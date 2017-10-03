@@ -11,7 +11,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $this->getDoctrine()->getRepository();
         return $this->render('UniqueCodeBundle:Default:index.html.twig');
     }
 
