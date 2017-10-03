@@ -1,0 +1,6 @@
+unique_code_homepage:
+    path:     /
+    defaults: { _controller: UniqueCodeBundle:Default:index }
+unique_code_check_code:
+    path:     /check_code
+    defaults: { _controller: UniqueCodeBundle:Default:checkCode }

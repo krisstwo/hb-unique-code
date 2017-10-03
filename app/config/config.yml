@@ -2,6 +2,8 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@UniqueCodeBundle/Resources/config/services.yml" }
+#    - { resource: "@UniqueCodeBundle/Resources/config/workflow.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -41,13 +43,24 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pdo_mysql
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_name%'
-        user: '%database_user%'
-        password: '%database_password%'
-        charset: UTF8
+        default_connection: local
+        connections:
+            local:
+                driver: pdo_mysql
+                host: '%local_database_host%'
+                port: '%local_database_port%'
+                dbname: '%local_database_name%'
+                user: '%local_database_user%'
+                password: '%local_database_password%'
+                charset: UTF8
+            extern:
+                driver: pdo_mysql
+                host: '%extern_database_host%'
+                port: '%extern_database_port%'
+                dbname: '%extern_database_name%'
+                user: '%extern_database_user%'
+                password: '%extern_database_password%'
+                charset: UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
@@ -57,8 +70,18 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        default_entity_manager: local
+        entity_managers:
+            local:
+                connection: local
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    UniqueCodeBundle:  ~
+            extern:
+                connection: extern
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    UniqueCodeBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -67,3 +90,69 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+# Assets
+assetic:
+    debug: "%kernel.debug%"
+    use_controller: '%kernel.debug%'
+    bundles: [UniqueCodeBundle]
+   #java: /usr/bin/java
+    java: C:\Program Files\Java\jdk1.8.0_92\bin\java.exe
+    filters:
+        cssrewrite: ~
+        cssembed:
+            jar: "%kernel.root_dir%/Resources/java/cssembed.jar"
+            yui_js:
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+        yui_css:
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+        lessphp:
+            file: "%kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php"
+            apply_to: ".less$"
+    assets:
+        jquery_js:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jquery/jquery.min.js"
+            #filters: [?yui_js]
+            output: js/jquery.min.js
+
+        bootstrap_css:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less"
+            filters:
+                - lessphp
+                - cssrewrite
+            output: css/bootstrap.css
+
+        bootstrap_js:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/affix.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/alert.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/button.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/carousel.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/collapse.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/dropdown.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/modal.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/tooltip.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/popover.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/scrollspy.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js"
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js"
+            filters: [?yui_js]
+            output: js/bootstrap.js
+        fonts_glyphicons_eot:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.eot"
+            output: "fonts/glyphicons-halflings-regular.eot"
+        fonts_glyphicons_svg:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.svg"
+            output: "fonts/glyphicons-halflings-regular.svg"
+        fonts_glyphicons_ttf:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf"
+            output: "fonts/glyphicons-halflings-regular.ttf"
+        fonts_glyphicons_woff:
+            inputs:
+                - "%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff"
+
+            output: "fonts/glyphicons-halflings-regular.woff"

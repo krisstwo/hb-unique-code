@@ -1,0 +1,4 @@
+services:
+    unique_code.check_code:
+        class: Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode
+        arguments: ["@doctrine.dbal.extern_connection", "@doctrine.dbal.local_connection"]

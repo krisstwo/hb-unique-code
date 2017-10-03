@@ -1,0 +1,27 @@
+workflow:
+    workflows:
+        status_code:
+            marking_store:
+                type: multiple_state
+                arguments:
+                    - state
+            supports:
+                - UniqueCodeBundle\Entity\StatusCode
+            places:
+                - not_actived
+                - actived
+                - waiting
+                - used
+            transitions:
+                actif:
+                    from: not_actived
+                    to:   actived
+                request:
+                    from: actived
+                    to:   waiting
+                refuse:
+                    from: waiting
+                    to:   actived
+                accept:
+                    from: waiting
+                    to:   used

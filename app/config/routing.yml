@@ -1,3 +1,3 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+unique_code:
+    resource: "@UniqueCodeBundle/Resources/config/routing.yml"
+    prefix:   /
