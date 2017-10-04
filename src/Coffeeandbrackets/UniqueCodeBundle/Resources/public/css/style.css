@@ -1,0 +1,8 @@
+body {
+    color: #61514e;
+    font-size: 14px;
+    font-family: 'Source Sans Pro',sans-serif;
+}
+.col-container {
+    background: rgba(255, 255, 255, 0.6);
+}

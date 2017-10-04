@@ -1,20 +1,126 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container">
-    <h1>Code unique</h1>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="code">Code</label>
-            <input type="text" class="form-control" id="code" name="code" placeholder="Code">
+<header>
+    <div class="container">
+        {% image '@UniqueCodeBundle/Resources/public/img/logo_header.png' %}
+        <img class="header_logo" src="{{ asset_url }}" alt="logo" />
+        {% endimage %}
+    </div>
+</header>
+<div class="cover" style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="col-container">
+                    <p class="text-center">Vous offre 50% dans un des hôtels partenaires Happybreak</p>
+                    <div>
+                        Comment ça marche :
+                        <div class="step-btn">
+                            Etape 1 : Je choisi un hôtel sur happybreak.com aux dates qui me conviennent
+                        </div>
+                        <div class="step-btn">
+                            Etape 2 : Je saisie mes informations
+                        </div>
+                        <div class="step-btn">
+                            Etape 3 : J’envoie ma demande de réservation
+                        </div>
+                        <div class="step-btn">
+                            Etape 4 : Je reçois la confirmation de réservation
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="step-container col-container">
+                    <div class="step-container" id="step_1">
+                        <h3 class="text-center">Vous êtes sur le point de réserver un hôtel d’exception à -50%</h3>
+                        <p>C’est très simple ! Premièrement, visitez notre site internet <a href="https://www.happybreak.com/">www.happybreak.com</a>
+                            pour choisir votre hôtel puis revenez sur cette page pour envoyer votre demande de réservation.</p>
+                        <h4>Etape 1 : Je choisi un hôtel sur happybreak.com aux dates qui me conviennent</h4>
+                        <p class="text-center">
+                            Vous n'avez pas encore choisi votre hôtel parmi nos hôtels ? <br>
+                            cliquer ci-dessous<br>
+                            <button class="btn btn-primary">Choisir mon hôtel</button>
+                            <br><br>
+                            Vous avez déjà visité notre site ?<br>
+                            cliquer ci-dessous<br>
+                            <button class="btn btn-primary" id="to_step_2">étape suivante</button>
+                        </p>
+                    </div>
+                    <div class="step-container" id="step_2" style="display: none">
+                        <h4>Etape 2 : Je saisie mes informations</h4>
+                        <form class="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="code" name="code" placeholder="Code de réservation *" data-validation="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom *" data-validation="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom *" data-validation="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Votre@email.com *" data-validation="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="re_email" name="re_email" placeholder="Veuillez confirmer votre adresse mail *" data-validation="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Téléphone *" data-validation="number" data-validation-length="50-200">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="cgv" data-validation="required">
+                                    En cochant cette case, j’accepte les conditions générales de Happybreak*.
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="newsletter">
+                                    En cochant cette case, j’accepte de recevoir la newsletter Happybreak tous les mois.
+                                </label>
+                            </div>
+                            <p class="text-center">
+                                <button type="submit" class="btn btn-primary" id="to_step_3">étape suivante</button>
+                            </p>
+                        </form>
+                        <span>* Champ obligatoire</span>
+                    </div>
+                    <div class="step-container" id="step_3" style="display: none">
+                        <h4>Etape 3 : J’envoie ma demande de réservation</h4>
+                        <form>
+                            <label class="radio-inline">
+                                Nombre de personnes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="number_person" id="number_person_1" value="1"> 1
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="number_person" id="number_person_2" value="2"> 2
+                            </label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="date" name="date" placeholder="Date d'entrée *">
+                            </div>
+                            <select name="number_night" class="form-control">
+                                <option value="1">1 nuit</option>
+                                <option value="2">2 nuit</option>
+                                <option value="3">3 nuit</option>
+                            </select>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="formule" name="formule" placeholder="Formule *">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="customer_msg" name="customer_msg" placeholder="Champs libre">
+                            </div>
+                            <button class="btn btn-primary" id="to_step_4">étape suivante</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="button" class="btn btn-default" id="check_code">Verifier</button>
-    </form>
+    </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    {% javascripts '@UniqueCodeBundle/Resources/public/js/*' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 {% endblock %}
