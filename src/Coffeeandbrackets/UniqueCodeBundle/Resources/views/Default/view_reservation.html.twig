@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="cover" style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
+    <div class="container">
+        <div class="row">
+            <div class="col-container">
+                {% if reservation is not empty %}
+                    <p>Monsieur {{ reservation.getCustomer.getLastName() }} souhaite réserver une chambre double avec {{ reservation.getOffer() }} du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits</p>
+                    {% if reservation.getCustomerMsg() is not empty %}
+                        <div class="customer_message">{{ reservation.getCustomerMsg() }}</div>
+                    {% endif %}
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-6 text-center">
+                            J’accepte la réservation<br>
+                            <a href="{{ path('unique_code_accept_reservation', {'id': reservation.getId() }) }}" class="accept_reservation">ok</a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            Ce n’est pas possible, je propose une autre date<br>
+                            <button class="refuse_reservation">X</button>
+                        </div>
+                    </div>
+                {% else %}
+                    <div>Le reservation n'existe pas</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
