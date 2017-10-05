@@ -52,6 +52,7 @@ class DefaultController extends Controller
             $reservation->setNumberNight($request->get('number_night'));
             $reservation->setNumberPerson($request->get('number_person'));
             $reservation->setHotel($request->get('hotel'));
+            $reservation->setOffer($request->get('offer'));
             $reservation->setCustomerMsg($request->get('customer_msg'));
             $reservation->setCustomer($customer);
 
@@ -62,6 +63,23 @@ class DefaultController extends Controller
             $code->setCurrentStatus('waiting');
 
             $em->flush();
+
+            // TODO get hotel email from extern BD
+            // Send mail to hotel
+            $serviceMail = $this->container->get('unique_code.mailer');
+            $tabParam = array(
+                'to' => 'hotel@hotel.com',
+                'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
+                'subject' => 'Demande de réservation',
+                'from' => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
+                'params' => array(
+                    'customer' => $customer,
+                    'reservation' => $reservation
+                )
+            );
+
+            // send mail
+            $serviceMail->sendMessage($tabParam, 'text/html');
 
             return new JsonResponse('ok');
         }
