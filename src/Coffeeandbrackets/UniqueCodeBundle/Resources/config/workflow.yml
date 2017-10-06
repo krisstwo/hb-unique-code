@@ -1,12 +1,12 @@
-workflow:
+framework:
     workflows:
         status_code:
             marking_store:
-                type: multiple_state
+                type: single_state
                 arguments:
-                    - state
+                    - currentStatus
             supports:
-                - UniqueCodeBundle\Entity\StatusCode
+                - Coffeeandbrackets\UniqueCodeBundle\Entity\Code
             places:
                 - not_actived
                 - actived

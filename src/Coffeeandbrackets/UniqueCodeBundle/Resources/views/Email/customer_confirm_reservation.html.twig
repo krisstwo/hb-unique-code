@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Confirmation de votre réservation{% endblock %}
+    </title>
+</head>
+<body>
+<h3>Faites vos valises !</h3>
+<br>
+<p>L’hôtel {{ reservation.getHotel() }} a accepté votre réservation et vous accueillera du {{ reservation.getReservationDate()|date('d/m/Y') }} .</p>
+<p>Attention ! Chaque réservation est soumise au CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter les informations à propos de votre réservation.</p>
+<p>Veuillez trouver ci-dessous les coordonnées de l’hôtel ainsi qu’un rappel de votre réservation :</p>
+<p>
+    {{ reservation.getHotel() }}<br>{{ reservation.getReservationDate()|date('d/m/Y') }} <br>
+    {{ reservation.getOffer() }}
+</p>
+<p style="text-align: center">Adepte du concept? Continuez à profiter des avantages Happybreak en illimité pendant 1 an pour seulement 79,90€ !</p>
+<p style="text-align: center">
+    Nous vous souhaitons un agréable séjour, avec Happybreak,<br>A bientôt,</br>L’équipe Happybreak
+</p>
+<p>Tous droits réservés | <a href="https://www.happybreak.com/mentions-legales">Mentions légales</a> |
+    <a href="https://www.happybreak.com">www.happybreak.com</a> | Contactez nous 09 80 01 01 01</p>
+<p style="text-align: center">
+    {% image '@UniqueCodeBundle/Resources/public/img/logo_header.png' %}
+    <img  src="{{ asset_url }}" alt="logo" />
+    {% endimage %}
+</p>
+</body>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Demande de réservation{% endblock %}
+    </title>
+</head>
+<body>
+<p>Merci d’avoir accepté la réservation de Mr/Mme {{ reservation.getCustomer().getLastName() }}</p>
+<p>Veuillez trouver ci-dessous les coordonnées du client ainsi qu’un rappel de la réservation :</p>
+<p>Si vous souhaitez des informations complémentaires pour confirmer la réservation veuillez contacter directement le client.</p>
+<p>
+    {{ reservation.getCustomer().getLastName() }} {{ reservation.getCustomer().getFirstName() }}<br>
+    {{ reservation.getCustomer().getEmail() }}<br>
+    {{ reservation.getReservationDate()|date('d/m/Y') }}<br>
+    {{ reservation.getOffer() }}
+</p>
+<p style="text-align: center">
+    A bientôt,</br>L’équipe Happybreak
+</p>
+<br>
+<p>Tous droits réservés | <a href="https://www.happybreak.com/mentions-legales">Mentions légales</a> |
+    <a href="https://www.happybreak.com">www.happybreak.com</a> | Contactez nous 09 80 01 01 01</p>
+<p style="text-align: center">
+    {% image '@UniqueCodeBundle/Resources/public/img/logo_header.png' %}
+    <img  src="{{ asset_url }}" alt="logo" />
+    {% endimage %}
+</p>
+</body>

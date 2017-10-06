@@ -2,3 +2,14 @@ services:
     unique_code.check_code:
         class: Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode
         arguments: ["@doctrine.dbal.extern_connection", "@doctrine.dbal.local_connection"]
+    unique_code.mailer:
+        class: Coffeeandbrackets\UniqueCodeBundle\Service\Mailer
+        arguments:
+            - "@mailer"
+            - "@templating"
+    unique_code.status_code_listener:
+        class: Coffeeandbrackets\UniqueCodeBundle\Event\StatusCodeListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_subscriber }
