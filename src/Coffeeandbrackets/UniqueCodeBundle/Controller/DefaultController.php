@@ -60,7 +60,11 @@ class DefaultController extends Controller
             $em->persist($reservation);
 
             $code = $em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $request->get('code')]);
-            $code->setCurrentStatus('waiting');
+
+            $workflow = $this->get('workflow.status_code');
+            if($workflow->can($code, 'request')){
+                $workflow->apply($code, 'request');
+            }
 
             $em->flush();
 
@@ -119,6 +123,13 @@ class DefaultController extends Controller
             )
         );
         $serviceMail->sendMessage($tabParam, 'text/html');
+
+        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
+        $workflow = $this->get('workflow.status_code');
+        if($workflow->can($code, 'accept')){
+            $workflow->apply($code, 'accept');
+        }
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->render('UniqueCodeBundle:Default:thanks_confirm_reservation.html.twig',
             array('reservation' => $reservation));
