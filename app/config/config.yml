@@ -114,6 +114,14 @@ assetic:
                 - "%kernel.root_dir%/../vendor/components/jquery/jquery.min.js"
             #filters: [?yui_js]
             output: js/jquery.min.js
+        jqueryui_js:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jqueryui/jquery-ui.min.js"
+            output: js/jquery-ui.min.js
+        jqueryui_css:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jqueryui/themes/base/jquery-ui.min.css"
+            output: css/jquery-ui.min.css
 
         bootstrap_css:
             inputs:
