@@ -7,3 +7,9 @@ services:
         arguments:
             - "@mailer"
             - "@templating"
+    unique_code.status_code_listener:
+        class: Coffeeandbrackets\UniqueCodeBundle\Event\StatusCodeListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_subscriber }

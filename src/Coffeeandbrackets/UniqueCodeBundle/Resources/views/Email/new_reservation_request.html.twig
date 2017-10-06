@@ -12,7 +12,7 @@
 <br>
 <p>Monsieur {{ customer.getLastName() }} souhaite réserver une chambre double avec {{ reservation.getOffer() }} du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits</p>
 <br>
-<p style="text-align: center"><a href="{{ path('unique_code_homepage') }}">Consulter</a> </p>
+<p style="text-align: center"><a href="{{ url('unique_code_view_reservation', {'id': reservation.getId()}) }}">Consulter</a> </p>
 <br>
 <p>Tous droits réservés | <a href="https://www.happybreak.com/mentions-legales">Mentions légales</a> |
     <a href="https://www.happybreak.com">www.happybreak.com</a> | Contactez nous 09 80 01 01 01</p>

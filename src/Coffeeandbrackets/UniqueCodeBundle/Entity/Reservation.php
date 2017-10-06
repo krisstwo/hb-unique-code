@@ -293,7 +293,7 @@ class Reservation
     }
 
     /**
-     * @return mixed
+     * @return Customer
      */
     public function getCustomer()
     {
