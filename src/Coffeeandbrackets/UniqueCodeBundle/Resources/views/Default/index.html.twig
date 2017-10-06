@@ -51,26 +51,26 @@
                         <h4>Etape 2 : Je saisie mes informations</h4>
                         <form class="form">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="code" name="code" placeholder="Code de réservation *" data-validation="required">
+                                <input type="text" class="form-control" id="code" name="code" placeholder="Code de réservation *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom *" data-validation="required">
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom *" data-validation="required">
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Votre@email.com *" data-validation="email">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Votre@email.com *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="re_email" name="re_email" placeholder="Veuillez confirmer votre adresse mail *" data-validation="email">
+                                <input type="text" class="form-control" id="re_email" name="re_email" placeholder="Veuillez confirmer votre adresse mail *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Téléphone *" data-validation="number" data-validation-length="50-200">
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Téléphone *" required>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="cgv" data-validation="required">
+                                    <input type="checkbox" value="cgv" name="cgv" id="cgv">
                                     En cochant cette case, j’accepte les conditions générales de Happybreak*.
                                 </label>
                             </div>
@@ -99,10 +99,10 @@
                                 <input type="radio" name="number_person" id="number_person_2" value="2"> 2
                             </label>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *">
+                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="date" name="date" placeholder="Date d'entrée *">
+                                <input type="text" class="form-control" id="date" name="date" placeholder="Date d'entrée *" required>
                             </div>
                             <div class="form-group">
                                 <select name="number_night" class="form-control">
@@ -112,7 +112,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Formule *">
+                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Formule *" required>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="customer_msg" name="customer_msg" placeholder="Champs libre">
