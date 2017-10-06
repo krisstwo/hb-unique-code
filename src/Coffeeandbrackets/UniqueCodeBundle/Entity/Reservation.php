@@ -43,6 +43,12 @@ class Reservation
     private $hotel;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="offer", type="string", length=255)
+     */
+    private $offer;
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="reservation_date", type="datetime")
@@ -287,7 +293,7 @@ class Reservation
     }
 
     /**
-     * @return mixed
+     * @return Customer
      */
     public function getCustomer()
     {
@@ -300,6 +306,22 @@ class Reservation
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOffer()
+    {
+        return $this->offer;
+    }
+
+    /**
+     * @param string $offer
+     */
+    public function setOffer($offer)
+    {
+        $this->offer = $offer;
     }
 }
 
