@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Confirmation de demande de réservation{% endblock %}
+    </title>
+</head>
+<body>
+<h3>Votre demande de réservation a bien été envoyée !</h3>
+<br>
+<p>- L’hôtel vous donnera une réponse par mail d’ici 12 heures</p>
+<p>Pensez à vérifier vos courriers indésirables</p>
+<br>
+<p>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.</p>
+<br>
+<p>Tous droits réservés | <a href="https://www.happybreak.com/mentions-legales">Mentions légales</a> |
+    <a href="https://www.happybreak.com">www.happybreak.com</a> | Contactez nous 09 80 01 01 01</p>
+<p style="text-align: center">
+    {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
+    <img  src="{{ asset_url }}" alt="logo" />
+    {% endimage %}
+</p>
+</body>
