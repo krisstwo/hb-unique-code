@@ -77,13 +77,13 @@ class Reservation
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
 
+            //TODO: must move to the end to simulate a transaction ...
+            $this->em->persist($newReservation);
+            $this->em->flush();
+
             //new reservation event
             $event = new ReservationCreated($newReservation);
             $this->eventDispatcher->dispatch(ReservationCreated::NAME, $event);
-
-            $this->em->persist($newReservation);
-
-            $this->em->flush();
         } catch (\Exception $e) {
             throw $e;
         }
