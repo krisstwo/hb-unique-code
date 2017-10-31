@@ -23,7 +23,18 @@ $(function(){
                     return $(element).val() == $("#email").val();
                 }
             }
-        }
+        },
+        errorClass : 'has-error',
+        validClass : '',
+        highlight: function(element, errorClass, validClass) {
+            $(element).parent('.form-group').addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parent('.form-group').removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function () {},
+        errorLabelContainer: 'ul.error-list',
+        wrapper: 'li'
     });
 
     $("#to_step_3").on('click', function (e) {
