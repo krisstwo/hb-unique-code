@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Reservation
  *
  * @ORM\Table(name="reservation")
- * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\ReservationRepository")
+ * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\ReservationRepository") @ORM\HasLifecycleCallbacks
  */
 class Reservation
 {
@@ -89,6 +89,22 @@ class Reservation
      * @ORM\OneToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
      */
     private $customer;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->addDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updateDate = new \DateTime();
+    }
 
     /**
      * Get id
@@ -245,20 +261,6 @@ class Reservation
     }
 
     /**
-     * Set addDate
-     *
-     * @param \DateTime $addDate
-     *
-     * @return Reservation
-     */
-    public function setAddDate($addDate)
-    {
-        $this->addDate = $addDate;
-
-        return $this;
-    }
-
-    /**
      * Get addDate
      *
      * @return \DateTime
@@ -266,20 +268,6 @@ class Reservation
     public function getAddDate()
     {
         return $this->addDate;
-    }
-
-    /**
-     * Set updateDate
-     *
-     * @param \DateTime $updateDate
-     *
-     * @return Reservation
-     */
-    public function setUpdateDate($updateDate)
-    {
-        $this->updateDate = $updateDate;
-
-        return $this;
     }
 
     /**

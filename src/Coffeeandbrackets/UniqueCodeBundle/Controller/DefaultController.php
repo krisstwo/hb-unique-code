@@ -46,8 +46,6 @@ class DefaultController extends Controller
 
             $reservation = new Reservation();
             $reservation->setCode($request->get('code'));
-            $reservation->setAddDate(new \DateTime());
-            $reservation->setUpdateDate(new \DateTime());
             $reservation->setReservationDate(date_create_from_format('d/m/Y', $request->get('date')));
             $reservation->setNumberNight($request->get('number_night'));
             $reservation->setNumberPerson($request->get('number_person'));
