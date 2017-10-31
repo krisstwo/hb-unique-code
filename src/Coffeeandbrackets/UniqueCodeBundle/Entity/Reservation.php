@@ -84,6 +84,49 @@ class Reservation
     private $updateDate;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hotel_confirmation_date", type="datetime", nullable=true)
+     */
+    private $hotelConfirmationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hotel_refuse_date", type="datetime", nullable=true)
+     */
+    private $hotelRefuseDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hotel_refuse_reason", type="text")
+     */
+    private $hotelRefuseReason;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hotel_proposed_check_in_date", type="date", nullable=true)
+     */
+    private $hotelProposedCheckInDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hotel_proposed_check_out_date", type="date", nullable=true)
+     */
+    private $hotelProposedCheckOutDate;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="customer_confirmation_date", type="datetime", nullable=true)
+     */
+    private $customerConfirmationDate;
+
+    /**
      * @var
      *
      * @ORM\OneToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
@@ -310,6 +353,102 @@ class Reservation
     public function setOffer($offer)
     {
         $this->offer = $offer;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHotelConfirmationDate()
+    {
+        return $this->hotelConfirmationDate;
+    }
+
+    /**
+     * @param \DateTime $hotelConfirmationDate
+     */
+    public function setHotelConfirmationDate($hotelConfirmationDate)
+    {
+        $this->hotelConfirmationDate = $hotelConfirmationDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHotelRefuseDate()
+    {
+        return $this->hotelRefuseDate;
+    }
+
+    /**
+     * @param \DateTime $hotelRefuseDate
+     */
+    public function setHotelRefuseDate($hotelRefuseDate)
+    {
+        $this->hotelRefuseDate = $hotelRefuseDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelRefuseReason()
+    {
+        return $this->hotelRefuseReason;
+    }
+
+    /**
+     * @param string $hotelRefuseReason
+     */
+    public function setHotelRefuseReason($hotelRefuseReason)
+    {
+        $this->hotelRefuseReason = $hotelRefuseReason;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHotelProposedCheckInDate()
+    {
+        return $this->hotelProposedCheckInDate;
+    }
+
+    /**
+     * @param \DateTime $hotelProposedCheckInDate
+     */
+    public function setHotelProposedCheckInDate($hotelProposedCheckInDate)
+    {
+        $this->hotelProposedCheckInDate = $hotelProposedCheckInDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHotelProposedCheckOutDate()
+    {
+        return $this->hotelProposedCheckOutDate;
+    }
+
+    /**
+     * @param \DateTime $hotelProposedCheckOutDate
+     */
+    public function setHotelProposedCheckOutDate($hotelProposedCheckOutDate)
+    {
+        $this->hotelProposedCheckOutDate = $hotelProposedCheckOutDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCustomerConfirmationDate()
+    {
+        return $this->customerConfirmationDate;
+    }
+
+    /**
+     * @param \DateTime $customerConfirmationDate
+     */
+    public function setCustomerConfirmationDate($customerConfirmationDate)
+    {
+        $this->customerConfirmationDate = $customerConfirmationDate;
     }
 }
 

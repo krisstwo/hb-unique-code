@@ -1,0 +1,10 @@
+{% if reservation is not empty %}
+    <p>Monsieur {{ reservation.getCustomer.getLastName() }} souhaite réserver une chambre double
+        avec {{ reservation.getOffer() }} du {{ reservation.getReservationDate()|date('d/m/Y') }}
+        pour {{ reservation.getNumberNight() }} nuits</p>
+    {% if reservation.getCustomerMsg() is not empty %}
+        <div class="customer_message">{{ reservation.getCustomerMsg() }}</div>
+    {% endif %}
+{% else %}
+    <div>La reservation n'existe pas</div>
+{% endif %}

@@ -13,3 +13,7 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: kernel.event_subscriber }
+    unique_code.reservation:
+            class: Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
+            arguments:
+                - "@doctrine.orm.entity_manager"

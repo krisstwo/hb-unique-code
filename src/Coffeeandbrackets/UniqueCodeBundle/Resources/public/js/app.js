@@ -25,6 +25,7 @@ $(function(){
     /**
      * Steps page
      */
+
     $('#date').datepicker({
         dateFormat: "dd/mm/yy"
     });
@@ -107,5 +108,78 @@ $(function(){
             //$('#step_3').hide();
             //$('#step_4').show();
         }
+    });
+
+    /**
+     * Hotel view reservation page
+     */
+
+    $('a.action-hotel-refuse-reservation').click(function (e) {
+        e.preventDefault();
+        if (window.confirm('Êtes vous sur de refuser cette réservation ?'))
+        {
+            window.location.href = e.target.href;
+        }
+
+    });
+
+
+    /**
+     * Hotel refuse reservation page
+     */
+
+    $('#check-in-date').datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+
+    $('form#hotel-refuse-reservation').validate({
+        rules: {
+            reason: {
+                required: true
+            },
+            'check-in-date': {
+                required: true
+            },
+            nights: {
+                required: true
+            }
+        },
+        errorClass: 'has-error',
+        validClass: '',
+        highlight: function (element, errorClass, validClass) {
+            $(element).parent('.form-group').addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parent('.form-group').removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function () {
+        },
+        errorContainer: 'form#hotel-refuse-reservation .errors',
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr('action'),
+                type: 'POST',
+                data: $(form).serialize(),
+                dataType: 'json',
+                success: function(result) {
+                    if(result && result.error)
+                        return;
+
+                    $('#modal-flash-success .content').text('Votre proposition a bien été envoyée au client');
+                    $('#modal-flash-success').modal('show');
+                }
+            });
+
+            return false;
+        }
+    });
+
+    $('a.action-hotel-accept-reservation').click(function (e) {
+       e.preventDefault();
+        if (window.confirm('Êtes vous sur d\'accepter cette réservation ?'))
+        {
+            window.location.href = e.target.href;
+        }
+
     });
 });

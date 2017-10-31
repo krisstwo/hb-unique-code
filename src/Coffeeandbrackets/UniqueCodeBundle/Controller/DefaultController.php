@@ -4,7 +4,9 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
+use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -131,5 +133,71 @@ class DefaultController extends Controller
 
         return $this->render('UniqueCodeBundle:Default:thanks_confirm_reservation.html.twig',
             array('reservation' => $reservation));
+    }
+
+    public function hotelRefuseReservationAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        /**
+         * @var Reservation $reservation
+         */
+        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+
+        //validate reservation state before proceeding
+        if ($reservation->getHotelConfirmationDate()
+            || $reservation->getHotelRefuseDate()
+            || $reservation->getCustomerConfirmationDate()) {
+            $this->addFlash(
+                'error',
+                'Cette réservation n\'est pas dans un status adéquat'
+            );
+
+            return $this->redirectToRoute('unique_code_homepage');
+        }
+
+
+        return $this->render('UniqueCodeBundle:Default:hotel-refuse-reservation.html.twig',
+            array('reservation' => $reservation));
+    }
+
+    public function postHotelRefuseReservationAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get('id');
+
+            /**
+             * @var Reservation $reservation
+             */
+            $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+
+            //validate reservation state before proceeding
+            if ($reservation->getHotelConfirmationDate()
+                || $reservation->getHotelRefuseDate()
+                || $reservation->getCustomerConfirmationDate()) {
+
+                return new JsonResponse(array('error' => 'Cette réservation n\'est pas dans un status adéquat'));
+            }
+
+            /**
+             * @var Form $form
+             */
+            $form = $this->get('form.factory')->createNamedBuilder('', HotelRefuseReservation::class)->getForm();
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+                /**
+                 * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
+                 */
+                $reservationService = $this->get('unique_code.reservation');
+                $reservationService->hotelRefuseReservation($reservation,$data);
+
+                return new JsonResponse(array());
+            }else {
+                return new JsonResponse(array('error' => 'Données invalides'));
+            }
+        }
+        return new Response("Action not allowed", 400);
     }
 }

@@ -6,19 +6,18 @@
         <div class="row">
             <div class="col-container">
                 {% if reservation is not empty %}
-                    <p>Monsieur {{ reservation.getCustomer.getLastName() }} souhaite réserver une chambre double avec {{ reservation.getOffer() }} du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits</p>
-                    {% if reservation.getCustomerMsg() is not empty %}
-                        <div class="customer_message">{{ reservation.getCustomerMsg() }}</div>
-                    {% endif %}
+                    {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
                     <br>
                     <div class="row">
                         <div class="col-xs-6 text-center">
                             J’accepte la réservation<br>
-                            <a href="{{ path('unique_code_accept_reservation', {'id': reservation.getId() }) }}" class="accept_reservation">ok</a>
+                            <a href="{{ path('unique_code_accept_reservation', {'id': reservation.getId() }) }}"
+                               class="action-hotel-accept-reservation">ok</a>
                         </div>
                         <div class="col-xs-6 text-center">
                             Ce n’est pas possible, je propose une autre date<br>
-                            <button class="refuse_reservation">X</button>
+                            <a href="{{ path('unique_code_hotel_refuse_reservation', {'id': reservation.getId() }) }}"
+                               class="action-hotel-refuse-reservation">X</a>
                         </div>
                     </div>
                 {% else %}
