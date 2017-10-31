@@ -118,13 +118,19 @@ class Reservation
      */
     private $hotelProposedCheckOutDate;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="customer_acceptance_date", type="datetime", nullable=true)
+     */
+    private $customerAcceptanceDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="customer_confirmation_date", type="datetime", nullable=true)
+     * @ORM\Column(name="customer_decline_date", type="datetime", nullable=true)
      */
-    private $customerConfirmationDate;
+    private $customerDeclineDate;
 
     /**
      * @var
@@ -438,17 +444,33 @@ class Reservation
     /**
      * @return \DateTime
      */
-    public function getCustomerConfirmationDate()
+    public function getCustomerAcceptanceDate()
     {
-        return $this->customerConfirmationDate;
+        return $this->customerAcceptanceDate;
     }
 
     /**
-     * @param \DateTime $customerConfirmationDate
+     * @param \DateTime $customerAcceptanceDate
      */
-    public function setCustomerConfirmationDate($customerConfirmationDate)
+    public function setCustomerAcceptanceDate($customerAcceptanceDate)
     {
-        $this->customerConfirmationDate = $customerConfirmationDate;
+        $this->customerAcceptanceDate = $customerAcceptanceDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCustomerDeclineDate()
+    {
+        return $this->customerDeclineDate;
+    }
+
+    /**
+     * @param \DateTime $customerDeclineDate
+     */
+    public function setCustomerDeclineDate($customerDeclineDate)
+    {
+        $this->customerDeclineDate = $customerDeclineDate;
     }
 }
 
