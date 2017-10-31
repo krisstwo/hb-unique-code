@@ -1,8 +1,138 @@
+html {
+    height: 100%;
+}
 body {
     color: #61514e;
     font-size: 14px;
     font-family: 'Source Sans Pro',sans-serif;
+    height: 100%;
+    padding-bottom: 3em;
+    box-sizing: border-box;
 }
+
+a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+a:hover {
+    color: #f7a600;
+    text-decoration: none;
+}
+
+/**
+LAYOUT STYLES
+ */
+
+.body-bg {
+    height: 100%;
+    background-position: top center;
+    background-size: cover;
+}
+
+#header {
+    background: #ffffff;
+    padding: 1em;
+    height: 70px;
+    box-sizing: content-box;
+}
+
+#header .logo-hb {
+    max-height: 70px;
+    line-height: 70px;
+}
+
+#header .logo-partner {
+    max-height: 70px;
+    line-height: 70px;
+}
+
+#main {
+    padding: 50px 0;
+}
+
 .col-container {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+}
+
+.col-container.step-container {
+    padding: 20px 40px;
+}
+
+#footer {
+    background: #776863;
+    color: #ffffff;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 3em;
+}
+
+#footer .row {
+    line-height: 3em;
+}
+
+#footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #f7a600;
+}
+
+#footer .logo {
+    position: absolute;
+    left: 1em;
+    height: 3em;
+    line-height: 3em;
+}
+
+/**
+CUSTOM ELEMENTS
+ */
+
+.step-list {
+
+}
+
+.step-list-item {
+    margin-bottom: 20px;
+    background: #d3cbc9;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.step-list-item.active {
+    background: #776863;
+}
+
+.step-container .step-heading {
+    margin-bottom: 25px;
+}
+
+/**
+BOOTSTRAP TWEAKS
+ */
+
+.btn.btn-hb {
+    background: rgb(247, 166, 0);
+    color: #ffffff;
+    border: none;
+}
+
+.btn.btn-upper {
+    text-transform: uppercase;
+}
+
+.form-control {
+    border-radius: 0;
+    background: none;
+    border-color: #776863;
+    color: #776863;
+}
+
+.form-group {
+    margin-bottom: 25px;
 }

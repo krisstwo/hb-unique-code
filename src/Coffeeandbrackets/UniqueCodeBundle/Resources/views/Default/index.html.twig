@@ -1,73 +1,116 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<header>
-    <div class="container">
-        {% image '@UniqueCodeBundle/Resources/public/img/logo_header.png' %}
-        <img class="header_logo" src="{{ asset_url }}" alt="logo" />
-        {% endimage %}
-    </div>
-</header>
-<div class="cover" style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
-    <div class="container">
+    <div class="body-bg"
+         style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
+        <header id="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="logo-hb">
+                            {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
+                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
+                            {% endimage %}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <div class="logo-partner">
+                            logo-partenaire
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="main">
+            <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="col-container">
+                    <p class="text-center">
+                        <i class="glyphicon glyphicon-home" style="font-size: 4em;"></i>
+                    </p>
                     <p class="text-center">Vous offre 50% dans un des hôtels partenaires Happybreak</p>
-                    <div>
+                    <p>
                         Comment ça marche :
-                        <div class="step-btn">
+                    </p>
+                    <div class="step-list">
+                        <div class="step-list-item active">
                             Etape 1 : Je choisi un hôtel sur happybreak.com aux dates qui me conviennent
                         </div>
-                        <div class="step-btn">
+                        <div class="step-list-item">
                             Etape 2 : Je saisie mes informations
                         </div>
-                        <div class="step-btn">
+                        <div class="step-list-item">
                             Etape 3 : J’envoie ma demande de réservation
                         </div>
-                        <div class="step-btn">
+                        <div class="step-list-item">
                             Etape 4 : Je reçois la confirmation de réservation
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="step-container col-container">
                     <div class="step-container" id="step_1">
-                        <h3 class="text-center">Vous êtes sur le point de réserver un hôtel d’exception à -50%</h3>
-                        <p>C’est très simple ! Premièrement, visitez notre site internet <a href="https://www.happybreak.com/">www.happybreak.com</a>
-                            pour choisir votre hôtel puis revenez sur cette page pour envoyer votre demande de réservation.</p>
+                        <h1 class="text-center">Vous êtes sur le point de réserver un hôtel d’exception à -50%</h1>
+                        <h4>C’est très simple ! Premièrement, visitez notre site internet <a
+                                    href="https://www.happybreak.com/">www.happybreak.com</a>
+                            pour choisir votre hôtel puis revenez sur cette page pour envoyer votre demande de
+                            réservation.</h4>
                         <h4>Etape 1 : Je choisi un hôtel sur happybreak.com aux dates qui me conviennent</h4>
                         <p class="text-center">
-                            Vous n'avez pas encore choisi votre hôtel parmi nos hôtels ? <br>
-                            cliquer ci-dessous<br>
-                            <button class="btn btn-primary">Choisir mon hôtel</button>
-                            <br><br>
-                            Vous avez déjà visité notre site ?<br>
-                            cliquer ci-dessous<br>
-                            <button class="btn btn-primary" id="to_step_2">étape suivante</button>
+                            <strong>Vous n'avez pas encore choisi votre hôtel parmi nos hôtels ?
+                                <br>
+                                <br>
+                                cliquer ci-dessous</strong>
+                            <br>
+                            <br>
+                            <button class="btn btn-hb btn-lg btn-upper">Choisir mon hôtel</button>
+                            <br>
+                            <br>
+                            <strong>Vous avez déjà visité notre site ?</strong>
+                            <br>
+                            <br>
+                            cliquer ci-dessous
+                            <br>
+                            <br>
+                            <button class="btn btn-hb btn-lg btn-upper" id="to_step_2">étape suivante</button>
                         </p>
                     </div>
                     <div class="step-container" id="step_2" style="display: none">
-                        <h4>Etape 2 : Je saisie mes informations</h4>
+                        <h3 class="step-heading">Etape 2 : Je saisie mes informations</h3>
                         <form class="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="code" name="code" placeholder="Code de réservation *" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="code" name="code"
+                                               placeholder="Code de réservation *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               placeholder="Nom *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               placeholder="Prénom *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                               placeholder="Votre@email.com *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="re_email" name="re_email"
+                                               placeholder="Veuillez confirmer votre adresse mail *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                               placeholder="Téléphone *" required>
+                                    </div>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom *" required>
+                                <div class="col-md-6">
+                                    <ul class="error-list"></ul>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom *" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Votre@email.com *" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="re_email" name="re_email" placeholder="Veuillez confirmer votre adresse mail *" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Téléphone *" required>
-                            </div>
+
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" value="cgv" name="cgv" id="cgv">
@@ -81,8 +124,11 @@
                                 </label>
                             </div>
                             <p class="text-center">
-                                <button type="submit" class="btn btn-primary" id="to_step_3">étape suivante</button>
+                                <button type="submit" class="btn btn-hb btn-lg btn-upper" id="to_step_3">étape
+                                    suivante
+                                </button>
                             </p>
+
                         </form>
                         <span>* Champ obligatoire</span>
                     </div>
@@ -124,5 +170,19 @@
             </div>
         </div>
     </div>
+        </section>
+        <footer id="footer">
+            <div class="logo">
+                logo-footer
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        Tous droits réservés - <a href="#">Mentions légales</a> - <a href="#">www.happybreak.com</a> -
+                        Contactez-nous au 09 80 01 01 01
+                    </div>
+                </div>
+            </div>
+        </footer>
 </div>
 {% endblock %}
