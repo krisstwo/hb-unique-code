@@ -116,6 +116,10 @@ CUSTOM ELEMENTS
 BOOTSTRAP TWEAKS
  */
 
+a.btn {
+    text-decoration: none;
+}
+
 .btn.btn-hb {
     background: rgb(247, 166, 0);
     color: #ffffff;
