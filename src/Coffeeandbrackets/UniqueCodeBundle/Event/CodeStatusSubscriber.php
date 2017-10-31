@@ -7,6 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Entity\LogCode;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
@@ -14,9 +15,17 @@ use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
 use Symfony\Component\Workflow\Workflow;
 
+/**
+ * Responsible for listening to every event that would change the code status.
+ * Logs any status change too.
+ *
+ * Class CodeStatusSubscriber
+ * @package Coffeeandbrackets\UniqueCodeBundle\Event
+ */
 class CodeStatusSubscriber implements EventSubscriberInterface
 {
     /**
@@ -66,7 +75,8 @@ class CodeStatusSubscriber implements EventSubscriberInterface
             HotelAccepted::NAME => 'onReservationEvent',
             HotelDeclined::NAME => 'onReservationEvent',
             CustomerAccepted::NAME => 'onReservationEvent',
-            CustomerDeclined::NAME => 'onReservationEvent'
+            CustomerDeclined::NAME => 'onReservationEvent',
+            'workflow.status_code.leave' => 'onCodeStatusChange'
         );
     }
 
@@ -94,6 +104,18 @@ class CodeStatusSubscriber implements EventSubscriberInterface
                 break;
         }
 
+        $this->em->flush();
+    }
+
+    public function onCodeStatusChange(Event $event) {
+        $logCode = new LogCode();
+        $logCode->setDate(new \DateTime());
+        $logCode->setFromStatus(implode(', ', array_keys($event->getMarking()->getPlaces())));
+        $logCode->setToStatus(implode(', ', $event->getTransition()->getTos()));
+        $logCode->setIsAdminAction(false);
+        $logCode->setCode($event->getSubject());
+
+        $this->em->persist($logCode);
         $this->em->flush();
     }
 }
