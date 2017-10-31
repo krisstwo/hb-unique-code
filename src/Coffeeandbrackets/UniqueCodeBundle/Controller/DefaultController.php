@@ -268,31 +268,34 @@ class DefaultController extends Controller
         }
     }
 
-    public function customerDeclineHotelProposingAction(Request $request)
+    public function ajaxCustomerDeclineHotelProposingAction(Request $request)
     {
-        $id = $request->get('id');
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get('id');
 
-        /**
-         * @var Reservation $reservation
-         */
-        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+            /**
+             * @var Reservation $reservation
+             */
+            $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
 
-        //validate reservation state before proceeding
-        if ($reservation->getHotelConfirmationDate()
-            || !$reservation->getHotelRefuseDate()) {
-            $this->addFlash(
-                'error',
-                'Cette réservation n\'est pas dans un status adéquat'
-            );
+            //validate reservation state before proceeding
+            if ($reservation->getHotelConfirmationDate()
+                || !$reservation->getHotelRefuseDate()
+                || $reservation->getCustomerAcceptanceDate()
+                || $reservation->getCustomerDeclineDate()) {
 
-            return $this->redirectToRoute('unique_code_homepage');
+                return new JsonResponse(array('error' => 'Cette réservation n\'est pas dans un status adéquat'));
+            }
+
+            //alter reservation
+            /**
+             * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
+             */
+            $reservationService = $this->get('unique_code.reservation');
+            $reservationService->customerDeclineHotelProposing($reservation);
+
+            return new JsonResponse(array());
         }
-
-        //code status change
-        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
-        $workflow = $this->get('workflow.status_code');
-        if ($workflow->can($code, 'refuse')) {
-            $workflow->apply($code, 'refuse');
-        }
+        return new Response("Action not allowed", 400);
     }
 }

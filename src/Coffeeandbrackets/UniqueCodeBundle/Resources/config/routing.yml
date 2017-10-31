@@ -25,6 +25,6 @@ unique_code_customer_reservation_action:
 unique_code_customer_accept_hotel_proposing:
     path:     /customer-accept-hotel-proposing/{id}
     defaults: { _controller: UniqueCodeBundle:Default:customerAcceptHotelProposing }
-unique_code_customer_decline_hotel_proposing:
-    path:     /customer-decline-hotel-proposing/{id}
-    defaults: { _controller: UniqueCodeBundle:Default:customerDeclineHotelProposing }
+unique_code_ajax_customer_decline_hotel_proposing:
+    path:     /ajax-customer-decline-hotel-proposing/{id}
+    defaults: { _controller: UniqueCodeBundle:Default:ajaxCustomerDeclineHotelProposing }

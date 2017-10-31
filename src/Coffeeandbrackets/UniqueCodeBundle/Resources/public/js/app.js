@@ -182,4 +182,27 @@ $(function(){
         }
 
     });
+
+    /**
+     * Customer reservation action page
+     */
+
+    $('a.action-customer-decline-reservation').click(function (e) {
+        e.preventDefault();
+        if (window.confirm('Êtes vous sur de refuser cette réservation ?'))
+        {
+            $.ajax({
+                url: $(e.target).attr('href'),
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
+                    if(result && result.error)
+                        return;
+
+                    window.location.href = '/';//TODO: fetch url from twig
+                }
+            });
+        }
+
+    });
 });
