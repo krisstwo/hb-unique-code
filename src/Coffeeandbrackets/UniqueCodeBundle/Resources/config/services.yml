@@ -17,3 +17,11 @@ services:
             class: Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
             arguments:
                 - "@doctrine.orm.entity_manager"
+                - "@event_dispatcher"
+    unique_code.code_status_subscriber:
+            class: Coffeeandbrackets\UniqueCodeBundle\Event\CodeStatusSubscriber
+            arguments:
+                - "@workflow.status_code"
+                - "@doctrine.orm.entity_manager"
+            tags:
+                - { name: kernel.event_subscriber }
