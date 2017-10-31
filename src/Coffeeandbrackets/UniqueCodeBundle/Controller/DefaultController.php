@@ -147,7 +147,7 @@ class DefaultController extends Controller
         //validate reservation state before proceeding
         if ($reservation->getHotelConfirmationDate()
             || $reservation->getHotelRefuseDate()
-            || $reservation->getCustomerConfirmationDate()) {
+            || $reservation->getCustomerAcceptanceDate()) {
             $this->addFlash(
                 'error',
                 'Cette réservation n\'est pas dans un status adéquat'
@@ -174,7 +174,7 @@ class DefaultController extends Controller
             //validate reservation state before proceeding
             if ($reservation->getHotelConfirmationDate()
                 || $reservation->getHotelRefuseDate()
-                || $reservation->getCustomerConfirmationDate()) {
+                || $reservation->getCustomerAcceptanceDate()) {
 
                 return new JsonResponse(array('error' => 'Cette réservation n\'est pas dans un status adéquat'));
             }
