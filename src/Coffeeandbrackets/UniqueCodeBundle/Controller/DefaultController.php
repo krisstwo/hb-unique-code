@@ -237,35 +237,35 @@ class DefaultController extends Controller
             array('reservation' => $reservation));
     }
 
-    public function customerAcceptHotelProposingAction(Request $request)
+    public function ajaxCustomerAcceptHotelProposingAction(Request $request)
     {
-        $id = $request->get('id');
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->get('id');
 
-        /**
-         * @var Reservation $reservation
-         */
-        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+            /**
+             * @var Reservation $reservation
+             */
+            $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
 
-        //validate reservation state before proceeding
-        if ($reservation->getHotelConfirmationDate()
-            || !$reservation->getHotelRefuseDate()) {
-            $this->addFlash(
-                'error',
-                'Cette réservation n\'est pas dans un status adéquat'
-            );
+            //validate reservation state before proceeding
+            if ($reservation->getHotelConfirmationDate()
+                || !$reservation->getHotelRefuseDate()
+                || $reservation->getCustomerAcceptanceDate()
+                || $reservation->getCustomerDeclineDate()) {
 
-            return $this->redirectToRoute('unique_code_homepage');
+                return new JsonResponse(array('error' => 'Cette réservation n\'est pas dans un status adéquat'));
+            }
+
+            //alter reservation
+            /**
+             * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
+             */
+            $reservationService = $this->get('unique_code.reservation');
+            $reservationService->customerAcceptHotelProposing($reservation);
+
+            return new JsonResponse(array());
         }
-
-        $reservationService = $this->get('unique_code.reservation');
-        $reservationService->customerAcceptHotelProposing($reservation);
-
-        //code status change
-        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
-        $workflow = $this->get('workflow.status_code');
-        if ($workflow->can($code, 'accept')) {
-            $workflow->apply($code, 'accept');
-        }
+        return new Response("Action not allowed", 400);
     }
 
     public function ajaxCustomerDeclineHotelProposingAction(Request $request)

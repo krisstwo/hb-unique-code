@@ -22,9 +22,9 @@ unique_code_post_hotel_refuse_reservation:
 unique_code_customer_reservation_action:
     path:     /customer-reservation-action/{id}
     defaults: { _controller: UniqueCodeBundle:Default:customerReservationAction }
-unique_code_customer_accept_hotel_proposing:
-    path:     /customer-accept-hotel-proposing/{id}
-    defaults: { _controller: UniqueCodeBundle:Default:customerAcceptHotelProposing }
+unique_code_ajax_customer_accept_hotel_proposing:
+    path:     /ajax-customer-accept-hotel-proposing/{id}
+    defaults: { _controller: UniqueCodeBundle:Default:ajaxCustomerAcceptHotelProposing }
 unique_code_ajax_customer_decline_hotel_proposing:
     path:     /ajax-customer-decline-hotel-proposing/{id}
     defaults: { _controller: UniqueCodeBundle:Default:ajaxCustomerDeclineHotelProposing }

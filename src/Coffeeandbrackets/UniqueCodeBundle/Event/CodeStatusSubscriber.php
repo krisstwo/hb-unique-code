@@ -97,7 +97,7 @@ class CodeStatusSubscriber implements EventSubscriberInterface
                 $this->codeStatusWorkflow->apply($code, 'refuse');
                 break;
             case CustomerAccepted::NAME :
-                $this->codeStatusWorkflow->apply($code, 'accept');
+                $this->codeStatusWorkflow->apply($code, 'refuse');//a fresh reservation will be created afterwards
                 break;
             case CustomerDeclined::NAME :
                 $this->codeStatusWorkflow->apply($code, 'refuse');

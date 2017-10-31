@@ -205,4 +205,24 @@ $(function(){
         }
 
     });
+
+    $('a.action-customer-accept-reservation').click(function (e) {
+        e.preventDefault();
+        if (window.confirm('Êtes vous sur d\'accepte cette réservation ?'))
+        {
+            $.ajax({
+                url: $(e.target).attr('href'),
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
+                    if(result && result.error)
+                        return;
+
+                    $('#modal-flash-success .content').text('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
+                    $('#modal-flash-success').modal('show');
+                }
+            });
+        }
+
+    });
 });
