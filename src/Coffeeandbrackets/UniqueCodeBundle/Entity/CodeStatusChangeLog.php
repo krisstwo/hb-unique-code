@@ -5,12 +5,12 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LogCode
+ * CodeStatusChangeLog
  *
  * @ORM\Table(name="log_code")
  * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\LogCodeRepository")
  */
-class LogCode
+class CodeStatusChangeLog
 {
     /**
      * @var int
@@ -71,7 +71,7 @@ class LogCode
      *
      * @param string $fromStatus
      *
-     * @return LogCode
+     * @return CodeStatusChangeLog
      */
     public function setFromStatus($fromStatus)
     {
@@ -95,7 +95,7 @@ class LogCode
      *
      * @param string $toStatus
      *
-     * @return LogCode
+     * @return CodeStatusChangeLog
      */
     public function setToStatus($toStatus)
     {
@@ -119,7 +119,7 @@ class LogCode
      *
      * @param \DateTime $date
      *
-     * @return LogCode
+     * @return CodeStatusChangeLog
      */
     public function setDate($date)
     {
@@ -143,7 +143,7 @@ class LogCode
      *
      * @param boolean $isAdminAction
      *
-     * @return LogCode
+     * @return CodeStatusChangeLog
      */
     public function setIsAdminAction($isAdminAction)
     {

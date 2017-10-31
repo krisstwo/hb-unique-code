@@ -7,7 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
-use Coffeeandbrackets\UniqueCodeBundle\Entity\LogCode;
+use Coffeeandbrackets\UniqueCodeBundle\Entity\CodeStatusChangeLog;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
@@ -108,7 +108,7 @@ class CodeStatusSubscriber implements EventSubscriberInterface
     }
 
     public function onCodeStatusChange(Event $event) {
-        $logCode = new LogCode();
+        $logCode = new CodeStatusChangeLog();
         $logCode->setDate(new \DateTime());
         $logCode->setFromStatus(implode(', ', array_keys($event->getMarking()->getPlaces())));
         $logCode->setToStatus(implode(', ', $event->getTransition()->getTos()));
