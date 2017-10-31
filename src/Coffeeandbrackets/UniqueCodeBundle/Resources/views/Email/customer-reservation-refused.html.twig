@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Demande de réservation refusée{% endblock %}
+    </title>
+</head>
+<body>
+<h3>Malheureusement, l’hôtel n’est pas disponible aux dates demandées.</h3>
+<br>
+<p>Veuillez cliquer sur le bouton ci-dessous pour connaitre le
+    motif du refus de votre réservation et découvrir la
+    proposition alternative de l’hôtel.</p>
+<br>
+<p style="text-align: center"><a href="">Consulter</a> </p>
+<br>
+<p>Tous droits réservés | <a href="https://www.happybreak.com/mentions-legales">Mentions légales</a> |
+    <a href="https://www.happybreak.com">www.happybreak.com</a> | Contactez nous 09 80 01 01 01</p>
+<p style="text-align: center">
+    {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
+    <img  src="{{ asset_url }}" alt="logo" />
+    {% endimage %}
+</p>
+</body>

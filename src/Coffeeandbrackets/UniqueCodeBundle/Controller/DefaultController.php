@@ -193,6 +193,18 @@ class DefaultController extends Controller
                 $reservationService = $this->get('unique_code.reservation');
                 $reservationService->hotelRefuseReservation($reservation,$data);
 
+                $serviceMail = $this->container->get('unique_code.mailer');
+                $tabParam = array(
+                    'to' => $reservation->getCustomer()->getEmail(),
+                    'template' => 'UniqueCodeBundle:Email:customer-reservation-refused.html.twig',
+                    'subject' => 'Demande de réservation refusée',
+                    'from' => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
+                    'params' => array(
+                        'reservation' => $reservation
+                    )
+                );
+                $serviceMail->sendMessage($tabParam, 'text/html');
+
                 return new JsonResponse(array());
             }else {
                 return new JsonResponse(array('error' => 'Données invalides'));
