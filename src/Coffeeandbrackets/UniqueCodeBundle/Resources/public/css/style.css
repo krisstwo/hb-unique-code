@@ -136,3 +136,7 @@ BOOTSTRAP TWEAKS
 .form-group {
     margin-bottom: 25px;
 }
+
+.modal-content > .alert {
+    margin-bottom: 0;
+}

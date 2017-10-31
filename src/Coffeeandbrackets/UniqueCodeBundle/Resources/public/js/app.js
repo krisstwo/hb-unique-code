@@ -1,4 +1,30 @@
 $(function(){
+
+    /**
+     * Generic logic
+     */
+
+    $(document).ajaxError(function (event, xhr, settings) {
+        $('#modal-flash-error .content').text('Une erreur inattendue est survenue.');
+        $('#modal-flash-error').modal('show');
+    });
+
+    $(document).ajaxSuccess(function (event, xhr, settings) {
+
+        if(xhr.responseJSON && xhr.responseJSON.error){
+            $('#modal-flash-error .content').text(xhr.responseJSON.error);
+            $('#modal-flash-error').modal('show');
+        }
+    });
+
+
+    /**
+     * Page specific logic
+     */
+
+    /**
+     * Steps page
+     */
     $('#date').datepicker({
         dateFormat: "dd/mm/yy"
     });
