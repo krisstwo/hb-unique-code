@@ -112,6 +112,13 @@ CUSTOM ELEMENTS
     margin-bottom: 25px;
 }
 
+.note {
+    border: 1px solid #776863;
+    color: #776863;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
 /**
 BOOTSTRAP TWEAKS
  */

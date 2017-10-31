@@ -212,4 +212,87 @@ class DefaultController extends Controller
         }
         return new Response("Action not allowed", 400);
     }
+
+    public function customerReservationActionAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        /**
+         * @var Reservation $reservation
+         */
+        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+
+        //validate reservation state before proceeding
+        if ($reservation->getHotelConfirmationDate()
+            || !$reservation->getHotelRefuseDate()) {
+            $this->addFlash(
+                'error',
+                'Cette réservation n\'est pas dans un status adéquat'
+            );
+
+            return $this->redirectToRoute('unique_code_homepage');
+        }
+
+        return $this->render('UniqueCodeBundle:Default:customer-reservation-action.html.twig',
+            array('reservation' => $reservation));
+    }
+
+    public function customerAcceptHotelProposingAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        /**
+         * @var Reservation $reservation
+         */
+        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+
+        //validate reservation state before proceeding
+        if ($reservation->getHotelConfirmationDate()
+            || !$reservation->getHotelRefuseDate()) {
+            $this->addFlash(
+                'error',
+                'Cette réservation n\'est pas dans un status adéquat'
+            );
+
+            return $this->redirectToRoute('unique_code_homepage');
+        }
+
+        $reservationService = $this->get('unique_code.reservation');
+        $reservationService->customerAcceptHotelProposing($reservation);
+
+        //code status change
+        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
+        $workflow = $this->get('workflow.status_code');
+        if ($workflow->can($code, 'accept')) {
+            $workflow->apply($code, 'accept');
+        }
+    }
+
+    public function customerDeclineHotelProposingAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        /**
+         * @var Reservation $reservation
+         */
+        $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
+
+        //validate reservation state before proceeding
+        if ($reservation->getHotelConfirmationDate()
+            || !$reservation->getHotelRefuseDate()) {
+            $this->addFlash(
+                'error',
+                'Cette réservation n\'est pas dans un status adéquat'
+            );
+
+            return $this->redirectToRoute('unique_code_homepage');
+        }
+
+        //code status change
+        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
+        $workflow = $this->get('workflow.status_code');
+        if ($workflow->can($code, 'refuse')) {
+            $workflow->apply($code, 'refuse');
+        }
+    }
 }

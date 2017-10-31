@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="body-bg"
+         style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
+        <header id="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="logo-hb">
+                            {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
+                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
+                            {% endimage %}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <div class="logo-partner">
+                            logo-partenaire
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="main">
+            <div class="container">
+                <div class="col-container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>
+                                Votre demande n’a pas abouti
+                            </h2>
+
+                            <p>
+                                Malheureusement, l’hôtel n’a pas
+                                pu accepter votre demande de
+                                réservation pour le motif suivant :
+                            </p>
+
+                            {% if reservation.getHotelRefuseReason() is not empty %}
+                                <div class="note">
+                                    {{ reservation.getHotelRefuseReason() }}
+                                </div>
+                            {% endif %}
+
+                            {% if reservation.getHotelProposedCheckInDate() is not empty and reservation.getHotelProposedCheckOutDate() is not empty %}
+                                <p>
+                                    Cependant, l’hôtel vous propose
+                                    une autre date de séjour :
+                                </p>
+                                <ul>
+                                    <li>du {{ reservation.getHotelProposedCheckInDate().format('d/m/Y') }}
+                                        au {{ reservation.getHotelProposedCheckOutDate().format('d/m/Y') }}</li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="text-center">
+                        <a class="btn btn-hb btn-lg btn-upper" href="{{ path('unique_code_customer_accept_hotel_proposing', {'id': reservation.getId() }) }}">Accepter la proposition de l’hôtel</a>
+                    </p>
+
+                    <p class="text-center">
+                        <a class="btn btn-hb btn-lg btn-upper" href="{{ path('unique_code_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}">Faire une autre demande*</a>
+                    </p>
+                    <p>
+                        * Autre hôtel, autre date
+                    </p>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            <div class="logo">
+                logo-footer
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        Tous droits réservés - <a href="#">Mentions légales</a> - <a href="#">www.happybreak.com</a> -
+                        Contactez-nous au 09 80 01 01 01
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endblock %}
