@@ -79,7 +79,7 @@ class Reservation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="update_date", type="datetime")
+     * @ORM\Column(name="update_date", type="datetime", nullable=true)
      */
     private $updateDate;
 
@@ -100,7 +100,7 @@ class Reservation
     /**
      * @var string
      *
-     * @ORM\Column(name="hotel_refuse_reason", type="text")
+     * @ORM\Column(name="hotel_refuse_reason", type="text", nullable=true)
      */
     private $hotelRefuseReason;
 
@@ -135,7 +135,7 @@ class Reservation
     /**
      * @var
      *
-     * @ORM\OneToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
      */
     private $customer;
 
