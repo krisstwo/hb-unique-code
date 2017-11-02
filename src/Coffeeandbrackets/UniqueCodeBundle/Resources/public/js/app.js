@@ -26,14 +26,24 @@ $(function(){
      * Steps page
      */
 
+    var stepTo = function (stepIndex) {
+        if (stepIndex < 1 || stepIndex > 3)
+            return;
+
+        $('.step-list .step-list-item').removeClass('active');
+        $('.step-list #step-' + stepIndex).addClass('active');
+
+        $('.step-container').hide();
+        $('#step_' + stepIndex).show();
+    };
+
     $('#date').datepicker({
         dateFormat: "dd/mm/yy"
     });
 
     $("#to_step_2").on('click', function (e) {
         e.preventDefault();
-        $('#step_1').hide();
-        $('#step_2').show();
+        stepTo(2);
     });
 
     $("#step_2 form").validate({
@@ -73,8 +83,7 @@ $(function(){
                 data: $("#step_2 form").serialize(),
                 success: function (msg) {
                     if (msg == 'ok') {
-                        $('#step_2').hide();
-                        $('#step_3').show();
+                        stepTo(3);
                     } else {
                         alert(msg);
                     }
