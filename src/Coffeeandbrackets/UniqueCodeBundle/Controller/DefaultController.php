@@ -85,6 +85,18 @@ class DefaultController extends Controller
             // send mail
             $serviceMail->sendMessage($tabParam, 'text/html');
 
+            //send email to customer
+            $mailConfig = array(
+                'to' => $reservation->getCustomer()->getEmail(),
+                'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
+                'subject' => 'Confirmation de demande de réservation',
+                'from' => 'krisstwo@gmail.com',//TODO: let from be empty
+                'params' => array(
+                    'reservation' => $reservation
+                )
+            );
+            $serviceMail->sendMessage($mailConfig, 'text/html');
+
             return new JsonResponse('ok');
         }
         return new Response("Action not allowed", 400);
