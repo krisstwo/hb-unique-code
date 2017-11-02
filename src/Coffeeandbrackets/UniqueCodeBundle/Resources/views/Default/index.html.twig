@@ -117,17 +117,19 @@
                         <span>* Champ obligatoire</span>
                     </div>
                     <div class="step-container" id="step_3" style="display: none">
-                        <h4>Etape 3 : J’envoie ma demande de réservation</h4>
+                        <h3 class="step-heading">Etape 3 : J’envoie ma demande de réservation</h3>
                         <form>
-                            <label class="radio-inline">
-                                Nombre de personnes
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="number_person" id="number_person_1" value="1" checked> 1
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="number_person" id="number_person_2" value="2"> 2
-                            </label>
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    Nombre de personnes
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="number_person" id="number_person_1" value="1" checked> 1
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="number_person" id="number_person_2" value="2"> 2
+                                </label>
+                            </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *"
                                        required>
@@ -151,7 +153,9 @@
                                 <input type="text" class="form-control" id="customer_msg" name="customer_msg"
                                        placeholder="Champs libre">
                             </div>
-                            <button class="btn btn-primary" id="to_step_4">étape suivante</button>
+                            <p class="text-center">
+                                <button class="btn btn-hb btn-lg btn-upper" id="to_step_4">étape suivante</button>
+                            </p>
                         </form>
                     </div>
                 </div>
