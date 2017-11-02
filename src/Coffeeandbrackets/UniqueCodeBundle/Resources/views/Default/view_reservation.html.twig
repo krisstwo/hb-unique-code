@@ -1,23 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="cover" style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
     <div class="container">
         <div class="row">
             <div class="col-container">
                 {% if reservation is not empty %}
-                    {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
-                    <br>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
                     <div class="row">
                         <div class="col-xs-6 text-center">
-                            J’accepte la réservation<br>
+                            J’accepte la réservation
+                            <br>
+                            <br>
                             <a href="{{ path('unique_code_accept_reservation', {'id': reservation.getId() }) }}"
-                               class="action-hotel-accept-reservation">ok</a>
+                               class="btn btn-lg btn-hb action-hotel-accept-reservation">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </a>
                         </div>
                         <div class="col-xs-6 text-center">
-                            Ce n’est pas possible, je propose une autre date<br>
+                            Ce n’est pas possible, je propose une autre date
+                            <br>
+                            <br>
                             <a href="{{ path('unique_code_hotel_refuse_reservation', {'id': reservation.getId() }) }}"
-                               class="action-hotel-refuse-reservation">X</a>
+                               class="btn btn-lg btn-hb-secondary action-hotel-refuse-reservation">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
                         </div>
                     </div>
                 {% else %}
@@ -26,6 +38,5 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 

@@ -133,6 +133,12 @@ a.btn {
     border: none;
 }
 
+.btn.btn-hb-secondary {
+    background: #776863;
+    color: #ffffff;
+    border: none;
+}
+
 .btn.btn-upper {
     text-transform: uppercase;
 }
