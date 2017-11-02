@@ -1,32 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="body-bg"
-         style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
-        <header id="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="logo-hb">
-                            {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
-                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
-                            {% endimage %}
-                        </div>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        <div class="logo-partner">
-                            logo-partenaire
-                        </div>
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% include 'UniqueCodeBundle:Default:partials/flash-messages.html.twig' %}
             </div>
-        </header>
-        <section id="main">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        {% include 'UniqueCodeBundle:Default:partials/flash-messages.html.twig' %}
-                    </div>
-                </div>
+        </div>
         <div class="row">
             <div class="col-md-3">
                 <div class="col-container">
@@ -110,7 +89,7 @@
                                         <input type="text" class="form-control" id="phone" name="phone"
                                                placeholder="Téléphone *" required>
                                     </div>
-                            </div>
+                                </div>
                                 <div class="col-md-6">
                                     <ul class="error-list"></ul>
                                 </div>
@@ -150,10 +129,12 @@
                                 <input type="radio" name="number_person" id="number_person_2" value="2"> 2
                             </label>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *" required>
+                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *"
+                                       required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="date" name="date" placeholder="Date d'entrée *" required>
+                                <input type="text" class="form-control" id="date" name="date"
+                                       placeholder="Date d'entrée *" required>
                             </div>
                             <div class="form-group">
                                 <select name="number_night" class="form-control">
@@ -163,10 +144,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Formule *" required>
+                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Formule *"
+                                       required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="customer_msg" name="customer_msg" placeholder="Champs libre">
+                                <input type="text" class="form-control" id="customer_msg" name="customer_msg"
+                                       placeholder="Champs libre">
                             </div>
                             <button class="btn btn-primary" id="to_step_4">étape suivante</button>
                         </form>
@@ -175,19 +158,4 @@
             </div>
         </div>
     </div>
-        </section>
-        <footer id="footer">
-            <div class="logo">
-                logo-footer
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        Tous droits réservés - <a href="#">Mentions légales</a> - <a href="#">www.happybreak.com</a> -
-                        Contactez-nous au 09 80 01 01 01
-                    </div>
-                </div>
-            </div>
-        </footer>
-</div>
 {% endblock %}

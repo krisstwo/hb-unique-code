@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="cover" style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
-        <div class="container">
-            <div class="row">
-                <div class="col-container">
-                    <p>
-                        Merci d’avoir accepté la réservation de Mr/Mme {{ reservation.customer.firstName }}
-                    </p>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-container">
+                <p>
+                    Merci d’avoir accepté la réservation de Mr/Mme {{ reservation.customer.firstName }}
+                </p>
             </div>
         </div>
     </div>

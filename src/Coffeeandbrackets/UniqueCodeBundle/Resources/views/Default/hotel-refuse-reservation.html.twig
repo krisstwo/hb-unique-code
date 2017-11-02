@@ -1,26 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="body-bg"
-         style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
-        <header id="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="logo-hb">
-                            {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
-                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
-                            {% endimage %}
-                        </div>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        <div class="logo-partner">
-                            logo-partenaire
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <section id="main">
             <div class="container">
                 <div class="col-container">
                     {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
