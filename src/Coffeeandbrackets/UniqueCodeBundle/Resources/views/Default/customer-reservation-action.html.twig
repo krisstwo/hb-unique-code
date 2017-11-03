@@ -32,17 +32,23 @@
                     {% endif %}
                 </div>
             </div>
-            <p class="text-center">
-                <a class="btn btn-hb btn-lg btn-upper action-customer-accept-reservation"
-                   href="{{ path('unique_code_ajax_customer_accept_hotel_proposing', {'id': reservation.getId() }) }}">Accepter
-                    la proposition de l’hôtel</a>
-            </p>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <p class="text-center">
+                        <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-accept-reservation"
+                           href="{{ path('unique_code_ajax_customer_accept_hotel_proposing', {'id': reservation.getId() }) }}"
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Accepter
+                            la proposition de l’hôtel</a>
+                    </p>
 
-            <p class="text-center">
-                <a class="btn btn-hb btn-lg btn-upper action-customer-decline-reservation"
-                   href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}">Faire
-                    une autre demande*</a>
-            </p>
+                    <p class="text-center">
+                        <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-decline-reservation"
+                           href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}"
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire
+                            une autre demande*</a>
+                    </p>
+                </div>
+            </div>
             <p>
                 * Autre hôtel, autre date
             </p>

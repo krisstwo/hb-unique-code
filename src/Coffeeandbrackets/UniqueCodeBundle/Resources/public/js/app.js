@@ -17,6 +17,29 @@ $(function(){
         }
     });
 
+    var confirmBox = function (title, content) {
+        var deferred = new $.Deferred();
+
+        //bind btn events
+        $('#modal-confirmation .confirm').click(function (e) {
+            deferred.resolve();
+        });
+        $('#modal-confirmation .cancel').click(function (e) {
+            deferred.reject();
+        });
+
+        //set content
+        if (title && title.length) {
+            $('#modal-confirmation .modal-title').html(title);
+        }
+        $('#modal-confirmation .modal-body').html(content);
+
+        //show modal
+        $('#modal-confirmation').modal('show');
+
+        return deferred;
+    };
+
 
     /**
      * Page specific logic
@@ -125,10 +148,9 @@ $(function(){
 
     $('a.action-hotel-refuse-reservation').click(function (e) {
         e.preventDefault();
-        if (window.confirm('Êtes vous sur de refuser cette réservation ?'))
-        {
+        confirmBox(null, 'Êtes vous sur de refuser cette réservation ?').done(function () {
             window.location.href = e.target.href;
-        }
+        });
 
     });
 
@@ -165,6 +187,8 @@ $(function(){
         },
         errorContainer: 'form#hotel-refuse-reservation .errors',
         submitHandler: function(form) {
+            $('#hotel-refuse-reservation button[type="submit"]').button('loading');
+
             $.ajax({
                 url: $(form).attr('action'),
                 type: 'POST',
@@ -176,6 +200,9 @@ $(function(){
 
                     $('#modal-flash-success .content').text('Votre proposition a bien été envoyée au client');
                     $('#modal-flash-success').modal('show');
+                },
+                complete: function () {
+                    $('#hotel-refuse-reservation button[type="submit"]').button('reset');
                 }
             });
 
@@ -185,10 +212,9 @@ $(function(){
 
     $('a.action-hotel-accept-reservation').click(function (e) {
        e.preventDefault();
-        if (window.confirm('Êtes vous sur d\'accepter cette réservation ?'))
-        {
+        confirmBox(null, 'Êtes vous sur d\'accepter cette réservation ?').done(function () {
             window.location.href = e.target.href;
-        }
+        });
 
     });
 
@@ -198,8 +224,8 @@ $(function(){
 
     $('a.action-customer-decline-reservation').click(function (e) {
         e.preventDefault();
-        if (window.confirm('Êtes vous sur de refuser cette réservation ?'))
-        {
+        confirmBox(null, 'Êtes vous sur d\'accepter cette réservation ?').done(function () {
+            $('a.action-customer-decline-reservation').button('loading');
             $.ajax({
                 url: $(e.target).attr('href'),
                 type: 'POST',
@@ -209,16 +235,19 @@ $(function(){
                         return;
 
                     window.location.href = '/';//TODO: fetch url from twig
+                },
+                complete: function () {
+                    $('a.action-customer-decline-reservation').button('reset');
                 }
             });
-        }
+        });
 
     });
 
     $('a.action-customer-accept-reservation').click(function (e) {
         e.preventDefault();
-        if (window.confirm('Êtes vous sur d\'accepte cette réservation ?'))
-        {
+        confirmBox(null, 'Êtes vous sur d\'accepter cette réservation ?').done(function () {
+            $('a.action-customer-accept-reservation').button('loading');
             $.ajax({
                 url: $(e.target).attr('href'),
                 type: 'POST',
@@ -229,9 +258,12 @@ $(function(){
 
                     $('#modal-flash-success .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
                     $('#modal-flash-success').modal('show');
+                },
+                complete: function () {
+                    $('a.action-customer-accept-reservation').button('reset');
                 }
             });
-        }
+        });
 
     });
 });
