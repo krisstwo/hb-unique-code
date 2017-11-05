@@ -8,6 +8,11 @@ use Doctrine\DBAL\Connection;
 
 class CheckCode {
 
+	const VALID_CODE = - 1;
+	const INVALID_CODE_NOT_FOUND = 0;
+	const INVALID_CODE_USED = 1;
+	const INVALID_CODE_RESERVED = 2;
+
     private $extern_connection;
     private $local_connection;
 
@@ -24,16 +29,16 @@ class CheckCode {
 
         $code_extern = $this->extern_connection->fetchArray("SELECT * FROM code WHERE code = '$code'");
         if(empty($code_extern))
-            return "Le code unique indiqué n'est pas valide.";
+	        return self::INVALID_CODE_NOT_FOUND;
 
         $code_local = $this->local_connection->fetchAssoc("SELECT * FROM code WHERE code = '$code'");
 
         if(!empty($code_local['current_status']) && $code_local['current_status'] == 'used')
-            return "Le code unique indiqué a déjà été utilisé.";
+	        return self::INVALID_CODE_USED;
 
         if(!empty($code_local['current_status']) && $code_local['current_status'] == 'waiting')
-            return "Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.";
+	        self::INVALID_CODE_RESERVED;
 
-        return "ok";
+        return self::VALID_CODE;
     }
 }

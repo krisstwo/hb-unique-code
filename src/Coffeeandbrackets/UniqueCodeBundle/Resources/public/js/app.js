@@ -100,19 +100,20 @@ $(function(){
     $("#to_step_3").on('click', function (e) {
         e.preventDefault();
         if($("#step_2 form").valid()) {
+            $('#to_step_3').button('loading');
+
             $.ajax({
                 url: '/submit_customer_information',
                 type: 'POST',
                 data: $("#step_2 form").serialize(),
-                success: function (msg) {
-                    if (msg == 'ok') {
+                success: function (result) {
+                    if (result && result.error)
+                        return;
+
                         stepTo(3);
-                    } else {
-                        alert(msg);
-                    }
                 },
-                error: function () {
-                    alert('une erreur interne est survenue. veuillez réessayer ultérieurement');
+                complete: function () {
+                    $('#to_step_3').button('reset');
                 }
             });
         }
@@ -122,23 +123,23 @@ $(function(){
     $("#to_step_4").on('click', function (e) {
         e.preventDefault();
         if($("#step_3 form").valid()) {
+            $('#to_step_4').button('loading');
+
             $.ajax({
                 url: '/submit_reservation',
                 type: 'POST',
                 data: $("#step_3 form").serialize() + '&' + $("#step_2 form").serialize(),
-                success: function (msg) {
-                    if (msg == 'ok') {
-                        alert('Votre demande de réservation a bien été envoyée !\n\n- L’hôtel vous donnera une réponse par mail d’ici 12 heures\n- Pensez à vérifier vos courriers indésirables\n- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.')
-                    } else {
-                        alert('error');
-                    }
+                success: function (result) {
+                    if (result && result.error)
+                        return;
+
+                    $('#modal-flash-success .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
+                    $('#modal-flash-success').modal('show');
                 },
-                error: function () {
-                    alert('une erreur interne est survenue. veuillez réessayer ultérieurement');
+                complete: function () {
+                    $('#to_step_4').button('reset');
                 }
             });
-            //$('#step_3').hide();
-            //$('#step_4').show();
         }
     });
 

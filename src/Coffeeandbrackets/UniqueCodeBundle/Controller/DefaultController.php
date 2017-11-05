@@ -5,6 +5,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
+use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,10 +25,28 @@ class DefaultController extends Controller
      */
     public function submitCustomerInformationAction(Request $request)
     {
-        if ($request->isXmlHttpRequest()) {
+
+	    if ( $request->isXmlHttpRequest() ) {
             $code = $request->get('code');
+		    /**
+		     * @var $checker CheckCode
+		     */
             $checker = $this->get('unique_code.check_code');
-            return new JsonResponse($checker->validate($code));
+
+		    switch ( $checker->validate( $code ) ) {
+			    case CheckCode::INVALID_CODE_NOT_FOUND:
+				    return new JsonResponse( array( 'error' => 'Le code unique indiqué n\'est pas valide.' ) );
+				    break;
+			    case CheckCode::INVALID_CODE_USED:
+				    return new JsonResponse( array( 'error' => 'Le code unique indiqué a déjà été utilisé.' ) );
+				    break;
+			    case CheckCode::INVALID_CODE_RESERVED:
+				    return new JsonResponse( array( 'error' => 'Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.' ) );
+				    break;
+			    default:
+				    return new JsonResponse( array() );
+				    break;
+		    }
         }
         return new Response("Action not allowed", 400);
     }
@@ -97,7 +116,7 @@ class DefaultController extends Controller
             );
             $serviceMail->sendMessage($mailConfig, 'text/html');
 
-            return new JsonResponse('ok');
+	        return new JsonResponse( array() );
         }
         return new Response("Action not allowed", 400);
     }
