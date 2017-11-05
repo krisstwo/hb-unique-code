@@ -26,36 +26,39 @@ class DefaultController extends Controller
     public function submitCustomerInformationAction(Request $request)
     {
 
-	    if ( $request->isXmlHttpRequest() ) {
+        if ($request->isXmlHttpRequest()) {
             $code = $request->get('code');
-		    /**
-		     * @var $checker CheckCode
-		     */
+            /**
+             * @var $checker CheckCode
+             */
             $checker = $this->get('unique_code.check_code');
 
-		    switch ( $checker->validate( $code ) ) {
-			    case CheckCode::INVALID_CODE_NOT_FOUND:
-				    return new JsonResponse( array( 'error' => 'Le code unique indiqué n\'est pas valide.' ) );
-				    break;
-			    case CheckCode::INVALID_CODE_USED:
-				    return new JsonResponse( array( 'error' => 'Le code unique indiqué a déjà été utilisé.' ) );
-				    break;
-			    case CheckCode::INVALID_CODE_RESERVED:
-				    return new JsonResponse( array( 'error' => 'Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.' ) );
-				    break;
-			    default:
-				    return new JsonResponse( array() );
-				    break;
-		    }
+            switch ($checker->validate($code)) {
+                case CheckCode::INVALID_CODE_NOT_FOUND:
+                    return new JsonResponse(array('error' => 'Le code unique indiqué n\'est pas valide.'));
+                    break;
+                case CheckCode::INVALID_CODE_USED:
+                    return new JsonResponse(array('error' => 'Le code unique indiqué a déjà été utilisé.'));
+                    break;
+                case CheckCode::INVALID_CODE_RESERVED:
+                    return new JsonResponse(array('error' => 'Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.'));
+                    break;
+                default:
+                    return new JsonResponse(array());
+                    break;
+            }
         }
+
         return new Response("Action not allowed", 400);
     }
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
-    public function submitReservationAction(Request $request){
+    public function submitReservationAction(Request $request)
+    {
         if ($request->isXmlHttpRequest()) {
             //TODO validation data
 
@@ -81,7 +84,7 @@ class DefaultController extends Controller
             $code = $em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $request->get('code')]);
 
             $workflow = $this->get('workflow.status_code');
-            if($workflow->can($code, 'request')){
+            if ($workflow->can($code, 'request')) {
                 $workflow->apply($code, 'request');
             }
 
@@ -90,13 +93,13 @@ class DefaultController extends Controller
             // TODO get hotel email from extern BD
             // Send mail to hotel
             $serviceMail = $this->container->get('unique_code.mailer');
-            $tabParam = array(
-                'to' => 'hotel@hotel.com',
+            $tabParam    = array(
+                'to'       => 'hotel@hotel.com',
                 'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
-                'subject' => 'Demande de réservation',
-                'from' => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
-                'params' => array(
-                    'customer' => $customer,
+                'subject'  => 'Demande de réservation',
+                'from'     => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
+                'params'   => array(
+                    'customer'    => $customer,
                     'reservation' => $reservation
                 )
             );
@@ -106,18 +109,19 @@ class DefaultController extends Controller
 
             //send email to customer
             $mailConfig = array(
-                'to' => $reservation->getCustomer()->getEmail(),
+                'to'       => $reservation->getCustomer()->getEmail(),
                 'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
-                'subject' => 'Confirmation de demande de réservation',
-                'from' => 'krisstwo@gmail.com',//TODO: let from be empty
-                'params' => array(
+                'subject'  => 'Confirmation de demande de réservation',
+                'from'     => 'krisstwo@gmail.com',//TODO: let from be empty
+                'params'   => array(
                     'reservation' => $reservation
                 )
             );
             $serviceMail->sendMessage($mailConfig, 'text/html');
 
-	        return new JsonResponse( array() );
+            return new JsonResponse(array());
         }
+
         return new Response("Action not allowed", 400);
     }
 
