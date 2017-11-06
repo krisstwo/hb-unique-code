@@ -73,7 +73,7 @@
                     </div>
                     <div class="step-container" id="step_2" style="display: none">
                         <h3 class="step-heading">Etape 2 : Je saisie mes informations</h3>
-                        <form class="form">
+                        <form class="form" action="{{ path('unique_code_submit_customer_information') }}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -131,7 +131,7 @@
                     </div>
                     <div class="step-container" id="step_3" style="display: none">
                         <h3 class="step-heading">Etape 3 : J’envoie ma demande de réservation</h3>
-                        <form>
+                        <form action="{{ path('unique_code_submit_reservation') }}">
                             <div class="form-group">
                                 <label class="radio-inline">
                                     Nombre de personnes

@@ -103,7 +103,7 @@ $(function(){
             $('#to_step_3').button('loading');
 
             $.ajax({
-                url: '/submit_customer_information',
+                url: $("#step_2 form").attr('action'),
                 type: 'POST',
                 data: $("#step_2 form").serialize(),
                 success: function (result) {
@@ -126,7 +126,7 @@ $(function(){
             $('#to_step_4').button('loading');
 
             $.ajax({
-                url: '/submit_reservation',
+                url: $("#step_3 form").attr('action'),
                 type: 'POST',
                 data: $("#step_3 form").serialize() + '&' + $("#step_2 form").serialize(),
                 success: function (result) {
