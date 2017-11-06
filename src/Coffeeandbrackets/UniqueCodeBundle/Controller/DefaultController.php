@@ -112,7 +112,7 @@ class DefaultController extends Controller
                 'to'       => $reservation->getCustomer()->getEmail(),
                 'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
                 'subject'  => 'Confirmation de demande de réservation',
-                'from'     => 'krisstwo@gmail.com',//TODO: let from be empty
+                'from'     => array($this->container->getParameter('mailer_user') => 'HappyBreak'),//TODO: let from be empty
                 'params'   => array(
                     'reservation' => $reservation
                 )
