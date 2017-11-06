@@ -71,6 +71,15 @@ $(function(){
 
     $("#step_2 form").validate({
         rules: {
+            code: {
+                required: true
+            },
+            last_name: {
+                required: true
+            },
+            first_name: {
+                required: true
+            },
             email: {
                 required: true,
                 email: true
@@ -87,14 +96,24 @@ $(function(){
         errorClass : 'has-error',
         validClass : '',
         highlight: function(element, errorClass, validClass) {
-            $(element).parent('.form-group').addClass(errorClass).removeClass(validClass);
+            $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
         },
         unhighlight: function(element, errorClass, validClass) {
-            $(element).parent('.form-group').removeClass(errorClass).addClass(validClass);
+            $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
         },
-        errorPlacement: function () {},
-        errorLabelContainer: 'ul.error-list',
-        wrapper: 'li'
+        errorPlacement: function (error, element) {
+        },
+        showErrors: function (errorMap, errorList) {
+            $('.error-required').hide();
+            if (errorMap['code'] || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['re_email'])
+                $('.error-required').show();
+
+            $('.error-cgv').hide();
+            if (errorMap['cgv'])
+                $('.error-cgv').show();
+
+            this.defaultShowErrors();
+        }
     });
 
     $("#to_step_3").on('click', function (e) {

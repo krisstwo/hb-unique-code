@@ -78,15 +78,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="code" name="code"
-                                               placeholder="Code de réservation *" required>
+                                               placeholder="Code de réservation *">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="last_name" name="last_name"
-                                               placeholder="Nom *" required>
+                                               placeholder="Nom *">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="first_name" name="first_name"
-                                               placeholder="Prénom *" required>
+                                               placeholder="Prénom *">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="email" name="email"
@@ -102,21 +102,28 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <ul class="error-list"></ul>
+                                    <div class="alert alert-danger error-required" style="display: none;">
+                                        Les champs indiqués en rouge sont incomplets. Veuillez les remplir.
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="cgv" name="cgv" id="cgv">
-                                    En cochant cette case, j’accepte les conditions générales de Happybreak*.
-                                </label>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="cgv" name="cgv" id="cgv">
+                                        En cochant cette case, j’accepte les conditions générales de Happybreak*.
+                                    </label>
+                                </div>
                             </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" value="newsletter">
                                     En cochant cette case, j’accepte de recevoir la newsletter Happybreak tous les mois.
                                 </label>
+                            </div>
+                            <div class="alert alert-danger error-cgv" style="display: none;">
+                                Vous devez accepter les conditions générales de Happybreak pour continuer.
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-4">
