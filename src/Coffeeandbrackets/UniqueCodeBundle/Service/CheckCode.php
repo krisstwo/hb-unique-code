@@ -13,11 +13,9 @@ class CheckCode {
 	const INVALID_CODE_USED = 1;
 	const INVALID_CODE_RESERVED = 2;
 
-    private $extern_connection;
     private $local_connection;
 
-    public function __construct(Connection $extern_connection, Connection $local_connection) {
-        $this->extern_connection = $extern_connection;
+    public function __construct(Connection $local_connection) {
         $this->local_connection = $local_connection;
     }
 
@@ -27,7 +25,7 @@ class CheckCode {
      */
     public function validate($code) {
 
-        $code_extern = $this->extern_connection->fetchArray("SELECT * FROM code WHERE code = '$code'");
+        $code_extern = $this->local_connection->fetchArray("SELECT * FROM code WHERE code = '$code'");
         if(empty($code_extern))
 	        return self::INVALID_CODE_NOT_FOUND;
 
