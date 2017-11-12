@@ -35,6 +35,14 @@ class Code
      */
     private $currentStatus;
 
+    /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign")
+     * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
+     */
+    private $campaign;
+
 
     /**
      * Get id
@@ -92,6 +100,22 @@ class Code
     public function getCurrentStatus()
     {
         return $this->currentStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    /**
+     * @param mixed $campaign
+     */
+    public function setCampaign($campaign)
+    {
+        $this->campaign = $campaign;
     }
 }
 
