@@ -140,6 +140,14 @@ class Reservation
     private $customer;
 
     /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign")
+     * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
+     */
+    private $campaign;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -343,6 +351,22 @@ class Reservation
     public function setCustomer($customer)
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    /**
+     * @param mixed $campaign
+     */
+    public function setCampaign($campaign)
+    {
+        $this->campaign = $campaign;
     }
 
     /**
