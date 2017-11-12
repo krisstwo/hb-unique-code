@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Campaign
  *
  * @ORM\Table(name="campaign_cam")
- * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\Entity\CampaignRepository")
+ * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CampaignRepository")
  */
 class Campaign
 {
