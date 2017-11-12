@@ -9,8 +9,12 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="col-container">
-                    <p class="text-center">
-                        <i class="glyphicon glyphicon-home" style="font-size: 4em;"></i>
+                    <p class="text-center campaign-logo-wrapper">
+                        {% if campaign is not empty %}
+                            <img src="{{ campaign.getLogo() }}" class="logo" />
+                        {% else %}
+                            <i class="fa fa-calendar-plus-o" style="font-size: 4em;"></i>
+                        {% endif %}
                     </p>
                     <p class="text-center">Vous offre 50% dans un des hôtels partenaires Happybreak</p>
                     <p>

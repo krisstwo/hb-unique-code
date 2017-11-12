@@ -5,6 +5,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
+use Coffeeandbrackets\UniqueCodeBundle\Service\Campaign;
 use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -14,9 +15,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+    public function headerCampaignLogoAction()
+    {
+        /**
+         * @var $campaignService Campaign
+         */
+        $campaignService = $this->get('unique_code.campaign');
+
+        return $this->render('UniqueCodeBundle:Default:partials/header-campaign-logo.html.twig',
+            array(
+                'campaign' => $campaignService->detectCampaign()
+            )
+        );
+    }
+
     public function indexAction()
     {
-        return $this->render('UniqueCodeBundle:Default:index.html.twig');
+        /**
+         * @var $campaignService Campaign
+         */
+        $campaignService = $this->get('unique_code.campaign');
+
+        return $this->render('UniqueCodeBundle:Default:index.html.twig',
+            array(
+                'campaign' => $campaignService->detectCampaign()
+            )
+        );
     }
 
     /**
