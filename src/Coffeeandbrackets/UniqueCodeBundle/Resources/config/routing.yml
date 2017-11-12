@@ -28,3 +28,7 @@ unique_code_ajax_customer_accept_hotel_proposing:
 unique_code_ajax_customer_decline_hotel_proposing:
     path:     /ajax-customer-decline-hotel-proposing/{id}
     defaults: { _controller: UniqueCodeBundle:Default:ajaxCustomerDeclineHotelProposing }
+#Must be last to not hijack any other route
+unique_code_campaign:
+    path:     /{campaignCode}
+    defaults: { _controller: UniqueCodeBundle:Default:index }

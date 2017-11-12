@@ -8,6 +8,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Campaign
 {
@@ -17,18 +18,30 @@ class Campaign
     private $em;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * Campaign constructor.
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, RequestStack $requestStack)
     {
         $this->em = $em;
+        $this->requestStack = $requestStack;
     }
 
     public function detectCampaign()
     {
-        $campaign = $this->em->getRepository('UniqueCodeBundle:Campaign')->find(1);
+
+        $request = $this->requestStack->getMasterRequest();
+        $code = $request->get('campaignCode');
+        if(empty($code))
+            return null;
+
+        $campaign = $this->em->getRepository('UniqueCodeBundle:Campaign')->findOneBy(array('code' => $code));
 
         return $campaign;
     }
