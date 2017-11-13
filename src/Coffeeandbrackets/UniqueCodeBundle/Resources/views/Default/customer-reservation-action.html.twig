@@ -46,6 +46,9 @@
                            href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}"
                            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire
                             une autre demande*</a>
+                        {% if reservation.getCampaign() is not empty %}
+                            <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_campaign', {'campaignCode': reservation.getCampaign().getCode() }) }}">
+                        {% endif %}
                     </p>
                 </div>
             </div>

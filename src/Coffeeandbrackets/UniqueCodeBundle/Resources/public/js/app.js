@@ -253,8 +253,8 @@ $(function(){
                 success: function(result) {
                     if(result && result.error)
                         return;
-
-                    window.location.href = '/';//TODO: fetch url from twig
+                    var redirectURl = $('#customer-decline-redirect-url').val();
+                    window.location.href = redirectURl ? redirectURl : '/';
                 },
                 complete: function () {
                     $('a.action-customer-decline-reservation').button('reset');
