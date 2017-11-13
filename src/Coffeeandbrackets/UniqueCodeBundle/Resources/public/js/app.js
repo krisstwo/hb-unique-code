@@ -244,7 +244,7 @@ $(function(){
 
     $('a.action-customer-decline-reservation').click(function (e) {
         e.preventDefault();
-        confirmBox(null, 'Êtes vous sur d\'accepter cette réservation ?').done(function () {
+        confirmBox(null, 'Êtes vous sur de refuser cette réservation ?').done(function () {
             $('a.action-customer-decline-reservation').button('loading');
             $.ajax({
                 url: $(e.target).attr('href'),
