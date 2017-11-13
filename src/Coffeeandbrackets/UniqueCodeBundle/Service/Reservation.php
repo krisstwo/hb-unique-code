@@ -76,6 +76,7 @@ class Reservation
             $newReservation->setOffer($reservation->getOffer());
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
+            $newReservation->setCampaign($reservation->getCampaign());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);
