@@ -7,6 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Entity\Code;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\CodeStatusChangeLog;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
@@ -83,7 +84,12 @@ class CodeStatusSubscriber implements EventSubscriberInterface
     public function onReservationEvent(ReservationEvent $event)
     {
         $reservation = $event->getReservation();
+        /**
+         * @var $code Code
+         */
         $code = $this->em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
+        $code->setCampaign($reservation->getCampaign());
+        $this->em->persist($code);
 
         switch ($event::NAME) {
             //TODO: when does code status pass to active ?
@@ -108,12 +114,18 @@ class CodeStatusSubscriber implements EventSubscriberInterface
     }
 
     public function onCodeStatusChange(Event $event) {
+        /**
+         * @var $code Code
+         */
+        $code = $event->getSubject();
+
         $logCode = new CodeStatusChangeLog();
         $logCode->setDate(new \DateTime());
         $logCode->setFromStatus(implode(', ', array_keys($event->getMarking()->getPlaces())));
         $logCode->setToStatus(implode(', ', $event->getTransition()->getTos()));
         $logCode->setIsAdminAction(false);
-        $logCode->setCode($event->getSubject());
+        $logCode->setCode($code);
+        $logCode->setCampaign($code->getCampaign());
 
         $this->em->persist($logCode);
         $this->em->flush();

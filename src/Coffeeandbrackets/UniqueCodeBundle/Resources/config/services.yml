@@ -25,3 +25,8 @@ services:
                 - "@unique_code.mailer"
             tags:
                 - { name: kernel.event_subscriber }
+    unique_code.campaign:
+            class: Coffeeandbrackets\UniqueCodeBundle\Service\Campaign
+            arguments:
+                - "@doctrine.orm.entity_manager"
+                - "@request_stack"

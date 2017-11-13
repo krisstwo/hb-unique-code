@@ -49,6 +49,14 @@ class Customer
      */
     private $acceptNewsletter;
 
+    /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign")
+     * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
+     */
+    private $campaign;
+
 
     /**
      * Get id
@@ -154,6 +162,22 @@ class Customer
     public function getAcceptNewsletter()
     {
         return $this->acceptNewsletter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    /**
+     * @param mixed $campaign
+     */
+    public function setCampaign($campaign)
+    {
+        $this->campaign = $campaign;
     }
 }
 
