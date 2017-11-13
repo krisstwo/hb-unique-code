@@ -84,6 +84,12 @@ class DefaultController extends Controller
     public function submitReservationAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
+            /**
+             * @var $campaignService Campaign
+             */
+            $campaignService = $this->get('unique_code.campaign');
+            $campaign = $campaignService->detectCampaign();
+
             //TODO validation data
 
             $customer = new Customer();
@@ -91,6 +97,7 @@ class DefaultController extends Controller
             $customer->setLastName($request->get('last_name'));
             $customer->setEmail($request->get('email'));
             $customer->setAcceptNewsletter(false);
+            $customer->setCampaign($campaign);
 
             $reservation = new Reservation();
             $reservation->setCode($request->get('code'));
@@ -101,6 +108,7 @@ class DefaultController extends Controller
             $reservation->setOffer($request->get('offer'));
             $reservation->setCustomerMsg($request->get('customer_msg'));
             $reservation->setCustomer($customer);
+            $reservation->setCampaign($campaign);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);

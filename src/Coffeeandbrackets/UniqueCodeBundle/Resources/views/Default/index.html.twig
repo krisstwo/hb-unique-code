@@ -80,6 +80,9 @@
                         <form class="form" action="{{ path('unique_code_submit_customer_information') }}">
                             <div class="row">
                                 <div class="col-md-6">
+                                    {% if campaign is not empty %}
+                                        <input type="hidden" name="campaignCode" value="{{ campaign.getCode() }}">
+                                    {% endif %}
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="code" name="code"
                                                placeholder="Code de réservation *">
