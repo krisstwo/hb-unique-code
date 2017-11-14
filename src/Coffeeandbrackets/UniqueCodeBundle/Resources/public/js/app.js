@@ -168,22 +168,65 @@ $(function(){
     // setp 3 related logic
 
     var searchResults = [];
+    var selectedHotel = null;
+    var selectedFormula = null;
+
     var selectHotel = function (id) {
-        var hotel = searchResults.find(function (hotel) {
+        selectedHotel = searchResults.find(function (hotel) {
             return hotel.id === id;
         });
 
+        if (!selectedHotel)
+            return;
+
         //keep the name of the hotel for form submission, useful for information retrieval when saving reservation.
-        $('#hotel-name').val(hotel.text);
+        $('#hotel-name').val(selectedHotel.text);
 
         //set formulas
         var optionTags = [];
 
-        for (var i in hotel.formulas) {
-            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', hotel.formulas[i].id).replace('{2}', hotel.formulas[i].label)));
+        for (var i in selectedHotel.formulas) {
+            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', selectedHotel.formulas[i].id).replace('{2}', selectedHotel.formulas[i].label)));
         }
 
         $('#offer').empty().append(optionTags);
+        selectFormula(optionTags[0].attr('value'));
+    };
+
+    var selectFormula = function (id) {
+        selectedFormula = selectedHotel.formulas[id];
+
+        if (!selectedFormula)
+            return;
+
+        //set available persons for this formula
+        $('input[name="number_person"]').each(function (index, el) {
+            var el = $(el);
+            if (selectedFormula.persons.indexOf(parseInt(el.attr('value'))) === -1) {
+                el.attr('disabled', 'disabled');
+                el.prop('checked', false);
+            } else {
+                if (el.attr('disabled')) {
+                    el.removeAttr('disabled');
+                }
+            }
+        });
+
+        //set available nights for this formula
+        var nightsOptions = $('#number_night option');
+        for (var i = 0; i < nightsOptions.length; i++) {
+            var el = $(nightsOptions[i]);
+            if (selectedFormula.nights.indexOf(parseInt(el.attr('value'))) === -1) {
+                el.attr('disabled', 'disabled');
+            } else {
+                if (el.attr('disabled')) {
+                    el.removeAttr('disabled');
+                }
+            }
+
+            $('#number_night').find('option:first').attr('selected', 'selected');
+        }
+
     };
 
     $('#hotel').select2({

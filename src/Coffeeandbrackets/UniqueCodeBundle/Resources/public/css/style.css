@@ -20,6 +20,11 @@ a:hover {
     text-decoration: none;
 }
 
+select option:disabled {
+    font-style: italic;
+    background: lightgrey;
+}
+
 /**
 LAYOUT STYLES
  */
