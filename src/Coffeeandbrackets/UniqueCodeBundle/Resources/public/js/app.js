@@ -162,6 +162,29 @@ $(function(){
         }
     });
 
+    $('#hotel').select2({
+        language: 'fr',
+        placeholder: 'Hôtel *',
+        ajax: {
+            url: '/ajax-search-hotel',
+            dataType: 'json',
+            processResults: function (data) {
+                var results = [];
+
+                for (var i in data) {
+                    data[i].id = data[i].text
+                    results.push(data[i]);
+                }
+
+                return {
+                    results: results
+                };
+            },
+            delay: 1000
+        },
+        minimumInputLength: 3
+    });
+
     /**
      * Hotel view reservation page
      */
