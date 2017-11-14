@@ -7,6 +7,7 @@ use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Campaign;
 use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
+use Coffeeandbrackets\UniqueCodeBundle\Service\Hotels;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -84,87 +85,13 @@ class DefaultController extends Controller
     public function ajaxSearchHotelAction(Request $request)
     {
         $query = $request->get('q');
-        $query = trim(strtolower(iconv("UTF-8", "ISO-8859-1", $query)));
 
-        //fetch data
-        $response = \Unirest\Request::get('https://happybreak.com/api/operation/hotels', array(),
-            array('hotel' => $query));//TODO: move to config
+        /**
+         * @var $hotelsService Hotels
+         */
+        $hotelsService = $this->get('unique_code.hotels');
 
-
-        //TODO: move parsing logic to some service
-        function extractPersons($formula)
-        {
-            $possibleValues = array();
-
-            switch ($formula->formules_disponibles) {
-                case '2':
-                    $possibleValues[] = 2;
-                    break;
-                case '1':
-                    $possibleValues[] = 1;
-                    break;
-                default:
-                    $possibleValues[] = 1;
-                    $possibleValues[] = 2;
-                    break;
-            }
-
-            return $possibleValues;
-        }
-
-        ;
-
-        function extractNights($formula)
-        {
-            $possibleValues = array();
-
-            switch ($formula->nuitee) {
-                case 'Cette formule est réservable un maximum de 1 nuitée consécutive':
-                    $possibleValues[] = 1;
-                    break;
-                case 'Cette formule est réservable un maximum de 2 nuitées consécutives':
-                    $possibleValues[] = 2;
-                    break;
-                default:
-                    $possibleValues[] = 1;
-                    $possibleValues[] = 2;
-                    $possibleValues[] = 3;
-                    break;
-            }
-
-            return $possibleValues;
-        }
-
-        ;
-
-        //results are a formulas array, must group them by hotel
-        $hotels = array();
-        foreach ($response->body as $item) {
-            $hotelId = preg_replace('#\/hotel\/(\d+)#', '${1}', $item->path);
-            if (empty($hotelId)) {
-                continue;
-            }
-
-            if ( ! isset($hotels[$hotelId])) {
-                $hotels[$hotelId] = array(
-                    'id'       => $hotelId,
-                    'text'     => $item->titre,
-                    'stars'    => $item->etoiles,
-                    'formulas' => array()
-                );
-            }
-
-            if ( ! isset($hotels[$hotelId]['formulas'][$item->nidforfait])) {
-                $hotels[$hotelId]['formulas'][$item->nidforfait] = array(
-                    'id'      => $item->nidforfait,
-                    'label'   => $item->forfait,
-                    'persons' => extractPersons($item),
-                    'nights'  => extractNights($item),
-                );
-            }
-        }
-
-        return new JsonResponse($hotels);
+        return new JsonResponse($hotelsService->find($query));
     }
 
     /**
