@@ -191,7 +191,7 @@ $(function(){
                 var results = [];
 
                 for (var i in data) {
-                    data[i].id = data[i].text;
+                    data[i].text = data[i].label;
                     results.push(data[i]);
                 }
 

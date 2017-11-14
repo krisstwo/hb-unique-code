@@ -33,7 +33,7 @@ class Hotels
             if ( ! isset($hotels[$hotelId])) {
                 $hotels[$hotelId] = array(
                     'id'       => $hotelId,
-                    'text'     => $item->titre,
+                    'label'     => $item->titre,
                     'stars'    => $item->etoiles,
                     'formulas' => array()
                 );
