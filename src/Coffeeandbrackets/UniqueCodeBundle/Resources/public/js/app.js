@@ -191,6 +191,7 @@ $(function(){
 
         $('#offer').empty().append(optionTags);
         selectFormula(optionTags[0].attr('value'));
+        $('#offer').trigger('change.select2');
     };
 
     var selectFormula = function (id) {
@@ -225,6 +226,9 @@ $(function(){
             }
 
             $('#number_night').find('option:first').attr('selected', 'selected');
+            $('#number_night').select2({
+                minimumResultsForSearch: -1
+            });
         }
 
     };
@@ -257,6 +261,13 @@ $(function(){
 
     $('#hotel').change(function (e) {
         selectHotel($('#hotel').val());
+    });
+
+    $('#number_night').select2({
+        minimumResultsForSearch: -1
+    });
+    $('#offer').select2({
+        minimumResultsForSearch: -1
     });
 
     /**

@@ -183,10 +183,18 @@ SELECT2 TWEAKS
     height: 34px;
 }
 
+.select2 .select2-selection > div {
+    height: 32px;
+}
+
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background: rgb(247, 166, 0);
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
     background: none;
+}
+
+#hotel + .select2 {
+    width: 100% !important;
 }
