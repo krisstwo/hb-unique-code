@@ -165,6 +165,22 @@ $(function(){
         }
     });
 
+    var searchResults = [];
+    var selectHotel = function (text) {
+        var hotel = searchResults.find(function (hotel) {
+            return hotel.text === text;
+        });
+
+        //set formulas
+        var optionTags = [];
+
+        for (var i in hotel.formulas) {
+            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', hotel.formulas[i].label).replace('{2}', hotel.formulas[i].label)));
+        }
+
+        $('#offer').empty().append(optionTags);
+    };
+
     $('#hotel').select2({
         language: 'fr',
         placeholder: 'Hôtel *',
@@ -175,9 +191,12 @@ $(function(){
                 var results = [];
 
                 for (var i in data) {
-                    data[i].id = data[i].text
+                    data[i].id = data[i].text;
                     results.push(data[i]);
                 }
+
+                //save search results for further use (hotel formulas etc)
+                searchResults = results;
 
                 return {
                     results: results
@@ -186,6 +205,10 @@ $(function(){
             delay: 1000
         },
         minimumInputLength: 3
+    });
+
+    $('#hotel').change(function (e) {
+        selectHotel($('#hotel').val());
     });
 
     /**
