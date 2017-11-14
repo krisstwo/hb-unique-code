@@ -165,17 +165,22 @@ $(function(){
         }
     });
 
+    // setp 3 related logic
+
     var searchResults = [];
-    var selectHotel = function (text) {
+    var selectHotel = function (id) {
         var hotel = searchResults.find(function (hotel) {
-            return hotel.text === text;
+            return hotel.id === id;
         });
+
+        //keep the name of the hotel for form submission, useful for information retrieval when saving reservation.
+        $('#hotel-name').val(hotel.text);
 
         //set formulas
         var optionTags = [];
 
         for (var i in hotel.formulas) {
-            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', hotel.formulas[i].label).replace('{2}', hotel.formulas[i].label)));
+            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', hotel.formulas[i].id).replace('{2}', hotel.formulas[i].label)));
         }
 
         $('#offer').empty().append(optionTags);

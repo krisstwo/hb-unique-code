@@ -108,6 +108,11 @@ class DefaultController extends Controller
             $campaignService = $this->get('unique_code.campaign');
             $campaign = $campaignService->detectCampaign();
 
+            /**
+             * @var $hotelsService Hotels
+             */
+            $hotelsService = $this->get('unique_code.hotels');
+
             //TODO validation data
 
             $customer = new Customer();
@@ -122,8 +127,20 @@ class DefaultController extends Controller
             $reservation->setReservationDate(date_create_from_format('d/m/Y', $request->get('date')));
             $reservation->setNumberNight($request->get('number_night'));
             $reservation->setNumberPerson($request->get('number_person'));
-            $reservation->setHotel($request->get('hotel'));
-            $reservation->setOffer($request->get('offer'));
+
+            $hotels  = $hotelsService->find($request->get('hotel-name'));
+            $hotelId = $request->get('hotel');
+            if ( ! isset($hotels[$hotelId])) {
+                return new JsonResponse(array('error' => 'Hôtel invalide'));
+            }
+            $reservation->setHotel($hotels[$hotelId]['label']);
+
+            $formulaId = $request->get('offer');
+            if ( ! isset($hotels[$hotelId]['formulas'][$formulaId])) {
+                return new JsonResponse(array('error' => 'Formule invalide'));
+            }
+            $reservation->setOffer($hotels[$hotelId]['formulas'][$formulaId]['label']);
+
             $reservation->setCustomerMsg($request->get('customer_msg'));
             $reservation->setCustomer($customer);
             $reservation->setCampaign($campaign);
