@@ -5,6 +5,9 @@ $(function(){
      */
 
     $(document).ajaxError(function (event, xhr, settings) {
+        if (xhr.statusText === 'abort')
+            return;
+
         $('#modal-flash-error .content').text('Une erreur inattendue est survenue.');
         $('#modal-flash-error').modal('show');
     });
