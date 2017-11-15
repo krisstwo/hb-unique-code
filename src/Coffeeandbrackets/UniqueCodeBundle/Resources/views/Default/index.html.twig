@@ -151,35 +151,77 @@
                                     Nombre de personnes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="number_person" id="number_person_1" value="1" checked> 1
+                                    <input type="radio" name="number_person" id="number_person_1" value="1"> 1
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="number_person" id="number_person_2" value="2"> 2
+                                    <input type="radio" name="number_person" id="number_person_2" value="2" checked> 2
                                 </label>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="hotel" name="hotel" placeholder="Hôtel *"
-                                       required>
+                                <select type="text" class="form-control" id="hotel" name="hotel" required></select>
+                                <input type="hidden" id="hotel-name" name="hotel-name">
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="date" name="date"
-                                       placeholder="Date d'entrée *" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="date" name="date"
+                                               placeholder="Date d'entrée *" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select id="number_night" name="number_night" class="form-control">
+                                            <option value="1">1 nuit</option>
+                                            <option value="2">2 nuits</option>
+                                            <option value="3">3 nuits</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <select name="number_night" class="form-control">
-                                    <option value="1">1 nuit</option>
-                                    <option value="2">2 nuit</option>
-                                    <option value="3">3 nuit</option>
+                                <select type="text" class="form-control" id="offer" name="offer" required>
+                                    <option value="" disabled selected>Formule *</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="offer" name="offer" placeholder="Formule *"
-                                       required>
+                            <p>&nbsp;</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Informations pratiques
+                                </div>
+                                <div class="col-md-8">
+                                    Information à fournir coté API
+                                </div>
+                            </div>
+                            <p>&nbsp;</p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>
+                                        Veuillez préciser ci-dessous toutes remarques
+                                        propres à votre réservation (demande d’un lit
+                                        d’appoint dans la chambre, nombre d’enfants
+                                        de moins de 3 ans, allergies…)
+                                    </p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="customer_msg" name="customer_msg"
-                                       placeholder="Champs libre">
+                                <textarea class="form-control" id="customer_msg" name="customer_msg"
+                                          placeholder="Je suis allergique au gluten et je souhaiterais un d'appoint ..."></textarea>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Attention
+                                </div>
+                                <div class="col-md-8">
+                                    <p>
+                                        Votre réservation ne sera prise en compte seulement quand l’hôtel aura confirmé votre demande.
+                                    </p>
+                                    <p>
+                                        Chaque réservation est soumise aux conditions générales d’utilisation de l’hôtel.
+                                    </p>
+                                </div>
+                            </div>
+                            <p>&nbsp;</p>
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-4">
                                     <button type="submit" class="btn btn-hb btn-lg btn-block btn-upper" id="to_step_4"

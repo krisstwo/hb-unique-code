@@ -5,6 +5,9 @@ $(function(){
      */
 
     $(document).ajaxError(function (event, xhr, settings) {
+        if (xhr.statusText === 'abort')
+            return;
+
         $('#modal-flash-error .content').text('Une erreur inattendue est survenue.');
         $('#modal-flash-error').modal('show');
     });
@@ -160,6 +163,111 @@ $(function(){
                 }
             });
         }
+    });
+
+    // setp 3 related logic
+
+    var searchResults = [];
+    var selectedHotel = null;
+    var selectedFormula = null;
+
+    var selectHotel = function (id) {
+        selectedHotel = searchResults.find(function (hotel) {
+            return hotel.id === id;
+        });
+
+        if (!selectedHotel)
+            return;
+
+        //keep the name of the hotel for form submission, useful for information retrieval when saving reservation.
+        $('#hotel-name').val(selectedHotel.text);
+
+        //set formulas
+        var optionTags = [];
+
+        for (var i in selectedHotel.formulas) {
+            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', selectedHotel.formulas[i].id).replace('{2}', selectedHotel.formulas[i].label)));
+        }
+
+        $('#offer').empty().append(optionTags);
+        selectFormula(optionTags[0].attr('value'));
+        $('#offer').trigger('change.select2');
+    };
+
+    var selectFormula = function (id) {
+        selectedFormula = selectedHotel.formulas[id];
+
+        if (!selectedFormula)
+            return;
+
+        //set available persons for this formula
+        $('input[name="number_person"]').each(function (index, el) {
+            var el = $(el);
+            if (selectedFormula.persons.indexOf(parseInt(el.attr('value'))) === -1) {
+                el.attr('disabled', 'disabled');
+                el.prop('checked', false);
+            } else {
+                if (el.attr('disabled')) {
+                    el.removeAttr('disabled');
+                }
+            }
+        });
+
+        //set available nights for this formula
+        var nightsOptions = $('#number_night option');
+        for (var i = 0; i < nightsOptions.length; i++) {
+            var el = $(nightsOptions[i]);
+            if (selectedFormula.nights.indexOf(parseInt(el.attr('value'))) === -1) {
+                el.attr('disabled', 'disabled');
+            } else {
+                if (el.attr('disabled')) {
+                    el.removeAttr('disabled');
+                }
+            }
+
+            $('#number_night').find('option:first').attr('selected', 'selected');
+            $('#number_night').select2({
+                minimumResultsForSearch: -1
+            });
+        }
+
+    };
+
+    $('#hotel').select2({
+        language: 'fr',
+        placeholder: 'Hôtel *',
+        ajax: {
+            url: '/ajax-search-hotel',
+            dataType: 'json',
+            processResults: function (data) {
+                var results = [];
+
+                for (var i in data) {
+                    data[i].text = data[i].label;
+                    results.push(data[i]);
+                }
+
+                //save search results for further use (hotel formulas etc)
+                searchResults = results;
+
+                return {
+                    results: results
+                };
+            },
+            delay: 1000
+        },
+        minimumInputLength: 3
+    });
+
+    $('#hotel').change(function (e) {
+        selectHotel($('#hotel').val());
+    });
+
+    $('#number_night').select2({
+        minimumResultsForSearch: -1
+    });
+    $('#offer').select2({
+        minimumResultsForSearch: -1
     });
 
     /**
