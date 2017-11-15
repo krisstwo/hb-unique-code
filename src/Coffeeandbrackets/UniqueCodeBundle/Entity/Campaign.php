@@ -38,13 +38,6 @@ class Campaign
     /**
      * @var string
      *
-     * @ORM\Column(name="cam_path", type="string", length=255, unique=true)
-     */
-    private $path;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="cam_logo", type="string", length=255)
      */
     private $logo;
@@ -106,30 +99,6 @@ class Campaign
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Campaign
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
     }
 
     /**

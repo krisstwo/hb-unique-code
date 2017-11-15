@@ -5,7 +5,8 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "Coffeeandbrackets\\UniqueCodeBundle\\": "src/Coffeeandbrackets/UniqueCodeBundle"
+            "Coffeeandbrackets\\UniqueCodeBundle\\": "src/Coffeeandbrackets/UniqueCodeBundle",
+            "Coffeeandbrackets\\UniqueCodeAdminBundle\\": "src/Coffeeandbrackets/UniqueCodeAdminBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -24,6 +25,8 @@
         "oyejorge/less.php": "v1.7.0.14",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "sonata-project/admin-bundle": "^3.23",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
         "symfony/assetic-bundle": "^2.8",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",

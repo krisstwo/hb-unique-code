@@ -18,6 +18,14 @@ class AppKernel extends Kernel
             new Coffeeandbrackets\UniqueCodeBundle\UniqueCodeBundle(),
             new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Coffeeandbrackets\UniqueCodeAdminBundle\UniqueCodeAdminBundle(),
+            // These are the other bundles the SonataAdminBundle relies on
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            // And finally, the storage and SonataAdminBundle
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'staging'], true)) {
