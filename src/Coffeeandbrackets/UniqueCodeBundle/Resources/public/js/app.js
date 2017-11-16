@@ -107,16 +107,20 @@ $(function(){
         errorPlacement: function (error, element) {
         },
         showErrors: function (errorMap, errorList) {
-            $('.error-required').hide();
+            $('#step_2 .error-required').hide();
             if (errorMap['code'] || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['re_email'])
-                $('.error-required').show();
+                $('#step_2 .error-required').show();
 
-            $('.error-cgv').hide();
+            $('#step_2 .error-cgv').hide();
             if (errorMap['cgv'])
-                $('.error-cgv').show();
+                $('#step_2 .error-cgv').show();
 
             this.defaultShowErrors();
         }
+    });
+
+    $('#re_email').bind("cut copy paste",function(e) {
+        e.preventDefault();
     });
 
     $("#to_step_3").on('click', function (e) {
@@ -141,16 +145,51 @@ $(function(){
         }
     });
 
-    $("#step_3 form").validate();
-    $("#to_step_4").on('click', function (e) {
-        e.preventDefault();
-        if($("#step_3 form").valid()) {
+    $("#step_3 form").validate({
+        rules: {
+            number_person: {
+                required: true
+            },
+            hotel: {
+                required: true
+            },
+            date: {
+                required: true
+            },
+            number_night: {
+                required: true
+            },
+            offer: {
+                required: true
+            },
+            customer_msg: {
+                maxlength: 255
+            }
+        },
+        errorClass: 'has-error',
+        validClass: '',
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function () {
+        },
+        showErrors: function (errorMap, errorList) {
+            $('#step_3 .error-required').hide();
+            if (errorMap['number_person'] || errorMap['hotel'] || errorMap['date'] || errorMap['offer'])
+                $('#step_3 .error-required').show();
+
+            this.defaultShowErrors();
+        },
+        submitHandler: function(form) {
             $('#to_step_4').button('loading');
 
             $.ajax({
-                url: $("#step_3 form").attr('action'),
+                url: $(form).attr('action'),
                 type: 'POST',
-                data: $("#step_3 form").serialize() + '&' + $("#step_2 form").serialize(),
+                data: $(form).serialize() + '&' + $("#step_2 form").serialize(),
                 success: function (result) {
                     if (result && result.error)
                         return;
@@ -162,6 +201,8 @@ $(function(){
                     $('#to_step_4').button('reset');
                 }
             });
+
+            return false;
         }
     });
 

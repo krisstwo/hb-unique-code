@@ -4,6 +4,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
+use Coffeeandbrackets\UniqueCodeBundle\Form\CreateReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Campaign;
 use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
@@ -113,42 +114,53 @@ class DefaultController extends Controller
              */
             $hotelsService = $this->get('unique_code.hotels');
 
-            //TODO validation data
+            //Validation
+            /**
+             * @var Form $form
+             */
+            $form = $this->get('form.factory')->createNamedBuilder('', CreateReservation::class)->getForm();
+            $form->handleRequest($request);
+
+            if ( ! $form->isSubmitted() || ! $form->isValid()) {
+                return new JsonResponse(array('error' => 'Données invalides'));
+            }
+
+            $data = $form->getData();
 
             $customer = new Customer();
-            $customer->setFirstName($request->get('first_name'));
-            $customer->setLastName($request->get('last_name'));
-            $customer->setEmail($request->get('email'));
-            $customer->setAcceptNewsletter(false);
+            $customer->setFirstName($data['first_name']);
+            $customer->setLastName($data['last_name']);
+            $customer->setEmail($data['email']);
+            $customer->setAcceptNewsletter(isset($data['newsletter']) ? true : false);
             $customer->setCampaign($campaign);
 
             $reservation = new Reservation();
-            $reservation->setCode($request->get('code'));
-            $reservation->setReservationDate(date_create_from_format('d/m/Y', $request->get('date')));
-            $reservation->setNumberNight($request->get('number_night'));
-            $reservation->setNumberPerson($request->get('number_person'));
+            $reservation->setCode($data['code']);
+            $reservation->setReservationDate(date_create_from_format('d/m/Y', $data['date']));
+            $reservation->setNumberNight($data['number_night']);
+            $reservation->setNumberPerson($data['number_person']);
 
-            $hotels  = $hotelsService->find($request->get('hotel-name'));
-            $hotelId = $request->get('hotel');
+            $hotels  = $hotelsService->find($data['hotel-name']);
+            $hotelId = $data['hotel'];
             if ( ! isset($hotels[$hotelId])) {
                 return new JsonResponse(array('error' => 'Hôtel invalide'));
             }
             $reservation->setHotel($hotels[$hotelId]['label']);
 
-            $formulaId = $request->get('offer');
+            $formulaId = $data['offer'];
             if ( ! isset($hotels[$hotelId]['formulas'][$formulaId])) {
                 return new JsonResponse(array('error' => 'Formule invalide'));
             }
             $reservation->setOffer($hotels[$hotelId]['formulas'][$formulaId]['label']);
 
-            $reservation->setCustomerMsg($request->get('customer_msg'));
+            $reservation->setCustomerMsg($data['customer_msg']);
             $reservation->setCustomer($customer);
             $reservation->setCampaign($campaign);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
 
-            $code = $em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $request->get('code')]);
+            $code = $em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $data['code']]);
 
             $workflow = $this->get('workflow.status_code');
             if ($workflow->can($code, 'request')) {

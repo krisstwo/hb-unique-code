@@ -125,7 +125,7 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="newsletter">
+                                    <input type="checkbox" id="newsletter" name="newsletter" value="1">
                                     En cochant cette case, j’accepte de recevoir la newsletter Happybreak tous les mois.
                                 </label>
                             </div>
@@ -206,7 +206,7 @@
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" id="customer_msg" name="customer_msg"
-                                          placeholder="Je suis allergique au gluten et je souhaiterais un d'appoint ..."></textarea>
+                                          placeholder="Je suis allergique au gluten et je souhaiterais un d'appoint ..." maxlength="255"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -220,6 +220,9 @@
                                         Chaque réservation est soumise aux conditions générales d’utilisation de l’hôtel.
                                     </p>
                                 </div>
+                            </div>
+                            <div class="alert alert-danger error-required" style="display: none;">
+                                Les champs indiqués en rouge sont incomplets. Veuillez les remplir.
                             </div>
                             <p>&nbsp;</p>
                             <div class="row">
