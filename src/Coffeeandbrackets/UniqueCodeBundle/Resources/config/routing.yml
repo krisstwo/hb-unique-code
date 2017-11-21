@@ -4,6 +4,9 @@ unique_code_homepage:
 unique_code_submit_customer_information:
     path:     /submit_customer_information
     defaults: { _controller: UniqueCodeBundle:Default:submitCustomerInformation }
+unique_code_ajax_validate_code:
+    path:     /ajax-validate-code
+    defaults: { _controller: UniqueCodeBundle:Default:ajaxValidateCode }
 unique_code_ajax_search_hotel:
     path:     /ajax-search-hotel
     defaults: { _controller: UniqueCodeBundle:Default:ajaxSearchHotel }

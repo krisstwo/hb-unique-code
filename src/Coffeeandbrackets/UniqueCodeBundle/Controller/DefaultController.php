@@ -93,6 +93,41 @@ class DefaultController extends Controller
      *
      * @return Response
      */
+    public function ajaxValidateCodeAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+
+            /**
+             * @var $checker CheckCode
+             */
+            $checker = $this->get('unique_code.check_code');
+
+            $code = $request->get('code');
+
+            switch ($checker->validate($code)) {
+                case CheckCode::INVALID_CODE_NOT_FOUND:
+                    return new JsonResponse('Le code unique indiqué n\'est pas valide.');
+                    break;
+                case CheckCode::INVALID_CODE_USED:
+                    return new JsonResponse('Le code unique indiqué a déjà été utilisé.');
+                    break;
+                case CheckCode::INVALID_CODE_RESERVED:
+                    return new JsonResponse('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.');
+                    break;
+                default:
+                    return new JsonResponse(true);
+                    break;
+            }
+        }
+
+        return new Response("Action not allowed", 400);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function ajaxSearchHotelAction(Request $request)
     {
         $query = $request->get('q');

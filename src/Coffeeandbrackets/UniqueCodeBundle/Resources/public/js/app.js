@@ -75,7 +75,18 @@ $(function(){
     $("#step_2 form").validate({
         rules: {
             code: {
-                required: true
+                required: true,
+                remote: {
+                    url: $('#step_2 #code').data('endpoint'),
+                    beforeSend: function () {
+                        $('#step_2 #code').attr('readonly', true);
+                        $('#step_2 #code + .form-control-feedback').show();
+                    },
+                    complete: function () {
+                        $('#step_2 #code + .form-control-feedback').hide();
+                        $('#step_2 #code').removeAttr('readonly');
+                    }
+                }
             },
             last_name: {
                 required: true
@@ -96,6 +107,7 @@ $(function(){
                 }
             }
         },
+        onkeyup: false,
         errorClass : 'has-error',
         validClass : '',
         highlight: function(element, errorClass, validClass) {
@@ -107,8 +119,14 @@ $(function(){
         errorPlacement: function (error, element) {
         },
         showErrors: function (errorMap, errorList) {
+            $('#step_2 .error-code').hide();
+            if (errorMap['code'] && errorMap['code'] !== 'This field is required.'){
+                $('#step_2 .error-code').text(errorMap['code']);
+                $('#step_2 .error-code').show();
+            }
+
             $('#step_2 .error-required').hide();
-            if (errorMap['code'] || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['re_email'])
+            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['re_email'])
                 $('#step_2 .error-required').show();
 
             $('#step_2 .error-cgv').hide();
