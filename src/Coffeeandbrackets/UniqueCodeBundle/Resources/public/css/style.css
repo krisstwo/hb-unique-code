@@ -195,7 +195,8 @@ SELECT2 TWEAKS
     background: none;
 }
 
-#hotel + .select2 {
+#hotel + .select2,
+#offer + .select2 {
     width: 100% !important;
 }
 
