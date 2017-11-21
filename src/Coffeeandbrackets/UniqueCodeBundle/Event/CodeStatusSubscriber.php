@@ -9,6 +9,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Code;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\CodeStatusChangeLog;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
@@ -72,6 +73,7 @@ class CodeStatusSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            CodeActivated::NAME => 'onReservationEvent',
             ReservationCreated::NAME => 'onReservationEvent',
             HotelAccepted::NAME => 'onReservationEvent',
             HotelDeclined::NAME => 'onReservationEvent',
@@ -92,7 +94,9 @@ class CodeStatusSubscriber implements EventSubscriberInterface
         $this->em->persist($code);
 
         switch ($event::NAME) {
-            //TODO: when does code status pass to active ?
+            case CodeActivated::NAME :
+                $this->codeStatusWorkflow->apply($code, 'actif');
+                break;
             case ReservationCreated::NAME :
                 $this->codeStatusWorkflow->apply($code, 'request');
                 break;
