@@ -35,7 +35,7 @@ class CheckCode {
 	        return self::INVALID_CODE_USED;
 
         if(!empty($code_local['current_status']) && $code_local['current_status'] == 'waiting')
-	        self::INVALID_CODE_RESERVED;
+            return self::INVALID_CODE_RESERVED;
 
         return self::VALID_CODE;
     }
