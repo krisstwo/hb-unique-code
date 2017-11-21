@@ -4,6 +4,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
+use Coffeeandbrackets\UniqueCodeBundle\Form\CreateCustomer;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Campaign;
@@ -53,11 +54,20 @@ class DefaultController extends Controller
     {
 
         if ($request->isXmlHttpRequest()) {
-            $code = $request->get('code');
+
             /**
              * @var $checker CheckCode
              */
             $checker = $this->get('unique_code.check_code');
+
+            $form = $this->get('form.factory')->createNamedBuilder('', CreateCustomer::class, array(), array('code_check' => $checker))->getForm();
+            $form->handleRequest($request);
+
+            if ( ! $form->isSubmitted() || ! $form->isValid()) {
+                return new JsonResponse(array('error' => 'Données invalides'));
+            }
+
+            $code = $request->get('code');
 
             switch ($checker->validate($code)) {
                 case CheckCode::INVALID_CODE_NOT_FOUND:
