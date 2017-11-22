@@ -85,6 +85,12 @@ $(function(){
                     complete: function () {
                         $('#step_2 #code + .form-control-feedback').hide();
                         $('#step_2 #code').removeAttr('readonly');
+                    },
+                    data: {
+                        campaignCode: $('#step_2 #campaignCode').val(),
+                        code: function() {
+                            return $('#step_2 #code').val();
+                        }
                     }
                 }
             },

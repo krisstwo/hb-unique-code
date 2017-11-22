@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     {% if campaign is not empty %}
-                                        <input type="hidden" name="campaignCode" value="{{ campaign.getCode() }}">
+                                        <input type="hidden" id="campaignCode" name="campaignCode" value="{{ campaign.getCode() }}">
                                     {% endif %}
                                     <div class="form-group has-feedback">
                                         <input type="text" class="form-control" id="code" name="code"

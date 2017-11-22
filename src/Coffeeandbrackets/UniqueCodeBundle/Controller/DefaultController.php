@@ -5,6 +5,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateCustomer;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
@@ -62,7 +63,7 @@ class DefaultController extends Controller
              */
             $checker = $this->get('unique_code.check_code');
 
-            $form = $this->get('form.factory')->createNamedBuilder('', CreateCustomer::class, array(), array('code_check' => $checker))->getForm();
+            $form = $this->get('form.factory')->createNamedBuilder('', CreateCustomer::class, array(), array('code_check' => $checker, 'allow_extra_fields' => true))->getForm();
             $form->handleRequest($request);
 
             if ( ! $form->isSubmitted() || ! $form->isValid()) {
@@ -123,9 +124,16 @@ class DefaultController extends Controller
                      */
                     $dispatcher = $this->get('event_dispatcher');
 
+                    /**
+                     * @var $campaignService Campaign
+                     */
+                    $campaignService = $this->get('unique_code.campaign');
+                    $campaign = $campaignService->detectCampaign();
+
                     //dumb reservation for the event interface
                     $emptyReservation = new Reservation();
                     $emptyReservation->setCode($code);
+                    $emptyReservation->setCampaign($campaign);
 
                     $event = new CodeActivated($emptyReservation);
                     $dispatcher->dispatch(CodeActivated::NAME, $event);
@@ -174,11 +182,16 @@ class DefaultController extends Controller
              */
             $hotelsService = $this->get('unique_code.hotels');
 
+            /**
+             * @var $dispatcher TraceableEventDispatcherInterface
+             */
+            $dispatcher = $this->get('event_dispatcher');
+
             //Validation
             /**
              * @var Form $form
              */
-            $form = $this->get('form.factory')->createNamedBuilder('', CreateReservation::class)->getForm();
+            $form = $this->get('form.factory')->createNamedBuilder('', CreateReservation::class, array(), array('allow_extra_fields' => true))->getForm();
             $form->handleRequest($request);
 
             if ( ! $form->isSubmitted() || ! $form->isValid()) {
@@ -219,15 +232,10 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
-
-            $code = $em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $data['code']]);
-
-            $workflow = $this->get('workflow.status_code');
-            if ($workflow->can($code, 'request')) {
-                $workflow->apply($code, 'request');
-            }
-
             $em->flush();
+
+            $event = new ReservationCreated($reservation);
+            $dispatcher->dispatch(ReservationCreated::NAME, $event);
 
             // TODO get hotel email from extern BD
             // Send mail to hotel
