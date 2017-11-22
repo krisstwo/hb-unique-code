@@ -12,6 +12,7 @@ services:
             arguments:
                 - "@doctrine.orm.entity_manager"
                 - "@event_dispatcher"
+                - "@unique_code.campaign"
     unique_code.code_status_subscriber:
             class: Coffeeandbrackets\UniqueCodeBundle\Event\CodeStatusSubscriber
             arguments:

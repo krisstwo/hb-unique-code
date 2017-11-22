@@ -4,7 +4,6 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
-use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateCustomer;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateReservation;
@@ -103,25 +102,11 @@ class DefaultController extends Controller
                     return new JsonResponse('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.');
                     break;
                 default:
-                    //activate code, a matter of dispatching the event
                     /**
-                     * @var $dispatcher TraceableEventDispatcherInterface
+                     * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
                      */
-                    $dispatcher = $this->get('event_dispatcher');
-
-                    /**
-                     * @var $campaignService Campaign
-                     */
-                    $campaignService = $this->get('unique_code.campaign');
-                    $campaign = $campaignService->detectCampaign();
-
-                    //dumb reservation for the event interface
-                    $emptyReservation = new Reservation();
-                    $emptyReservation->setCode($code);
-                    $emptyReservation->setCampaign($campaign);
-
-                    $event = new CodeActivated($emptyReservation);
-                    $dispatcher->dispatch(CodeActivated::NAME, $event);
+                    $reservationService = $this->get('unique_code.reservation');
+                    $reservationService->activateCode($code);
 
                     return new JsonResponse(true);
                     break;

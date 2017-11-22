@@ -8,6 +8,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
@@ -26,10 +27,29 @@ class Reservation
      */
     private $eventDispatcher;
 
-    public function __construct(EntityManager $entityManager, EventDispatcherInterface $eventDispatcher)
+    /**
+     * @var Campaign
+     */
+    private $campaignService;
+
+    public function __construct(EntityManager $entityManager, EventDispatcherInterface $eventDispatcher, Campaign $campaignService)
     {
         $this->em = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->campaignService = $campaignService;
+    }
+
+    public function activateCode($code)
+    {
+        $campaign = $this->campaignService->detectCampaign();
+
+        //dumb reservation for the event interface
+        $emptyReservation = new ReservationEntity();
+        $emptyReservation->setCode($code);
+        $emptyReservation->setCampaign($campaign);
+
+        $event = new CodeActivated($emptyReservation);
+        $this->eventDispatcher->dispatch(CodeActivated::NAME, $event);
     }
 
     public function hotelRefuseReservation(ReservationEntity $reservation, $data)
