@@ -70,22 +70,7 @@ class DefaultController extends Controller
                 return new JsonResponse(array('error' => 'Données invalides'));
             }
 
-            $code = $request->get('code');
-
-            switch ($checker->validate($code)) {
-                case CheckCode::INVALID_CODE_NOT_FOUND:
-                    return new JsonResponse(array('error' => 'Le code unique indiqué n\'est pas valide.'));
-                    break;
-                case CheckCode::INVALID_CODE_USED:
-                    return new JsonResponse(array('error' => 'Le code unique indiqué a déjà été utilisé.'));
-                    break;
-                case CheckCode::INVALID_CODE_RESERVED:
-                    return new JsonResponse(array('error' => 'Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.'));
-                    break;
-                default:
-                    return new JsonResponse(array());
-                    break;
-            }
+            return new JsonResponse(array());
         }
 
         return new Response("Action not allowed", 400);
