@@ -153,6 +153,11 @@ class DefaultController extends Controller
             $hotelsService = $this->get('unique_code.hotels');
 
             /**
+             * @var $codeChecker CheckCode
+             */
+            $codeChecker = $this->get('unique_code.check_code');
+
+            /**
              * @var $dispatcher TraceableEventDispatcherInterface
              */
             $dispatcher = $this->get('event_dispatcher');
@@ -161,11 +166,11 @@ class DefaultController extends Controller
             /**
              * @var Form $form
              */
-            $form = $this->get('form.factory')->createNamedBuilder('', CreateReservation::class, array(), array('allow_extra_fields' => true))->getForm();
+            $form = $this->get('form.factory')->createNamedBuilder('', CreateReservation::class, array(), array('allow_extra_fields' => true, 'hotels_service' => $hotelsService, 'code_check' => $codeChecker))->getForm();
             $form->handleRequest($request);
 
             if ( ! $form->isSubmitted() || ! $form->isValid()) {
-                return new JsonResponse(array('error' => 'Données invalides'));
+                return new JsonResponse(array('error' => 'Données invalides', 'details' => (string) $form->getErrors(true)));
             }
 
             $data = $form->getData();
@@ -183,18 +188,10 @@ class DefaultController extends Controller
             $reservation->setNumberNight($data['number_night']);
             $reservation->setNumberPerson($data['number_person']);
 
-            $hotels  = $hotelsService->find($data['hotel-name']);
-            $hotelId = $data['hotel'];
-            if ( ! isset($hotels[$hotelId])) {
-                return new JsonResponse(array('error' => 'Hôtel invalide'));
-            }
-            $reservation->setHotel($hotels[$hotelId]['label']);
+            //Hotel validated in form, can use label directly
+            $reservation->setHotel($data['hotel-name']);
 
-            $formulaId = $data['offer'];
-            if ( ! isset($hotels[$hotelId]['formulas'][$formulaId])) {
-                return new JsonResponse(array('error' => 'Formule invalide'));
-            }
-            $reservation->setOffer($hotels[$hotelId]['formulas'][$formulaId]['label']);
+            $reservation->setOffer($data['offer-name']);
 
             $reservation->setCustomerMsg($data['customer_msg']);
             $reservation->setCustomer($customer);

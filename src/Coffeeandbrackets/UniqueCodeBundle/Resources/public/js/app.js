@@ -15,7 +15,11 @@ $(function(){
     $(document).ajaxSuccess(function (event, xhr, settings) {
 
         if(xhr.responseJSON && xhr.responseJSON.error){
-            $('#modal-flash-error .content').text(xhr.responseJSON.error);
+            if (xhr.responseJSON.details && xhr.responseJSON.details.length) {
+                $('#modal-flash-error .content').html('<h5>' + xhr.responseJSON.error + '</h5>' + (xhr.responseJSON.details).replace(/(?:\r\n|\r|\n)/g, '<br>'));
+            } else {
+                $('#modal-flash-error .content').text(xhr.responseJSON.error);
+            }
             $('#modal-flash-error').modal('show');
         }
     });
@@ -266,6 +270,8 @@ $(function(){
 
         if (!selectedFormula)
             return;
+
+        $('#offer-name').val(selectedFormula.label);
 
         //set available persons for this formula
         $('input[name="number_person"]').each(function (index, el) {
