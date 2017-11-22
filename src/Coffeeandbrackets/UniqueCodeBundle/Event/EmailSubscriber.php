@@ -7,6 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Mailer;
@@ -56,7 +57,8 @@ class EmailSubscriber implements EventSubscriberInterface
     {
         return array(
             ReservationCreated::NAME => 'onReservationCreated',
-            HotelDeclined::NAME => 'onHotelDeclined'
+            HotelDeclined::NAME => 'onHotelDeclined',
+            HotelAccepted::NAME => 'onHotelAccepted'
         );
     }
 
@@ -104,5 +106,33 @@ class EmailSubscriber implements EventSubscriberInterface
             )
         );
         $this->mailer->sendMessage($mailConfig, 'text/html');
+    }
+
+    public function onHotelAccepted(ReservationEvent $event)
+    {
+        $reservation = $event->getReservation();
+
+        $tabParam = array(
+            'to' => 'contact@coffeeandbrackets.com',
+            'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
+            'subject' => 'Confirmation de réservation',
+            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'params' => array(
+                'reservation' => $reservation
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
+
+        // send confirmation mail to customer
+        $tabParam = array(
+            'to' => $reservation->getCustomer()->getEmail(),
+            'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
+            'subject' => 'Confirmation de votre réservation',
+            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'params' => array(
+                'reservation' => $reservation
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
     }
 }

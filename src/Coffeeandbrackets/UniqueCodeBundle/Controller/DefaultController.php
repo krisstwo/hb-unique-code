@@ -251,37 +251,11 @@ class DefaultController extends Controller
     public function acceptReservationAction($id) {
         $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
 
-        $serviceMail = $this->container->get('unique_code.mailer');
-        // send confirmation mail to hotel
-        $tabParam = array(
-            'to' => 'hotel@hotel.com',
-            'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
-            'subject' => 'Confirmation de réservation',
-            'from' => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
-            'params' => array(
-                'reservation' => $reservation
-            )
-        );
-        $serviceMail->sendMessage($tabParam, 'text/html');
-
-        // send confirmation mail to customer
-        $tabParam = array(
-            'to' => $reservation->getCustomer()->getEmail(),
-            'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
-            'subject' => 'Confirmation de votre réservation',
-            'from' => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
-            'params' => array(
-                'reservation' => $reservation
-            )
-        );
-        $serviceMail->sendMessage($tabParam, 'text/html');
-
-        $code = $this->getDoctrine()->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
-        $workflow = $this->get('workflow.status_code');
-        if($workflow->can($code, 'accept')){
-            $workflow->apply($code, 'accept');
-        }
-        $this->getDoctrine()->getManager()->flush();
+        /**
+         * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
+         */
+        $reservationService = $this->get('unique_code.reservation');
+        $reservationService->hotelAcceptReservation($reservation);
 
         return $this->render('UniqueCodeBundle:Default:thanks_confirm_reservation.html.twig',
             array('reservation' => $reservation));

@@ -10,6 +10,7 @@ use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Doctrine\ORM\EntityManager;
@@ -70,6 +71,18 @@ class Reservation
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function hotelAcceptReservation(ReservationEntity $reservation)
+    {
+        $reservation->setHotelConfirmationDate(new \DateTime());
+
+        //dispatch event
+        $event = new HotelAccepted($reservation);
+        $this->eventDispatcher->dispatch(HotelAccepted::NAME, $event);
+
+        $this->em->persist($reservation);
+        $this->em->flush();
     }
 
     public function customerDeclineHotelProposing(ReservationEntity $reservation)
