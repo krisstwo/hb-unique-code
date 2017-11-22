@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
+use Symfony\Component\Workflow\Exception\LogicException;
 use Symfony\Component\Workflow\Workflow;
 
 /**
@@ -90,12 +91,16 @@ class CodeStatusSubscriber implements EventSubscriberInterface
          * @var $code Code
          */
         $code = $this->em->getRepository('UniqueCodeBundle:Code')->findOneBy(['code' => $reservation->getCode()]);
+        if($reservation->getId())//make sure it is a real reservation (with id, etc) and not an early placeholder
+            $code->setReservation($reservation);
         $code->setCampaign($reservation->getCampaign());
         $this->em->persist($code);
 
         switch ($event::NAME) {
             case CodeActivated::NAME :
-                $this->codeStatusWorkflow->apply($code, 'actif');
+                //an activated code could be resubmitted, so prevention
+                if($code->getCurrentStatus() === 'not_actived')
+                    $this->codeStatusWorkflow->apply($code, 'actif');
                 break;
             case ReservationCreated::NAME :
                 $this->codeStatusWorkflow->apply($code, 'request');
@@ -129,6 +134,9 @@ class CodeStatusSubscriber implements EventSubscriberInterface
         $logCode->setToStatus(implode(', ', $event->getTransition()->getTos()));
         $logCode->setIsAdminAction(false);
         $logCode->setCode($code);
+        $reservation = $code->getReservation();
+        if($reservation && $reservation->getId())//make sure it is a real reservation (with id, etc) and not an early placeholder
+            $logCode->setReservation($reservation);
         $logCode->setCampaign($code->getCampaign());
 
         $this->em->persist($logCode);
