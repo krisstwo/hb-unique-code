@@ -38,6 +38,13 @@ class Code
     /**
      * @var
      *
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation")
+     */
+    private $reservation;
+
+    /**
+     * @var
+     *
      * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign")
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
      */
@@ -100,6 +107,22 @@ class Code
     public function getCurrentStatus()
     {
         return $this->currentStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * @param mixed $reservation
+     */
+    public function setReservation($reservation)
+    {
+        $this->reservation = $reservation;
     }
 
     /**

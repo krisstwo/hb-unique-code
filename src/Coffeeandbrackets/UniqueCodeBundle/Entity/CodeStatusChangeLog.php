@@ -58,6 +58,13 @@ class CodeStatusChangeLog
     /**
      * @var
      *
+     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation")
+     */
+    private $reservation;
+
+    /**
+     * @var
+     *
      * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign")
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
      */
@@ -184,6 +191,22 @@ class CodeStatusChangeLog
     public function setCode($code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * @param mixed $reservation
+     */
+    public function setReservation($reservation)
+    {
+        $this->reservation = $reservation;
     }
 
     /**
