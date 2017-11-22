@@ -15,7 +15,9 @@ class Hotels
 {
     public function find($query)
     {
-        $query = trim(strtolower(iconv("UTF-8", "ISO-8859-1", $query)));
+        //TODO: more solid fix
+        $query = str_replace(str_split('ô'), str_split('o'), strtolower($query));
+        $query = trim(iconv("UTF-8", "ASCII//TRANSLIT", $query));
 
         //fetch data
         $response = \Unirest\Request::get('https://happybreak.com/api/operation/hotels', array(),
