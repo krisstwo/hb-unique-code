@@ -7,6 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Mailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -54,7 +55,8 @@ class EmailSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ReservationCreated::NAME => 'onReservationCreated'
+            ReservationCreated::NAME => 'onReservationCreated',
+            HotelDeclined::NAME => 'onHotelDeclined'
         );
     }
 
@@ -83,6 +85,22 @@ class EmailSubscriber implements EventSubscriberInterface
             'params' => array(
                 'reservation' => $reservation,
                 'customer' => $reservation->getCustomer(),
+            )
+        );
+        $this->mailer->sendMessage($mailConfig, 'text/html');
+    }
+
+    public function onHotelDeclined(ReservationEvent $event)
+    {
+        $reservation = $event->getReservation();
+
+        $mailConfig = array(
+            'to'       => $reservation->getCustomer()->getEmail(),
+            'template' => 'UniqueCodeBundle:Email:customer-reservation-refused.html.twig',
+            'subject'  => 'Demande de réservation refusée',
+            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'params'   => array(
+                'reservation' => $reservation
             )
         );
         $this->mailer->sendMessage($mailConfig, 'text/html');

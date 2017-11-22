@@ -6,11 +6,11 @@
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
-
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -54,12 +54,22 @@ class Reservation
 
     public function hotelRefuseReservation(ReservationEntity $reservation, $data)
     {
-        $reservation->setHotelRefuseDate(new \DateTime());
-        $reservation->setHotelRefuseReason($data['reason']);
-        $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
-        $reservation->setHotelProposedCheckOutDate(date_create_from_format('d/m/Y', $data['check-in-date'])->add(new \DateInterval(sprintf('P%dD', $data['nights']))));
-        $this->em->persist($reservation);
-        $this->em->flush();
+        try {
+            $reservation->setHotelRefuseDate(new \DateTime());
+            $reservation->setHotelRefuseReason($data['reason']);
+            $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
+            $reservation->setHotelProposedCheckOutDate(date_create_from_format('d/m/Y',
+                $data['check-in-date'])->add(new \DateInterval(sprintf('P%dD', $data['nights']))));
+
+            //dispatch event
+            $event = new HotelDeclined($reservation);
+            $this->eventDispatcher->dispatch(HotelDeclined::NAME, $event);
+
+            $this->em->persist($reservation);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     public function customerDeclineHotelProposing(ReservationEntity $reservation)
