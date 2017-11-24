@@ -77,7 +77,6 @@ class CodeStatusSubscriber implements EventSubscriberInterface
             ReservationCreated::NAME => 'onReservationEvent',
             HotelAccepted::NAME => 'onReservationEvent',
             HotelDeclined::NAME => 'onReservationEvent',
-            CustomerDeclined::NAME => 'onReservationEvent',
             'workflow.status_code.leave' => 'onCodeStatusChange'
         );
     }
@@ -107,9 +106,6 @@ class CodeStatusSubscriber implements EventSubscriberInterface
                 $this->codeStatusWorkflow->apply($code, 'accept');
                 break;
             case HotelDeclined::NAME :
-                $this->codeStatusWorkflow->apply($code, 'refuse');
-                break;
-            case CustomerDeclined::NAME :
                 $this->codeStatusWorkflow->apply($code, 'refuse');
                 break;
         }
