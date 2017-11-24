@@ -71,7 +71,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => $reservation->getCustomer()->getEmail(),
             'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
             'subject' => 'Confirmation de demande de réservation',
-            'from' => 'contat@coffeeandbrackets.com',//TODO: let from be empty
+            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation
             )
@@ -83,7 +83,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => 'hotel@happybreak-codeunique.local', //TODO: hotel email
             'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
             'subject' => 'Demande de réservation',
-            'from' => 'contat@coffeeandbrackets.com',//TODO: let from be empty
+            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation,
                 'customer' => $reservation->getCustomer(),
