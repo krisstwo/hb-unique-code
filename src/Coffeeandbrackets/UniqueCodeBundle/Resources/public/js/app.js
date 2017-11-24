@@ -350,7 +350,7 @@ $(function(){
     $('a.action-hotel-refuse-reservation').click(function (e) {
         e.preventDefault();
         confirmBox(null, 'Êtes vous sur de refuser cette réservation ?').done(function () {
-            window.location.href = e.target.href;
+            window.location.href = $('a.action-hotel-refuse-reservation').attr('href');
         });
 
     });
@@ -414,7 +414,7 @@ $(function(){
     $('a.action-hotel-accept-reservation').click(function (e) {
        e.preventDefault();
         confirmBox(null, 'Êtes vous sur d\'accepter cette réservation ?').done(function () {
-            window.location.href = e.target.href;
+            window.location.href = $('a.action-hotel-accept-reservation').attr('href');
         });
 
     });
