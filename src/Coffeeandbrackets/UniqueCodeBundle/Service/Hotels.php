@@ -37,6 +37,7 @@ class Hotels
                     'id'       => $hotelId,
                     'label'     => $item->titre,
                     'stars'    => $item->etoiles,
+                    'informations'    => trim($item->infos_pratiques),
                     'formulas' => array()
                 );
             }
