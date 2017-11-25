@@ -6,6 +6,7 @@
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
+use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
@@ -51,6 +52,39 @@ class Reservation
 
         $event = new CodeActivated($emptyReservation);
         $this->eventDispatcher->dispatch(CodeActivated::NAME, $event);
+    }
+
+    public function createReservation($data)
+    {
+        $campaign = $this->campaignService->detectCampaign();
+
+        $customer = new Customer();
+        $customer->setFirstName($data['first_name']);
+        $customer->setLastName($data['last_name']);
+        $customer->setEmail($data['email']);
+        $customer->setAcceptNewsletter(isset($data['newsletter']) ? true : false);
+        $customer->setCampaign($campaign);
+
+        $reservation = new ReservationEntity();
+        $reservation->setCode($data['code']);
+        $reservation->setReservationDate(date_create_from_format('d/m/Y', $data['date']));
+        $reservation->setNumberNight($data['number_night']);
+        $reservation->setNumberPerson($data['number_person']);
+
+        //Hotel validated in form, can use label directly
+        $reservation->setHotel($data['hotel-name']);
+
+        $reservation->setOffer($data['offer-name']);
+
+        $reservation->setCustomerMsg($data['customer_msg']);
+        $reservation->setCustomer($customer);
+        $reservation->setCampaign($campaign);
+
+        $this->em->persist($reservation);
+        $this->em->flush();
+
+        $event = new ReservationCreated($reservation);
+        $this->eventDispatcher->dispatch(ReservationCreated::NAME, $event);
     }
 
     public function hotelRefuseReservation(ReservationEntity $reservation, $data)

@@ -2,9 +2,7 @@
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Controller;
 
-use Coffeeandbrackets\UniqueCodeBundle\Entity\Customer;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
-use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateCustomer;
 use Coffeeandbrackets\UniqueCodeBundle\Form\CreateReservation;
 use Coffeeandbrackets\UniqueCodeBundle\Form\HotelRefuseReservation;
@@ -12,7 +10,6 @@ use Coffeeandbrackets\UniqueCodeBundle\Service\Campaign;
 use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Hotels;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -142,10 +139,9 @@ class DefaultController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             /**
-             * @var $campaignService Campaign
+             * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
              */
-            $campaignService = $this->get('unique_code.campaign');
-            $campaign = $campaignService->detectCampaign();
+            $reservationService = $this->get('unique_code.reservation');
 
             /**
              * @var $hotelsService Hotels
@@ -156,11 +152,6 @@ class DefaultController extends Controller
              * @var $codeChecker CheckCode
              */
             $codeChecker = $this->get('unique_code.check_code');
-
-            /**
-             * @var $dispatcher TraceableEventDispatcherInterface
-             */
-            $dispatcher = $this->get('event_dispatcher');
 
             //Validation
             /**
@@ -174,64 +165,7 @@ class DefaultController extends Controller
             }
 
             $data = $form->getData();
-
-            $customer = new Customer();
-            $customer->setFirstName($data['first_name']);
-            $customer->setLastName($data['last_name']);
-            $customer->setEmail($data['email']);
-            $customer->setAcceptNewsletter(isset($data['newsletter']) ? true : false);
-            $customer->setCampaign($campaign);
-
-            $reservation = new Reservation();
-            $reservation->setCode($data['code']);
-            $reservation->setReservationDate(date_create_from_format('d/m/Y', $data['date']));
-            $reservation->setNumberNight($data['number_night']);
-            $reservation->setNumberPerson($data['number_person']);
-
-            //Hotel validated in form, can use label directly
-            $reservation->setHotel($data['hotel-name']);
-
-            $reservation->setOffer($data['offer-name']);
-
-            $reservation->setCustomerMsg($data['customer_msg']);
-            $reservation->setCustomer($customer);
-            $reservation->setCampaign($campaign);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($reservation);
-            $em->flush();
-
-            $event = new ReservationCreated($reservation);
-            $dispatcher->dispatch(ReservationCreated::NAME, $event);
-
-            // TODO get hotel email from extern BD
-            // Send mail to hotel
-            $serviceMail = $this->container->get('unique_code.mailer');
-            $tabParam    = array(
-                'to'       => 'hotel@hotel.com',
-                'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
-                'subject'  => 'Demande de réservation',
-                'from'     => array($this->container->getParameter('mailer_user') => 'HappyBreak'),
-                'params'   => array(
-                    'customer'    => $customer,
-                    'reservation' => $reservation
-                )
-            );
-
-            // send mail
-            $serviceMail->sendMessage($tabParam, 'text/html');
-
-            //send email to customer
-            $mailConfig = array(
-                'to'       => $reservation->getCustomer()->getEmail(),
-                'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
-                'subject'  => 'Confirmation de demande de réservation',
-                'from'     => array($this->container->getParameter('mailer_user') => 'HappyBreak'),//TODO: let from be empty
-                'params'   => array(
-                    'reservation' => $reservation
-                )
-            );
-            $serviceMail->sendMessage($mailConfig, 'text/html');
+            $reservationService->createReservation($data);
 
             return new JsonResponse(array());
         }
