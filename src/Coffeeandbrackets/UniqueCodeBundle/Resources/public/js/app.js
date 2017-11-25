@@ -253,7 +253,8 @@ $(function(){
         //keep the name of the hotel for form submission, useful for information retrieval when saving reservation.
         $('#hotel-name').val(selectedHotel.text);
 
-        $('#hotel-informations').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
+        $('#hotel-informations').show();
+        $('#hotel-informations .content').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
 
         //set formulas
         var optionTags = [];
