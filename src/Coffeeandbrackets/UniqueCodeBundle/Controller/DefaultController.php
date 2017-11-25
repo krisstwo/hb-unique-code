@@ -63,7 +63,7 @@ class DefaultController extends Controller
             $form->handleRequest($request);
 
             if ( ! $form->isSubmitted() || ! $form->isValid()) {
-                return new JsonResponse(array('error' => 'Données invalides'));
+                return new JsonResponse(array('error' => 'Données invalides', 'details' => (string) $form->getErrors(true)));
             }
 
             return new JsonResponse(array());
