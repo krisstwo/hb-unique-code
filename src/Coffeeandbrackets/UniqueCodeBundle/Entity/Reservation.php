@@ -45,6 +45,13 @@ class Reservation
     /**
      * @var string
      *
+     * @ORM\Column(name="hotel_email", type="string", length=255)
+     */
+    private $hotelEmail;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="offer", type="string", length=255)
      */
     private $offer;
@@ -243,6 +250,22 @@ class Reservation
     public function getHotel()
     {
         return $this->hotel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelEmail()
+    {
+        return $this->hotelEmail;
+    }
+
+    /**
+     * @param string $hotelEmail
+     */
+    public function setHotelEmail($hotelEmail)
+    {
+        $this->hotelEmail = $hotelEmail;
     }
 
     /**
