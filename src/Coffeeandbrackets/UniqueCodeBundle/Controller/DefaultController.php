@@ -252,7 +252,7 @@ class DefaultController extends Controller
 
                 return new JsonResponse(array());
             }else {
-                return new JsonResponse(array('error' => 'Données invalides'));
+                return new JsonResponse(array('error' => 'Données invalides', 'details' => (string) $form->getErrors(true)));
             }
         }
         return new Response("Action not allowed", 400);
