@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Hotels
 {
-    public function find($query)
+    public function findAllByName($query)
     {
         //TODO: more solid fix
         $query = str_replace(str_split('ô'), str_split('o'), strtolower($query));

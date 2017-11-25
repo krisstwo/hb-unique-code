@@ -58,7 +58,7 @@ class CreateReservation extends AbstractType
              */
             $hotelsService = $options['hotels_service'];
             $allData       = $context->getRoot()->getData();
-            $this->hotels        = $hotelsService->find($allData['hotel-name']);//validation of hotel-name must be earlier, this way we are sure we have a value
+            $this->hotels        = $hotelsService->findAllByName($allData['hotel-name']);//validation of hotel-name must be earlier, this way we are sure we have a value
             if ( ! isset($this->hotels[$hotelId])) {
                 $context->buildViolation('Hôtel invalide')
                         ->atPath('hotel')
