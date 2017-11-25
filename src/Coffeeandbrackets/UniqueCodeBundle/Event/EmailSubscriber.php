@@ -80,7 +80,7 @@ class EmailSubscriber implements EventSubscriberInterface
 
         //send email to hotel
         $mailConfig = array(
-            'to' => 'hotel@happybreak-codeunique.local', //TODO: hotel email
+            'to' => $reservation->getHotelEmail(),
             'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
             'subject' => 'Demande de réservation',
             'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
@@ -112,8 +112,9 @@ class EmailSubscriber implements EventSubscriberInterface
     {
         $reservation = $event->getReservation();
 
+        //send email to hotel
         $tabParam = array(
-            'to' => 'contact@coffeeandbrackets.com',
+            'to' => $reservation->getHotelEmail(),
             'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
             'subject' => 'Confirmation de réservation',
             'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty,

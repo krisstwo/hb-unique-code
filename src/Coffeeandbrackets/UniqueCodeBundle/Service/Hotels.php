@@ -13,6 +13,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Hotels
 {
+    public function findOneByNameId($query, $id)
+    {
+        $hotels = $this->findAllByName($query);
+
+        return isset($hotels[$id]) ? $hotels[$id] : null;
+    }
+
     public function findAllByName($query)
     {
         //TODO: more solid fix
@@ -34,11 +41,12 @@ class Hotels
 
             if ( ! isset($hotels[$hotelId])) {
                 $hotels[$hotelId] = array(
-                    'id'       => $hotelId,
-                    'label'     => $item->titre,
-                    'stars'    => $item->etoiles,
-                    'informations'    => trim($item->infos_pratiques),
-                    'formulas' => array()
+                    'id'           => $hotelId,
+                    'label'        => $item->titre,
+                    'stars'        => $item->etoiles,
+                    'informations' => trim($item->infos_pratiques),
+                    'email'        => trim($item->mail_hotel),
+                    'formulas'     => array()
                 );
             }
 

@@ -34,11 +34,22 @@ class Reservation
      */
     private $campaignService;
 
-    public function __construct(EntityManager $entityManager, EventDispatcherInterface $eventDispatcher, Campaign $campaignService)
+    /**
+     * @var Hotels
+     */
+    private $hotelsService;
+
+    public function __construct(
+        EntityManager $entityManager,
+        EventDispatcherInterface $eventDispatcher,
+        Campaign $campaignService,
+        Hotels $hotelsService
+    )
     {
         $this->em = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->campaignService = $campaignService;
+        $this->hotelsService = $hotelsService;
     }
 
     public function activateCode($code)
@@ -73,6 +84,11 @@ class Reservation
 
         //Hotel validated in form, can use label directly
         $reservation->setHotel($data['hotel-name']);
+
+        $hotel = $this->hotelsService->findOneByNameId($data['hotel-name'], $data['hotel']);
+        if ($hotel) {
+            $reservation->setHotelEmail($hotel['email']);
+        }
 
         $reservation->setOffer($data['offer-name']);
 

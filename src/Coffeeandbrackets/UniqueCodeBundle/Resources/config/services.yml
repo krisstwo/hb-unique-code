@@ -13,6 +13,7 @@ services:
                 - "@doctrine.orm.entity_manager"
                 - "@event_dispatcher"
                 - "@unique_code.campaign"
+                - "@unique_code.hotels"
     unique_code.code_status_subscriber:
             class: Coffeeandbrackets\UniqueCodeBundle\Event\CodeStatusSubscriber
             arguments:

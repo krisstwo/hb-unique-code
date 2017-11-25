@@ -127,7 +127,14 @@ class DefaultController extends Controller
          */
         $hotelsService = $this->get('unique_code.hotels');
 
-        return new JsonResponse($hotelsService->findAllByName($query));
+        $hotels = $hotelsService->findAllByName($query);
+
+        //sanitize, remove private data
+        foreach ($hotels as $id => $hotel){
+            unset($hotels[$id]['email']);
+        }
+
+        return new JsonResponse($hotels);
     }
 
     /**
