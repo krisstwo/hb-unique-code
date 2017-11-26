@@ -67,8 +67,28 @@ $(function(){
         $('#step_' + stepIndex).show();
     };
 
-    $('#date').datepicker({
-        dateFormat: "dd/mm/yy"
+    $('#step_3 #date').datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: new Date(),
+        beforeShowDay: function (date) {
+            //if no forumla can't really choose
+            if (!selectedFormula)
+                return [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
+
+            //see if a planning satisfies the current date
+            var shownYear = date.getFullYear();
+            var shownMonth = date.getMonth() + 1;
+            var shownDay = date.getDate();
+
+            var isStatisfied = false;
+            for (var i in selectedFormula.planning) {
+                var planning = selectedFormula.planning[i];
+                if(parseInt(planning.year) == shownYear && parseInt(planning.month) == shownMonth && planning.days[shownDay] !== undefined && planning.days[shownDay] > 0)
+                    isStatisfied = true;
+            }
+
+            return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
+        }
     });
 
     $("#to_step_2").on('click', function (e) {
@@ -344,6 +364,9 @@ $(function(){
     });
     $('#offer').select2({
         minimumResultsForSearch: -1
+    });
+    $('#offer').change(function (e) {
+        selectFormula($('#offer').val());
     });
 
     /**

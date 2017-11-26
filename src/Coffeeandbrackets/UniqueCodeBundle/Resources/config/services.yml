@@ -33,4 +33,6 @@ services:
                 - "@doctrine.orm.entity_manager"
                 - "@request_stack"
     unique_code.hotels:
-                class: Coffeeandbrackets\UniqueCodeBundle\Service\Hotels
+            class: Coffeeandbrackets\UniqueCodeBundle\Service\Hotels
+            arguments:
+                - "@doctrine.orm.entity_manager"

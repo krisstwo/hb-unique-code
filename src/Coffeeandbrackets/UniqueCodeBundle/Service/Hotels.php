@@ -7,12 +7,29 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Entity\ForfaitPlanning;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class Hotels
 {
+
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * Hotels constructor.
+     *
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     public function findOneByNameId($query, $id)
     {
         $hotels = $this->findAllByName($query);
@@ -51,11 +68,28 @@ class Hotels
             }
 
             if ( ! isset($hotels[$hotelId]['formulas'][$item->nidforfait])) {
+                //get forfait planing for this forfait
+                $planinngGrid = $this->em->getRepository('UniqueCodeBundle:ForfaitPlanning')->findPlaningById($item->nidforfait);
+
+                $forfaitPlanning = array();
+                foreach ($planinngGrid as $planningLine) {
+                    /**
+                     * @var $planningLine ForfaitPlanning
+                     */
+                    $forfaitPlanning[] = array(
+                        'year'  => $planningLine->getYear(),
+                        'month' => $planningLine->getMonth(),
+                        'days'  => $planningLine->getDaysArray()
+                    );
+                }
+
+                //setup the structure
                 $hotels[$hotelId]['formulas'][$item->nidforfait] = array(
                     'id'      => $item->nidforfait,
                     'label'   => $item->forfait,
                     'persons' => $this->extractPersons($item),
                     'nights'  => $this->extractNights($item),
+                    'planning' => $forfaitPlanning
                 );
             }
         }
