@@ -43,6 +43,13 @@ class Customer
     private $email;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255)
+     */
+    private $phone;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="accept_newsletter", type="boolean")
@@ -138,6 +145,22 @@ class Customer
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
     }
 
     /**

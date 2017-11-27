@@ -73,6 +73,7 @@ class Reservation
         $customer->setFirstName($data['first_name']);
         $customer->setLastName($data['last_name']);
         $customer->setEmail($data['email']);
+        $customer->setPhone($data['phone']);
         $customer->setAcceptNewsletter(isset($data['newsletter']) ? true : false);
         $customer->setCampaign($campaign);
 
