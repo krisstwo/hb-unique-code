@@ -28,6 +28,12 @@ services:
                 - "@logger"
             tags:
                 - { name: kernel.event_subscriber }
+    unique_code.email_log_subscriber:
+                class: Coffeeandbrackets\UniqueCodeBundle\Event\EmailLogSubscriber
+                arguments:
+                    - "@doctrine.orm.entity_manager"
+                tags:
+                    - { name: kernel.event_subscriber }
     unique_code.campaign:
             class: Coffeeandbrackets\UniqueCodeBundle\Service\Campaign
             arguments:
