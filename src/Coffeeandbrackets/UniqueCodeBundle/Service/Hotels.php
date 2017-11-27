@@ -8,9 +8,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\ForfaitPlanning;
-use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class Hotels
 {

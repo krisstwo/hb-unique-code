@@ -7,7 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
-use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation;
+use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 
