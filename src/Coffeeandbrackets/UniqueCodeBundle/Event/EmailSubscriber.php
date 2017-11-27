@@ -7,6 +7,8 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
+use Coffeeandbrackets\UniqueCodeBundle\Event\Email\HotelConfirmationDueEmailSent;
+use Coffeeandbrackets\UniqueCodeBundle\Event\EmailEvent;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelConfirmationDue;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
@@ -14,6 +16,7 @@ use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationUnseen;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Mailer;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -35,13 +38,19 @@ class EmailSubscriber implements EventSubscriberInterface
     private $logger;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * EmailSubscriber constructor.
      * @param Mailer $mailer
      */
-    public function __construct(Mailer $mailer, LoggerInterface $logger)
+    public function __construct(Mailer $mailer, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
     {
         $this->mailer = $mailer;
         $this->logger = $logger;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -179,10 +188,12 @@ class EmailSubscriber implements EventSubscriberInterface
         }
 
         //send email to office about hotel not responding
-        $tabParam = array(
-            'to'       => $reservation->getHotelEmail(),
+        $subject   = 'Plus que 2 heures pour accepter la réservation';
+        $recipient = $reservation->getHotelEmail();
+        $tabParam  = array(
+            'to'       => $recipient,
             'template' => 'UniqueCodeBundle:Email:hotel-confirmation-due.html.twig',
-            'subject'  => 'Plus que 2 heures pour accepter la réservation',
+            'subject'  => $subject,
             'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
             'params'   => array(
                 'reservation' => $reservation,
@@ -190,5 +201,8 @@ class EmailSubscriber implements EventSubscriberInterface
             )
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
+
+        $event = new HotelConfirmationDueEmailSent($recipient, $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
+        $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 }
