@@ -260,6 +260,7 @@ $(function(){
 
     var searchResults = [];
     var selectedHotel = null;
+    var formulaOptions = [];
     var selectedFormula = null;
 
     var selectHotel = function (id) {
@@ -277,15 +278,16 @@ $(function(){
         $('#hotel-informations .content').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
 
         //set formulas
-        var optionTags = [];
-
+        formulaOptions = [];
         for (var i in selectedHotel.formulas) {
-            optionTags.push($('<option value="{1}">{2}</option>'.replace('{1}', selectedHotel.formulas[i].id).replace('{2}', selectedHotel.formulas[i].label)));
+            var forumula = selectedHotel.formulas[i];
+            forumula.text = forumula.label;
+            formulaOptions.push(forumula);
         }
 
-        $('#offer').empty().append(optionTags);
-        selectFormula(optionTags[0].attr('value'));
-        $('#offer').trigger('change.select2');
+        initOfferSelect2();
+        if(formulaOptions.length > 0)
+            $('#offer').val(formulaOptions[0].id).trigger('change');
     };
 
     var selectFormula = function (id) {
@@ -329,6 +331,29 @@ $(function(){
 
     };
 
+    var searchFormulaPrice = function (formula) {
+        if (!formula.planning || !formula.planning.length)
+            return '';
+
+        var price = 0;
+        for (var i in formula.planning) {
+            var planning = formula.planning[i];
+
+            for (var day in planning.days) {
+                //set the price to fist non-zero value, first
+                if (price === 0 && planning.days[day] > 0)
+                    price = planning.days[day];
+                else if (planning.days[day] > 0 && planning.days[day] < price)//set the lowest price we find
+                    price = planning.days[day];
+            }
+        }
+
+        if (price > 0)
+            return (' ' + price + ' €').replace('.', ',');
+        else
+            return '';
+    };
+
     $('#hotel').select2({
         language: 'fr',
         placeholder: 'Hôtel *',
@@ -362,9 +387,27 @@ $(function(){
     $('#number_night').select2({
         minimumResultsForSearch: -1
     });
-    $('#offer').select2({
-        minimumResultsForSearch: -1
-    });
+
+    //as we need to refresh the select2, it is wrapped in a function
+    var initOfferSelect2 = function () {
+        $('#offer').select2({
+            minimumResultsForSearch: -1,
+            data: formulaOptions,
+            templateResult: function (d) {
+                if (d.id)
+                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + searchFormulaPrice(d) + '</span>');
+                else
+                    return $(d.text);
+            },
+            templateSelection: function (d) {
+                if (d.id)
+                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + searchFormulaPrice(d) + '</span>');
+                else
+                    return $(d.text);
+            }
+        });
+    };
+
     $('#offer').change(function (e) {
         selectFormula($('#offer').val());
     });
