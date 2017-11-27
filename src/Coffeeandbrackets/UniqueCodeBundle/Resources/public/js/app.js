@@ -358,7 +358,7 @@ $(function(){
         language: 'fr',
         placeholder: 'Hôtel *',
         ajax: {
-            url: '/ajax-search-hotel',
+            url: $('#hotel').data('endpoint'),
             dataType: 'json',
             processResults: function (data) {
                 var results = [];
