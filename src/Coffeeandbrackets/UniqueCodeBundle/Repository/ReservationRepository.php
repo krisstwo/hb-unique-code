@@ -2,6 +2,8 @@
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
+
 /**
  * ReservationRepository
  *
@@ -10,4 +12,25 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Repository;
  */
 class ReservationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findHotelConfirmationDue()
+    {
+        $criterea = new Criteria();
+
+        $criterea->where($criterea->expr()->isNull('hotelConfirmationDate'));
+        $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
+        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT2H'))));
+
+        return $this->matching($criterea);
+    }
+
+    public function findUnseen()
+    {
+        $criterea = new Criteria();
+
+        $criterea->where($criterea->expr()->isNull('hotelConfirmationDate'));
+        $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
+        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT4H'))));
+
+        return $this->matching($criterea);
+    }
 }

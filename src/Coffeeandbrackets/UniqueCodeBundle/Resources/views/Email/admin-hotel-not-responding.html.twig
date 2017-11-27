@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Demande de réservation sans réponse{% endblock %}
+    </title>
+</head>
+<body>
+<table width="600px" align="center" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <p>
+                L'hôtel {{ reservation.getHotel() }} n'a pas répondu à une demande de réservation d'un membre Happybreak. Merci d'appeler l'hôtelier pour lui signaler.
+            </p>
+            <br>
+            <ul>
+                <li>
+                    {{ customer.getFirstName() }} {{ customer.getLastName() }}
+                </li>
+                <li>
+                    {{ customer.getPhone() }}
+                </li>
+                <li>
+                    {{ customer.getEmail() }}
+                </li>
+                <li>
+                    {{ reservation.getReservationDate().format('d/m/Y') }} {{ reservation.getNumberNight() }}
+                </li>
+                <li>
+                    {{ reservation.getOffer() }}
+                </li>
+                <li>
+                    {{ reservation.getCustomerMsg() }}
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {% include 'UniqueCodeBundle:Email:footer.html.twig' %}
+        </td>
+    </tr>
+</table>
+{% include 'UniqueCodeBundle:Email:style.html.twig' %}
+</body>

@@ -12,8 +12,10 @@ use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelConfirmationDue;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationUnseen;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -182,5 +184,17 @@ class Reservation
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function unseenReservation(ReservationEntity $reservation)
+    {
+        $event = new ReservationUnseen($reservation);
+        $this->eventDispatcher->dispatch(ReservationUnseen::NAME, $event);
+    }
+
+    public function hotelConfirmationDueReservation(ReservationEntity $reservation)
+    {
+        $event = new HotelConfirmationDue($reservation);
+        $this->eventDispatcher->dispatch(HotelConfirmationDue::NAME, $event);
     }
 }

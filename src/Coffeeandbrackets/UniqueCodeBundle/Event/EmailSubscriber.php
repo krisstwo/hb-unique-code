@@ -8,9 +8,12 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelConfirmationDue;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationUnseen;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Mailer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -27,12 +30,18 @@ class EmailSubscriber implements EventSubscriberInterface
     private $mailer;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * EmailSubscriber constructor.
      * @param Mailer $mailer
      */
-    public function __construct(Mailer $mailer)
+    public function __construct(Mailer $mailer, LoggerInterface $logger)
     {
         $this->mailer = $mailer;
+        $this->logger = $logger;
     }
 
     /**
@@ -56,9 +65,11 @@ class EmailSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ReservationCreated::NAME => 'onReservationCreated',
-            HotelDeclined::NAME => 'onHotelDeclined',
-            HotelAccepted::NAME => 'onHotelAccepted'
+            ReservationCreated::NAME   => 'onReservationCreated',
+            HotelDeclined::NAME        => 'onHotelDeclined',
+            HotelAccepted::NAME        => 'onHotelAccepted',
+            ReservationUnseen::NAME    => 'onReservationUnseen',
+            HotelConfirmationDue::NAME => 'onHotelConfirmationDue',
         );
     }
 
@@ -132,6 +143,50 @@ class EmailSubscriber implements EventSubscriberInterface
             'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
+    }
+
+    public function onReservationUnseen(ReservationEvent $event)
+    {
+        $reservation = $event->getReservation();
+
+        //send email to office about hotel not responding
+        $tabParam = array(
+            'to'       => 'contact@coffeeandbrackets.com',
+            'template' => 'UniqueCodeBundle:Email:admin-hotel-not-responding.html.twig',
+            'subject'  => 'Demande de réservation sans réponse',
+            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'params'   => array(
+                'reservation' => $reservation,
+                'customer'    => $reservation->getCustomer(),
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
+    }
+
+    public function onHotelConfirmationDue(ReservationEvent $event)
+    {
+        $reservation = $event->getReservation();
+
+        if (empty($reservation->getHotelEmail())) {
+            //log and quit
+            $this->logger->warning(sprintf('Reservation without hotel email when notifying of confirmation due (id:%s)',
+                $reservation->getId()));
+
+            return;
+        }
+
+        //send email to office about hotel not responding
+        $tabParam = array(
+            'to'       => $reservation->getHotelEmail(),
+            'template' => 'UniqueCodeBundle:Email:hotel-confirmation-due.html.twig',
+            'subject'  => 'Plus que 2 heures pour accepter la réservation',
+            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'params'   => array(
+                'reservation' => $reservation,
+                'customer'    => $reservation->getCustomer(),
             )
         );
         $this->mailer->sendMessage($tabParam, 'text/html');

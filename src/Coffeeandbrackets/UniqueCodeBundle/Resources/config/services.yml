@@ -25,6 +25,7 @@ services:
             class: Coffeeandbrackets\UniqueCodeBundle\Event\EmailSubscriber
             arguments:
                 - "@unique_code.mailer"
+                - "@logger"
             tags:
                 - { name: kernel.event_subscriber }
     unique_code.campaign:
