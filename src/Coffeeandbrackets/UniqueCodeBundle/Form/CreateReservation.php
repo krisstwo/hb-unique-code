@@ -81,6 +81,7 @@ class CreateReservation extends AbstractType
             ->add('code', null, array('required' => true, 'constraints' => array(new Callback($codeCallback))))
             ->add('last_name', null, array('required' => true))
             ->add('first_name', null, array('required' => true))
+            ->add('gender', null, array('required' => true))
             ->add('email', EmailType::class, array('required' => true))
             ->add('re_email', EmailType::class, array('required' => true))
             ->add('phone', null, array('required' => true))
