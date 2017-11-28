@@ -8,6 +8,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 
 
 use Coffeeandbrackets\UniqueCodeBundle\Event\Email\HotelConfirmationDueEmailSent;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Email\UnseenReservationEmailSent;
 use Coffeeandbrackets\UniqueCodeBundle\Event\EmailEvent;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelConfirmationDue;
@@ -162,10 +163,12 @@ class EmailSubscriber implements EventSubscriberInterface
         $reservation = $event->getReservation();
 
         //send email to office about hotel not responding
-        $tabParam = array(
-            'to'       => 'contact@coffeeandbrackets.com',
+        $recipient = 'contact@coffeeandbrackets.com';
+        $subject   = 'Demande de réservation sans réponse';
+        $tabParam  = array(
+            'to'       => $recipient,
             'template' => 'UniqueCodeBundle:Email:admin-hotel-not-responding.html.twig',
-            'subject'  => 'Demande de réservation sans réponse',
+            'subject'  => $subject,
             'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
             'params'   => array(
                 'reservation' => $reservation,
@@ -173,11 +176,16 @@ class EmailSubscriber implements EventSubscriberInterface
             )
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
+
+        $event = new UnseenReservationEmailSent($recipient, $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
+        $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
     public function onHotelConfirmationDue(ReservationEvent $event)
     {
         $reservation = $event->getReservation();
+
+
 
         if (empty($reservation->getHotelEmail())) {
             //log and quit
