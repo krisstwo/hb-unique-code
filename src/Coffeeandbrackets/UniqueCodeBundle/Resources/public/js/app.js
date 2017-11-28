@@ -135,9 +135,7 @@ $(function(){
                 required: true
             },
             re_email: {
-                required: function(element) {
-                    return $(element).val() == $("#email").val();
-                }
+                equalTo: "#email"
             }
         },
         onkeyup: false,
@@ -159,8 +157,12 @@ $(function(){
             }
 
             $('#step_2 .error-required').hide();
-            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['re_email'])
+            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'])
                 $('#step_2 .error-required').show();
+
+            $('#step_2 .error-re-email').hide();
+            if(errorMap['re_email'])
+                $('#step_2 .error-re-email').show();
 
             $('#step_2 .error-cgv').hide();
             if (errorMap['cgv'])
