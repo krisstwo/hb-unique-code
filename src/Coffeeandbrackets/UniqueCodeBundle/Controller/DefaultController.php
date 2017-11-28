@@ -189,6 +189,18 @@ class DefaultController extends Controller
     public function acceptReservationAction($id) {
         $reservation = $this->getDoctrine()->getRepository('UniqueCodeBundle:Reservation')->find($id);
 
+        //validate reservation state before proceeding
+        if ($reservation->getHotelConfirmationDate()
+            || $reservation->getHotelRefuseDate()
+            || $reservation->getCustomerAcceptanceDate()) {
+            $this->addFlash(
+                'error',
+                'Cette réservation n\'est pas dans un status adéquat'
+            );
+
+            return $this->redirectToRoute('unique_code_homepage');
+        }
+
         /**
          * @var $reservationService \Coffeeandbrackets\UniqueCodeBundle\Service\Reservation
          */
