@@ -118,6 +118,9 @@ $(function(){
                     }
                 }
             },
+            gender: {
+                required: true
+            },
             last_name: {
                 required: true
             },
