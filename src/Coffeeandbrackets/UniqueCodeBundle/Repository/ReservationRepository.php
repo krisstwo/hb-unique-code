@@ -2,6 +2,8 @@
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Repository;
 
+use Coffeeandbrackets\UniqueCodeBundle\Entity\EmailLog;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Email\HotelConfirmationDueEmailSent;
 use Doctrine\Common\Collections\Criteria;
 
 /**
@@ -20,7 +22,11 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
         $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
         $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT2H'))));
 
-        return $this->matching($criterea);
+        $qb = $this->createQueryBuilder('r');
+        $qb->addCriteria($criterea)
+            ->andWhere($qb->expr()->eq(sprintf('(SELECT COUNT(el.id) FROM %s el WHERE el.reservation = r AND el.event = \'%s\')', EmailLog::class, HotelConfirmationDueEmailSent::NAME), 0));
+
+        return $qb->getQuery()->execute();
     }
 
     public function findUnseen()
