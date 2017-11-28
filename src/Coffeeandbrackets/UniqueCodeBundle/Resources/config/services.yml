@@ -26,6 +26,7 @@ services:
             arguments:
                 - "@unique_code.mailer"
                 - "@logger"
+                - "@event_dispatcher"
             tags:
                 - { name: kernel.event_subscriber }
     unique_code.email_log_subscriber:
