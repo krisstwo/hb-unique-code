@@ -45,6 +45,7 @@ LAYOUT STYLES
 #header .logo-hb {
     max-height: 70px;
     line-height: 70px;
+    text-align: ce;
 }
 
 #header .logo-campaign {
@@ -96,6 +97,10 @@ LAYOUT STYLES
     left: 1em;
     height: 3em;
     line-height: 3em;
+}
+
+#footer .logo img {
+    max-height: 80%;
 }
 
 /**

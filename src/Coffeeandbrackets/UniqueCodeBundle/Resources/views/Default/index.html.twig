@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 {% include 'UniqueCodeBundle:Default:partials/flash-messages.html.twig' %}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="col-container">
                     <p class="text-center campaign-logo-wrapper">
                         {% if campaign is not empty %}
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="col-container">
                     <div class="step-container" id="step_1">
                         <h1 class="text-center">Vous êtes sur le point de réserver un hôtel d’exception à -50%</h1>

@@ -20,19 +20,16 @@
     </head>
     <body>
     <div class="body-bg"
-         style="background-image: url('https://www.happybreak.com/sites/default/files/styles/730_375/public/HOT001P03.jpg?itok=aSmgcZVH')">
+         style="background-image: url('{% image '@UniqueCodeBundle/Resources/public/img/bg.jpg' %}{{ asset_url }}{% endimage %}')">
         <header id="header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <div class="logo-hb">
                             {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
                             <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
                             {% endimage %}
                         </div>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        {{ render(controller('UniqueCodeBundle:Default:headerCampaignLogo')) }}
                     </div>
                 </div>
             </div>
@@ -42,12 +39,14 @@
         </section>
         <footer id="footer">
             <div class="logo">
-                logo-footer
+                {% image '@UniqueCodeBundle/Resources/public/img/footer-logo.png' %}
+                <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
+                {% endimage %}
             </div>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        Tous droits réservés - <a href="#">Mentions légales</a> - <a href="#">www.happybreak.com</a> -
+                        Tous droits réservés - <a href="#">Mentions légales</a> - <a href="#">CGV-CGU</a> - <a href="#">www.happybreak.com</a> -
                         Contactez-nous au 09 80 01 01 01
                     </div>
                 </div>
