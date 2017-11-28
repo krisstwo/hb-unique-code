@@ -22,6 +22,9 @@ unique_code_accept_reservation:
 unique_code_hotel_refuse_reservation:
     path:     /hotel-refuse-reservation/{id}
     defaults: { _controller: UniqueCodeBundle:Default:hotelRefuseReservation }
+unique_code_notification:
+    path:     /notification
+    defaults: { _controller: UniqueCodeBundle:Default:notification }
 unique_code_post_hotel_refuse_reservation:
     path:     /post-hotel-refuse-reservation/{id}
     defaults: { _controller: UniqueCodeBundle:Default:postHotelRefuseReservation }

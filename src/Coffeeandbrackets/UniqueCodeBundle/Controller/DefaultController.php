@@ -269,12 +269,22 @@ class DefaultController extends Controller
                 $reservationService = $this->get('unique_code.reservation');
                 $reservationService->hotelRefuseReservation($reservation, $data);
 
+                //prepare message for redirection
+                $this->addFlash(
+                    'success',
+                    'Votre proposition a bien été envoyée au client'
+                );
+
                 return new JsonResponse(array());
             }else {
                 return new JsonResponse(array('error' => 'Données invalides', 'details' => (string) $form->getErrors(true)));
             }
         }
         return new Response("Action not allowed", 400);
+    }
+
+    public function notificationAction() {
+        return $this->render('UniqueCodeBundle:Default:notification.html.twig', array());
     }
 
     public function customerReservationActionAction(Request $request)

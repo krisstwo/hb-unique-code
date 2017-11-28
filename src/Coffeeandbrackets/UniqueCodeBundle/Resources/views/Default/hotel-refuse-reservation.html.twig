@@ -13,7 +13,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <form id="hotel-refuse-reservation" method="post" action="{{ path('unique_code_post_hotel_refuse_reservation', {'id': reservation.getId()}) }}">
+                            <form id="hotel-refuse-reservation" method="post" action="{{ path('unique_code_post_hotel_refuse_reservation', {'id': reservation.getId()}) }}" data-redirect="{{ path('unique_code_notification') }}">
                                 <p>
                                     Veuillez justifier votre refus de réservation.
                                     Votre message sera transféré directement

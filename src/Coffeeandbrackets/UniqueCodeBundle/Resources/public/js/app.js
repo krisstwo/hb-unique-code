@@ -435,9 +435,11 @@ $(function(){
      */
 
     $('#check-in-date').datepicker({
-        dateFormat: "dd/mm/yy"
+        dateFormat: "dd/mm/yy",
+        minDate: new Date()
     });
 
+    var isRefusalSubmitted  = false;
     $('form#hotel-refuse-reservation').validate({
         rules: {
             reason: {
@@ -462,6 +464,10 @@ $(function(){
         },
         errorContainer: 'form#hotel-refuse-reservation .errors',
         submitHandler: function(form) {
+            //only one successful submit
+            if(isRefusalSubmitted)
+                return;
+
             $('#hotel-refuse-reservation button[type="submit"]').button('loading');
 
             $.ajax({
@@ -473,8 +479,8 @@ $(function(){
                     if(result && result.error)
                         return;
 
-                    $('#modal-flash-success .content').text('Votre proposition a bien été envoyée au client');
-                    $('#modal-flash-success').modal('show');
+                    isRefusalSubmitted = true;
+                    window.location.href = $(form).data('redirect');
                 },
                 complete: function () {
                     $('#hotel-refuse-reservation button[type="submit"]').button('reset');
