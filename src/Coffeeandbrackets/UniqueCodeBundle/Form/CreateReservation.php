@@ -43,7 +43,7 @@ class CreateReservation extends AbstractType
                             ->addViolation();
                     break;
                 case CheckCode::INVALID_CODE_RESERVED:
-                    $context->buildViolation('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.')
+                    $context->buildViolation('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez pas envoyer plusieurs demandes de réservation en même temps.')
                             ->atPath('firstName')
                             ->addViolation();
                     break;

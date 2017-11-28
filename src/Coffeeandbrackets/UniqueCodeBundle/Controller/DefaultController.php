@@ -96,7 +96,7 @@ class DefaultController extends Controller
                     return new JsonResponse('Le code unique indiqué a déjà été utilisé.');
                     break;
                 case CheckCode::INVALID_CODE_RESERVED:
-                    return new JsonResponse('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez envoyer plusieurs demandes de réservation en même temps.');
+                    return new JsonResponse('Le code unique indiqué a déjà une demande de reservation en cours. Vous ne pouvez pas envoyer plusieurs demandes de réservation en même temps.');
                     break;
                 default:
                     /**
