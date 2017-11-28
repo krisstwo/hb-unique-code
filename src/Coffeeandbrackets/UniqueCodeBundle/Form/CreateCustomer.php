@@ -7,6 +7,7 @@
 namespace Coffeeandbrackets\UniqueCodeBundle\Form;
 
 use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
+use Sonata\AdminBundle\Form\Type\Filter\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -50,6 +51,7 @@ class CreateCustomer extends AbstractType
 
         $builder
             ->add('code', null, array('required' => true, 'constraints' => array(new Callback($codeCallback))))
+            ->add('gender', null, array('required' => true))
             ->add('last_name', null, array('required' => true))
             ->add('first_name', null, array('required' => true))
             ->add('email', EmailType::class, array('required' => true))

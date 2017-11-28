@@ -64,6 +64,13 @@ class Customer
      */
     private $campaign;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gender", type="string", columnDefinition="enum('male', 'female')")
+     */
+    private $gender;
+
 
     /**
      * Get id
@@ -201,6 +208,22 @@ class Customer
     public function setCampaign($campaign)
     {
         $this->campaign = $campaign;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param mixed $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
     }
 }
 
