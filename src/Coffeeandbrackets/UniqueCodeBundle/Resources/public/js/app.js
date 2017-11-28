@@ -96,6 +96,14 @@ $(function(){
         stepTo(2);
     });
 
+    $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        }
+    );
+
     $("#step_2 form").validate({
         rules: {
             code: {
@@ -136,6 +144,10 @@ $(function(){
             },
             re_email: {
                 equalTo: "#email"
+            },
+            phone: {
+                required: true,
+                regex: /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/
             }
         },
         onkeyup: false,
@@ -157,7 +169,7 @@ $(function(){
             }
 
             $('#step_2 .error-required').hide();
-            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'])
+            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['phone'])
                 $('#step_2 .error-required').show();
 
             $('#step_2 .error-re-email').hide();
