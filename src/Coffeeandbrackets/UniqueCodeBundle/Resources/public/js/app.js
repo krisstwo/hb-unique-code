@@ -57,7 +57,7 @@ $(function(){
      */
 
     var stepTo = function (stepIndex) {
-        if (stepIndex < 1 || stepIndex > 3)
+        if (stepIndex < 1 || stepIndex > 4)
             return;
 
         $('.step-list .step-list-item').removeClass('active');
@@ -193,6 +193,8 @@ $(function(){
         }
     });
 
+    var isReservationSubmitted = false;
+
     $("#step_3 form").validate({
         rules: {
             number_person: {
@@ -232,6 +234,10 @@ $(function(){
             this.defaultShowErrors();
         },
         submitHandler: function(form) {
+            //can submit only on a page load
+            if(isReservationSubmitted)
+                return;
+
             $('#to_step_4').button('loading');
 
             $.ajax({
@@ -242,10 +248,9 @@ $(function(){
                     if (result && result.error)
                         return;
 
-                    $('#modal-flash-success .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
-                    $('#modal-flash-success').modal('show');
-
+                    isReservationSubmitted = true;
                     $('#to_step_4').prop('disabled', true);
+                    stepTo(4);
                 },
                 complete: function () {
                     $('#to_step_4').button('reset');
