@@ -361,7 +361,7 @@ $(function(){
 
     $('#hotel').select2({
         language: 'fr',
-        placeholder: 'Hôtel *',
+        placeholder: 'Saisissez le nom de l\'hôtel *',
         ajax: {
             url: $('#hotel').data('endpoint'),
             dataType: 'json',

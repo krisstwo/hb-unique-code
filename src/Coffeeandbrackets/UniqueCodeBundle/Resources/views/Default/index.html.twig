@@ -147,8 +147,12 @@
                         <span>* Champ obligatoire</span>
                     </div>
                     <div class="step-container" id="step_3" style="display: none">
-                        <h3 class="step-heading">Etape 3 : J’envoie ma demande de réservation</h3>
+                        <h3 class="step-heading">3. J’envoie ma demande de réservation</h3>
                         <form action="{{ path('unique_code_submit_reservation') }}">
+                            <div class="form-group">
+                                <select type="text" class="form-control" id="hotel" name="hotel" required data-endpoint="{{ path('unique_code_ajax_search_hotel') }}"></select>
+                                <input type="hidden" id="hotel-name" name="hotel-name">
+                            </div>
                             <div class="form-group">
                                 <label class="radio-inline">
                                     Nombre de personnes
@@ -160,15 +164,11 @@
                                     <input type="radio" name="number_person" id="number_person_2" value="2" checked> 2
                                 </label>
                             </div>
-                            <div class="form-group">
-                                <select type="text" class="form-control" id="hotel" name="hotel" required data-endpoint="{{ path('unique_code_ajax_search_hotel') }}"></select>
-                                <input type="hidden" id="hotel-name" name="hotel-name">
-                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="date" name="date"
-                                               placeholder="Date d'entrée *" required>
+                                               placeholder="Date d'arrivée *" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -212,16 +212,13 @@
                                           placeholder="Je suis allergique au gluten et je souhaiterais un d'appoint ..." maxlength="255"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
-                                    Attention
-                                </div>
-                                <div class="col-md-8">
-                                    <p>
-                                        Votre réservation ne sera prise en compte seulement quand l’hôtel aura confirmé votre demande.
-                                    </p>
-                                    <p>
-                                        Chaque réservation est soumise aux conditions générales d’utilisation de l’hôtel.
-                                    </p>
+                                <div class="col-md-offset-2 col-md-8">
+                                    <ul>
+                                        <li>A noter, votre réservation ne sera prise en compte seulement quand l'hôtel aura confirmé votre demande par email (sous n délai de 12h).</li>
+                                        <li>
+                                            Chaque réservation est soumise aux conditions générales de vente de l'hôtel.
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="alert alert-danger error-required" style="display: none;">
