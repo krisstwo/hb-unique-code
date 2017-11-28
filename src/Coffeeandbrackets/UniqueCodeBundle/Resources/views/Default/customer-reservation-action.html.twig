@@ -4,14 +4,9 @@
         <div class="col-container">
             <div class="row">
                 <div class="col-md-8">
-                    <h2>
-                        Votre demande n’a pas abouti
-                    </h2>
 
                     <p>
-                        Malheureusement, l’hôtel n’a pas
-                        pu accepter votre demande de
-                        réservation pour le motif suivant :
+                        Nous sommes désolées, l'hôtel {{ reservation.getHotel() }} n'a pas pu accepter votre demande de réservation pour le motif suivant :
                     </p>
 
                     {% if reservation.getHotelRefuseReason() is not empty %}
@@ -22,8 +17,7 @@
 
                     {% if reservation.getHotelProposedCheckInDate() is not empty and reservation.getHotelProposedCheckOutDate() is not empty %}
                         <p>
-                            Cependant, l’hôtel vous propose
-                            une autre date de séjour :
+                            <strong>Cependant, l'hôtel vous propose une autre date de séjour :</strong>
                         </p>
                         <ul>
                             <li>du {{ reservation.getHotelProposedCheckInDate().format('d/m/Y') }}
@@ -38,14 +32,13 @@
                         <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-accept-reservation"
                            href="{{ path('unique_code_ajax_customer_accept_hotel_proposing', {'id': reservation.getId() }) }}"
                            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Accepter
-                            la proposition de l’hôtel</a>
+                            la proposition de l'hôtel</a>
                     </p>
 
                     <p class="text-center">
                         <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-decline-reservation"
                            href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}"
-                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire
-                            une autre demande*</a>
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire une autre demande <br>de réservation*</a>
                         {% if reservation.getCampaign() is not empty %}
                             <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_campaign', {'campaignCode': reservation.getCampaign().getCode() }) }}">
                         {% endif %}
