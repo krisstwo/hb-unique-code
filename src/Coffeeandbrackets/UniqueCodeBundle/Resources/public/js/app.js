@@ -96,6 +96,16 @@ $(function(){
         stepTo(2);
     });
 
+    $("#back_step_1").on('click', function (e) {
+        e.preventDefault();
+        stepTo(1);
+    });
+
+    $("#back_step_2").on('click', function (e) {
+        e.preventDefault();
+        stepTo(2);
+    });
+
     $.validator.addMethod(
         "regex",
         function(value, element, regexp) {
