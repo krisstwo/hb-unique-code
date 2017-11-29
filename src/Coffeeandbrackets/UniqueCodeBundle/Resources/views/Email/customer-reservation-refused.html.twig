@@ -8,29 +8,59 @@
     </title>
 </head>
 <body>
-<table width="600px" align="center" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td>
-            <h3>Malheureusement, l’hôtel n’est pas disponible aux dates demandées.</h3>
-            <br>
-            <p>Veuillez cliquer sur le bouton ci-dessous pour connaitre le
-                motif du refus de votre réservation et découvrir la
-                proposition alternative de l’hôtel.</p>
-            <br>
-            <p style="text-align: center"><a class="btn btn-lg btn-hb btn-upper" href="{{ url('unique_code_customer_reservation_action', {'id': reservation.getId()}) }}">Consulter</a> </p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {% include 'UniqueCodeBundle:Email:footer.html.twig' %}
-        </td>
-    </tr>
-</table>
+<center>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center" valign="top">
+                <table width="600px" align="center" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="center" valign="top">
+                            <img src="http://emailing.happy-break.fr/resources/codeunique/img/banniere.jpg" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{ reservation.getCustomer().getFirstName() }},</p>
+                            <p>Nous sommes désolés! L’hôtel n’est pas disponible aux dates demandées.</p>
+                            <p>Veuillez cliquer sur le bouton ci-dessous pour connaitre le motif du refus de votre réservation et <b>découvrir la proposition alternative de l’hôtel.</b></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <table width="180" height="44" cellpadding="0" cellspacing="0" border="0"
+                                   bgcolor="#F7A600 " style="border-radius:4px;">
+                                <tr>
+                                    <td align="center" valign="middle" height="44">
+                                        <a href="{{ url('unique_code_customer_reservation_action', {'id': reservation.getId()}) }}"
+                                           target="_blank"
+                                           style="width:180px;">Consulter</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <p>
+                                Nous vous souhaitons un agréable séjour, avec Happybreak,<br>A bientôt,</br>L’équipe Happybreak
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% include 'UniqueCodeBundle:Email:footer.html.twig' %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</center>
 {% include 'UniqueCodeBundle:Email:style.html.twig' %}
 </body>
