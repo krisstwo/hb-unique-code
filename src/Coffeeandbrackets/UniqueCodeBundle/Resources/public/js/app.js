@@ -282,7 +282,6 @@ $(function(){
 
     var searchResults = [];
     var selectedHotel = null;
-    var formulaOptions = [];
     var selectedFormula = null;
 
     var selectHotel = function (id) {
@@ -299,17 +298,7 @@ $(function(){
         $('#hotel-informations').show();
         $('#hotel-informations .content').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
 
-        //set formulas
-        formulaOptions = [];
-        for (var i in selectedHotel.formulas) {
-            var forumula = selectedHotel.formulas[i];
-            forumula.text = forumula.label;
-            formulaOptions.push(forumula);
-        }
-
         initOfferSelect2();
-        if(formulaOptions.length > 0)
-            $('#offer').val(formulaOptions[0].id).trigger('change');
     };
 
     var selectFormula = function (id) {
@@ -333,24 +322,7 @@ $(function(){
             }
         });
 
-        //set available nights for this formula
-        var nightsOptions = $('#number_night option');
-        for (var i = 0; i < nightsOptions.length; i++) {
-            var el = $(nightsOptions[i]);
-            if (selectedFormula.nights.indexOf(parseInt(el.attr('value'))) === -1) {
-                el.attr('disabled', 'disabled');
-            } else {
-                if (el.attr('disabled')) {
-                    el.removeAttr('disabled');
-                }
-            }
-
-            $('#number_night').find('option:first').attr('selected', 'selected');
-            $('#number_night').select2({
-                minimumResultsForSearch: -1
-            });
-        }
-
+        initNightsSelect2();
     };
 
     var searchFormulaPrice = function (formula) {
@@ -406,13 +378,31 @@ $(function(){
         selectHotel($('#hotel').val());
     });
 
+    $('#offer').select2({
+        language: 'fr',
+        minimumResultsForSearch: -1
+    });
+
     $('#number_night').select2({
+        language: 'fr',
         minimumResultsForSearch: -1
     });
 
     //as we need to refresh the select2, it is wrapped in a function
     var initOfferSelect2 = function () {
+        var formulaOptions = [];
+
+        for (var i in selectedHotel.formulas) {
+            var forumula = selectedHotel.formulas[i];
+            forumula.text = forumula.label;
+            formulaOptions.push(forumula);
+        }
+
+        //reset value, otherwise it keep showing old options
+        $('#offer option').remove();
+
         $('#offer').select2({
+            language: 'fr',
             minimumResultsForSearch: -1,
             data: formulaOptions,
             templateResult: function (d) {
@@ -428,11 +418,41 @@ $(function(){
                     return $(d.text);
             }
         });
+
+        if(formulaOptions.length > 0)
+            $('#offer').val(formulaOptions[0].id);
+        $('#offer').trigger('change');
     };
 
     $('#offer').change(function (e) {
         selectFormula($('#offer').val());
     });
+
+    //as we need to refresh the select2, it is wrapped in a function
+    var initNightsSelect2 = function () {
+        var nightsOptions = [];
+        if (selectedFormula && selectedFormula.nights && selectedFormula.nights.length) {
+            for (var i = 0; i < selectedFormula.nights.length; i++) {
+                nightsOptions.push({
+                    id: selectedFormula.nights[i],
+                    text: selectedFormula.nights[i] == 1 ? '1 nuit' : selectedFormula.nights[i] + ' nuits'
+                });
+            }
+        }
+
+        //reset value, otherwise it keep showing old options
+        $('#number_night option').remove();
+
+        $('#number_night').select2({
+            language: 'fr',
+            minimumResultsForSearch: -1,
+            data: nightsOptions
+        });
+
+        if(nightsOptions.length > 0)
+            $('#number_night').val(nightsOptions[0].id).trigger('change');
+        $('#number_night').trigger('change');
+    };
 
     /**
      * Hotel view reservation page

@@ -124,12 +124,15 @@ class Hotels
                 $possibleValues[] = 1;
                 break;
             case 'Cette formule est réservable un maximum de 2 nuitées consécutives':
-                $possibleValues[] = 2;
+                $possibleValues = array(1, 2);
+                break;
+            case 'Cette formule est réservable un maximum de 3 nuitées consécutives':
+                $possibleValues = array(1, 2, 3);
+                break;
+            case 'Cette formule est réservable plusieurs nuitées consécutives' :
+                $possibleValues = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 break;
             default:
-                $possibleValues[] = 1;
-                $possibleValues[] = 2;
-                $possibleValues[] = 3;
                 break;
         }
 
