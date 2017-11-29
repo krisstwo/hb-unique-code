@@ -2,30 +2,26 @@
 {% block body %}
             <div class="container">
                 <div class="col-container">
-                    {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
+                <div class="row">
+                <div class="col-md-12">
+                Vous refusez la réservation de Mr/Mme {{ reservation.getCustomer.getLastName() }} pour le {{ reservation.getReservationDate()|date('d/m/Y') }}
+                </div>
+                </div>
+                <br><br>
                     <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                            <div class="row">
-                                <div class="col-md-6 col-md-offset-3">
-                                    <p class="text-center">
-                                        <a class="btn btn-hb btn-lg btn-upper btn-block action-hotel-accept-reservation" href="{{ path('unique_code_accept_reservation', {'id': reservation.getId()}) }}">J’ai changé d’avis, <br>j’accepte la réservation
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                            <form id="hotel-refuse-reservation" method="post" action="{{ path('unique_code_post_hotel_refuse_reservation', {'id': reservation.getId()}) }}">
+                        <div class="col-md-6 refuse-container">
+                        <form id="hotel-refuse-reservation" method="post" action="{{ path('unique_code_post_hotel_refuse_reservation', {'id': reservation.getId()}) }}">
+                                <p class="text-center"><b>Je propose une alternative au client</b></p>
                                 <p>
                                     Veuillez justifier votre refus de réservation.
-                                    Votre message sera transféré directement
-                                    au client.
+                                    Votre message sera transféré directement au client.
                                 </p>
                                 <div class="form-group">
                                     <textarea class="form-control" id="reason" name="reason"
                                               placeholder="Motif du refus *"></textarea>
                                 </div>
                                 <p>
-                                    Veuillez proposer une autre date à laquelle
-                                    vous seriez prêt à accueillir le client
+                                    Veuillez proposer une autre date à laquelle vous seriez prêt à accueillir le client
                                 </p>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="check-in-date" name="check-in-date"
@@ -54,6 +50,15 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <b>J’ai changé d’avis,</b> <br><br>
+                                <a class="btn btn-hb btn-lg btn-upper action-hotel-accept-reservation"
+                                   href="{{ path('unique_code_accept_reservation', {'id': reservation.getId()}) }}">
+                                   j’accepte la réservation
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>
