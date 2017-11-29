@@ -119,11 +119,11 @@ class Reservation
     private $hotelProposedCheckInDate;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="hotel_proposed_check_out_date", type="date", nullable=true)
+     * @ORM\Column(name="hotel_proposed_number_night", type="integer", nullable=true)
      */
-    private $hotelProposedCheckOutDate;
+    private $hotelProposedNumberNight;
 
     /**
      * @var \DateTime
@@ -475,22 +475,6 @@ class Reservation
     /**
      * @return \DateTime
      */
-    public function getHotelProposedCheckOutDate()
-    {
-        return $this->hotelProposedCheckOutDate;
-    }
-
-    /**
-     * @param \DateTime $hotelProposedCheckOutDate
-     */
-    public function setHotelProposedCheckOutDate($hotelProposedCheckOutDate)
-    {
-        $this->hotelProposedCheckOutDate = $hotelProposedCheckOutDate;
-    }
-
-    /**
-     * @return \DateTime
-     */
     public function getCustomerAcceptanceDate()
     {
         return $this->customerAcceptanceDate;
@@ -518,6 +502,22 @@ class Reservation
     public function setCustomerDeclineDate($customerDeclineDate)
     {
         $this->customerDeclineDate = $customerDeclineDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHotelProposedNumberNight()
+    {
+        return $this->hotelProposedNumberNight;
+    }
+
+    /**
+     * @param int $hotelProposedNumberNight
+     */
+    public function setHotelProposedNumberNight($hotelProposedNumberNight)
+    {
+        $this->hotelProposedNumberNight = $hotelProposedNumberNight;
     }
 }
 
