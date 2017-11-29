@@ -311,6 +311,8 @@ $(function(){
         initOfferSelect2();
     };
 
+    $('#number_person_1').tooltip();
+    $('#number_person_2').tooltip();
     var selectFormula = function (id) {
         selectedFormula = selectedHotel.formulas[id];
 
@@ -334,22 +336,22 @@ $(function(){
 
         initNightsSelect2();
         // select nb person
-        $('#number_person_1').attr('title', '');
+        $('#number_person_1').closest('label').attr('title', '');
         $('#number_person_1').removeAttr("disabled");
-        $('#number_person_1').tooltip('disable');
+        $('#number_person_1').closest('label').tooltip('destroy');
         if(selectedFormula.persons.indexOf(1) === -1){
             $('#number_person_1').attr('disabled', 'disabled');
-            $('#number_person_1').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 1 personne.');
-            $('#number_person_1').tooltip();
+            $('#number_person_1').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 1 personne.');
+            $('#number_person_1').closest('label').tooltip();
         }
 
-        $('#number_person_2').attr('title', '');
+        $('#number_person_2').closest('label').attr('title', '');
         $('#number_person_2').removeAttr("disabled");
-        $('#number_person_2').tooltip('disable');
+        $('#number_person_2').closest('label').tooltip('destroy');
         if(selectedFormula.persons.indexOf(2) === -1){
             $('#number_person_2').attr('disabled', 'disabled');
-            $('#number_person_2').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 2 personnes.');
-            $('#number_person_2').tooltip();
+            $('#number_person_2').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 2 personnes.');
+            $('#number_person_2').closest('label').tooltip();
         }
 
     };
