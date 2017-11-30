@@ -24,6 +24,13 @@ class Code
     /**
      * @var string
      *
+     * @ORM\Column(name="clear", type="string", length=255)
+     */
+    private $clear;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="code", type="string", length=255)
      */
     private $code;
@@ -59,6 +66,22 @@ class Code
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClear()
+    {
+        return $this->clear;
+    }
+
+    /**
+     * @param string $clear
+     */
+    public function setClear($clear)
+    {
+        $this->clear = $clear;
     }
 
     /**
