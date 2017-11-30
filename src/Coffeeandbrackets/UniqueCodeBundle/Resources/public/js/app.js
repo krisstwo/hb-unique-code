@@ -67,6 +67,8 @@ $(function(){
         $('#step_' + stepIndex).show();
     };
 
+    $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+
     $('#step_3 #date').datepicker({
         dateFormat: "dd/mm/yy",
         minDate: new Date(),
