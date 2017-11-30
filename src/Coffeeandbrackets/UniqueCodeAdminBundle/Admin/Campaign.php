@@ -44,6 +44,6 @@ class Campaign extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clearExcept(array('list', 'export', 'edit', 'delete'));
+        $collection->clearExcept(array('list', 'export', 'create', 'edit', 'delete'));
     }
 }
