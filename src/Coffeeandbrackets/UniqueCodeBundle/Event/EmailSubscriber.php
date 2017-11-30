@@ -92,7 +92,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => $reservation->getCustomer()->getEmail(),
             'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
             'subject' => 'Confirmation de demande de réservation',
-            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'from' => 'contact@happybreak.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation
             )
@@ -104,7 +104,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => $reservation->getHotelEmail(),
             'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
             'subject' => 'Demande de réservation',
-            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'from' => 'contact@happybreak.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation,
                 'customer' => $reservation->getCustomer(),
@@ -121,7 +121,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to'       => $reservation->getCustomer()->getEmail(),
             'template' => 'UniqueCodeBundle:Email:customer-reservation-refused.html.twig',
             'subject'  => 'Demande de réservation refusée',
-            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'from'     => 'contact@happybreak.com',//TODO: let from be empty
             'params'   => array(
                 'reservation' => $reservation
             )
@@ -138,7 +138,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => $reservation->getHotelEmail(),
             'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
             'subject' => 'Confirmation de réservation',
-            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'from' => 'contact@happybreak.com',//TODO: let from be empty,
             'params' => array(
                 'reservation' => $reservation
             )
@@ -150,7 +150,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to' => $reservation->getCustomer()->getEmail(),
             'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
             'subject' => 'Confirmation de votre réservation',
-            'from' => 'contact@coffeeandbrackets.com',//TODO: let from be empty
+            'from' => 'contact@happybreak.com',//TODO: let from be empty
             'params' => array(
                 'reservation' => $reservation
             )
@@ -163,13 +163,13 @@ class EmailSubscriber implements EventSubscriberInterface
         $reservation = $event->getReservation();
 
         //send email to office about hotel not responding
-        $recipient = 'contact@coffeeandbrackets.com';
+        $recipient = 'contact@happybreak.com';
         $subject   = 'Demande de réservation sans réponse';
         $tabParam  = array(
             'to'       => $recipient,
             'template' => 'UniqueCodeBundle:Email:admin-hotel-not-responding.html.twig',
             'subject'  => $subject,
-            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'from'     => 'contact@happybreak.com',//TODO: let from be empty,
             'params'   => array(
                 'reservation' => $reservation,
                 'customer'    => $reservation->getCustomer(),
@@ -202,7 +202,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'to'       => $recipient,
             'template' => 'UniqueCodeBundle:Email:hotel-confirmation-due.html.twig',
             'subject'  => $subject,
-            'from'     => 'contact@coffeeandbrackets.com',//TODO: let from be empty,
+            'from'     => 'contact@happybreak.com',//TODO: let from be empty,
             'params'   => array(
                 'reservation' => $reservation,
                 'customer'    => $reservation->getCustomer(),
