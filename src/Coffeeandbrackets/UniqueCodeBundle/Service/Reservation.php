@@ -170,6 +170,7 @@ class Reservation
             $newReservation->setNumberPerson($reservation->getNumberPerson());
             $newReservation->setHotel($reservation->getHotel());
             $newReservation->setOffer($reservation->getOffer());
+            $newReservation->setHotelEmail($reservation->getHotelEmail());
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
             $newReservation->setCampaign($reservation->getCampaign());
