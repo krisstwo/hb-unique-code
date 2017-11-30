@@ -178,7 +178,7 @@ class Reservation
     /**
      * @var float
      *
-     * @ORM\Column(name="offer_price", type="float", scale=2)
+     * @ORM\Column(name="offer_price", type="float", scale=2, nullable=true)
      */
     private $offerPrice;
 
