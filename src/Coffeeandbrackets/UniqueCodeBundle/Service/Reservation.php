@@ -90,7 +90,7 @@ class Reservation
 
         $hotel = $this->hotelsService->findOneByNameId($data['hotel-name'], $data['hotel']);
         if ($hotel) {
-            $reservation->setHotelEmail($hotel['email']);
+            $reservation->setHotelEmail(iconv("UTF-8", "ASCII//IGNORE", $hotel['email']));
         }
 
         $reservation->setOffer($data['offer-name']);
