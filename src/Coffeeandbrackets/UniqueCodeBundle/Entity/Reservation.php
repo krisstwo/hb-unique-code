@@ -157,21 +157,21 @@ class Reservation
     /**
      * @var string
      *
-     * @ORM\Column(name="offer_service_afternoon", type="string", length=255)
+     * @ORM\Column(name="offer_service_afternoon", type="string", length=255, nullable=true)
      */
     private $offerServiceAfternoon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offer_service_night", type="string", length=255)
+     * @ORM\Column(name="offer_service_night", type="string", length=255, nullable=true)
      */
     private $offerServiceNight;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offer_service_morning", type="string", length=255)
+     * @ORM\Column(name="offer_service_morning", type="string", length=255, nullable=true)
      */
     private $offerServiceMorning;
 
