@@ -83,7 +83,7 @@ LAYOUT STYLES
 #footer {
     background: #776863;
     color: #ffffff;
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     height: 3em;

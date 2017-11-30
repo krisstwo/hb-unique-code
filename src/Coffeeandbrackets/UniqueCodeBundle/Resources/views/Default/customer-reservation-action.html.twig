@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <p>
-                        Nous sommes désolées, l'hôtel {{ reservation.getHotel() }} n'a pas pu accepter votre demande de réservation pour le motif suivant :
+                        Nous sommes désolés, l'hôtel {{ reservation.getHotel() }} n'a pas pu accepter votre demande de réservation pour le motif suivant :
                     </p>
 
                     {% if reservation.getHotelRefuseReason() is not empty %}
@@ -30,8 +30,7 @@
                     <p class="text-center">
                         <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-accept-reservation"
                            href="{{ path('unique_code_ajax_customer_accept_hotel_proposing', {'id': reservation.getId() }) }}"
-                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Accepter
-                            la proposition de l'hôtel</a>
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Accepter la proposition <br>de l'hôtel</a>
                     </p>
 
                     <p class="text-center">

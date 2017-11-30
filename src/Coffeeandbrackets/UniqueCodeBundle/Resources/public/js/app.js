@@ -88,6 +88,9 @@ $(function(){
             }
 
             return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
+        },
+        onSelect : function(dateText){
+            reservationDetail(dateText);
         }
     });
 
@@ -358,6 +361,36 @@ $(function(){
             });
         }
 
+        reservationDetail($('#step_3 #date').val());
+    };
+
+    var reservationDetail = function (date){
+
+        $('#reservation-detail').hide();
+
+        $('#reservation-detail #offer_service_afternoon').val('');
+        $('#reservation-detail #offer_service_night').val('');
+        $('#reservation-detail #offer_service_morning').val('');
+
+        if (!selectedFormula || !date)
+            return false;
+
+        var month = parseInt(date.split('/')[1]);
+        var year = parseInt(date.split('/')[2]);
+        for (var i in selectedFormula.planning) {
+            var planning = selectedFormula.planning[i];
+
+            if(parseInt(planning.year) == year && parseInt(planning.month) == month){
+                if((planning.service_afternoon || planning.service_night || planning.service_morning)){
+                    $('#reservation-detail').show();
+                    $('#reservation-detail .content').html(planning.service_afternoon+'<br><br>'+planning.service_night+'<br><br>'+planning.service_morning);
+
+                    $('#reservation-detail #offer_service_afternoon').val(planning.service_afternoon);
+                    $('#reservation-detail #offer_service_night').val(planning.service_night);
+                    $('#reservation-detail #offer_service_morning').val(planning.service_morning);
+                }
+            }
+        }
     };
 
     var searchFormulaPrice = function (formula) {
