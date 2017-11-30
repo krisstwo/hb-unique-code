@@ -77,7 +77,10 @@ class Hotels
                     $forfaitPlanning[] = array(
                         'year'  => $planningLine->getYear(),
                         'month' => $planningLine->getMonth(),
-                        'days'  => $planningLine->getDaysArray()
+                        'days'  => $planningLine->getDaysArray(),
+                        'service_afternoon' => $planningLine->getServiceAfternoon(),
+                        'service_night' => $planningLine->getServiceNight(),
+                        'service_morning' => $planningLine->getServiceMorning()
                     );
                 }
 

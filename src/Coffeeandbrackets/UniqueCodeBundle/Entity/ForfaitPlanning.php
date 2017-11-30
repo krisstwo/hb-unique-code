@@ -280,6 +280,27 @@ class ForfaitPlanning
      */
     private $day31;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_afternoon", type="string", length=255)
+     */
+    private $serviceAfternoon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_night", type="string", length=255)
+     */
+    private $serviceNight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service_morning", type="string", length=255)
+     */
+    private $serviceMorning;
+
 
     /**
      * Get id
@@ -450,6 +471,54 @@ class ForfaitPlanning
         }
 
         return $days;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceAfternoon()
+    {
+        return $this->serviceAfternoon;
+    }
+
+    /**
+     * @param string $serviceAfternoon
+     */
+    public function setServiceAfternoon($serviceAfternoon)
+    {
+        $this->serviceAfternoon = $serviceAfternoon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceNight()
+    {
+        return $this->serviceNight;
+    }
+
+    /**
+     * @param string $serviceNight
+     */
+    public function setServiceNight($serviceNight)
+    {
+        $this->serviceNight = $serviceNight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceMorning()
+    {
+        return $this->serviceMorning;
+    }
+
+    /**
+     * @param string $serviceMorning
+     */
+    public function setServiceMorning($serviceMorning)
+    {
+        $this->serviceMorning = $serviceMorning;
     }
 }
 
