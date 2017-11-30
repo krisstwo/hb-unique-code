@@ -112,8 +112,7 @@ class Reservation
             $reservation->setHotelRefuseDate(new \DateTime());
             $reservation->setHotelRefuseReason($data['reason']);
             $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
-            $reservation->setHotelProposedCheckOutDate(date_create_from_format('d/m/Y',
-                $data['check-in-date'])->add(new \DateInterval(sprintf('P%dD', $data['nights']))));
+            $reservation->setHotelProposedNumberNight($data['nights']);
 
             //dispatch event
             $event = new HotelDeclined($reservation);
@@ -166,7 +165,7 @@ class Reservation
             $newReservation = new ReservationEntity();
             $newReservation->setCode($reservation->getCode());
             $newReservation->setReservationDate($reservation->getHotelProposedCheckInDate());
-            $newReservation->setNumberNight($reservation->getHotelProposedCheckInDate()->diff($reservation->getHotelProposedCheckOutDate())->format('%a'));
+            $newReservation->setNumberNight($reservation->getHotelProposedNumberNight());
             $newReservation->setNumberPerson($reservation->getNumberPerson());
             $newReservation->setHotel($reservation->getHotel());
             $newReservation->setOffer($reservation->getOffer());

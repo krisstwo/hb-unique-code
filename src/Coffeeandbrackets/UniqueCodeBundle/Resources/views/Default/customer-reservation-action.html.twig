@@ -4,7 +4,6 @@
         <div class="col-container">
             <div class="row">
                 <div class="col-md-8">
-
                     <p>
                         Nous sommes désolées, l'hôtel {{ reservation.getHotel() }} n'a pas pu accepter votre demande de réservation pour le motif suivant :
                     </p>
@@ -15,13 +14,13 @@
                         </div>
                     {% endif %}
 
-                    {% if reservation.getHotelProposedCheckInDate() is not empty and reservation.getHotelProposedCheckOutDate() is not empty %}
+                    {% if reservation.getHotelProposedCheckInDate() is not empty and reservation.getHotelProposedNumberNight() is not empty %}
                         <p>
                             <strong>Cependant, l'hôtel vous propose une autre date de séjour :</strong>
                         </p>
                         <ul>
                             <li>du {{ reservation.getHotelProposedCheckInDate().format('d/m/Y') }}
-                                au {{ reservation.getHotelProposedCheckOutDate().format('d/m/Y') }}</li>
+                                pour {{ reservation.getHotelProposedNumberNight() }} nuits</li>
                         </ul>
                     {% endif %}
                 </div>
