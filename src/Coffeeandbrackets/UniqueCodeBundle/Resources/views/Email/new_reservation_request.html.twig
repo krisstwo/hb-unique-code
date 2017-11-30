@@ -32,6 +32,7 @@
                             {% if(reservation.getOfferServiceAfternoon()) %}<p>{{ reservation.getOfferServiceAfternoon() }}</p>{% endif %}
                             {% if(reservation.getOfferServiceNight()) %}<p>{{ reservation.getOfferServiceNight() }}</p>{% endif %}
                             {% if(reservation.getOfferServiceMorning()) %}<p>{{ reservation.getOfferServiceMorning() }}</p>{% endif %}
+                            <p>Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.</p>
                         </td>
                     </tr>
                     <tr>

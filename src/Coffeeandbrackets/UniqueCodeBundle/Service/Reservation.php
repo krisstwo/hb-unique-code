@@ -103,6 +103,8 @@ class Reservation
         $reservation->setOfferServiceNight($data['offer_service_night']);
         $reservation->setOfferServiceMorning($data['offer_service_morning']);
 
+        $reservation->setOfferPrice($data['offer_price']);
+
         $this->em->persist($reservation);
         $this->em->flush();
 
@@ -180,6 +182,7 @@ class Reservation
             $reservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
             $reservation->setOfferServiceNight($reservation->getOfferServiceNight());
             $reservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
+            $reservation->setOfferPrice($reservation->getOfferPrice());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);

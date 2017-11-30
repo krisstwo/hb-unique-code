@@ -362,6 +362,7 @@ $(function(){
         }
 
         reservationDetail($('#step_3 #date').val());
+        $('#offer_price').val(searchFormulaPrice(selectedFormula, true));
     };
 
     var reservationDetail = function (date){
@@ -393,7 +394,7 @@ $(function(){
         }
     };
 
-    var searchFormulaPrice = function (formula) {
+    var searchFormulaPrice = function (formula, without_currency) {
         if (!formula.planning || !formula.planning.length)
             return '';
 
@@ -409,6 +410,9 @@ $(function(){
                     price = planning.days[day];
             }
         }
+
+        if(without_currency)
+            return price;
 
         if (price > 0)
             return (' ' + price + ' €').replace('.', ',');
