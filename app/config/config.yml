@@ -106,6 +106,18 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/jqueryui/jquery-ui.min.js"
             output: js/jquery-ui.min.js
+        jqueryui_fr_js:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jqueryui/ui/i18n/datepicker-fr.js"
+            output: js/datepicker-fr.js
+        jqueryui_icones:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jqueryui/themes/base/images/ui-icons_444444_256x240.png"
+            output: css/images/ui-icons_444444_256x240.png
+        jqueryui_icones_bis:
+            inputs:
+                - "%kernel.root_dir%/../vendor/components/jqueryui/themes/base/images/ui-icons_555555_256x240.png"
+            output: css/images/ui-icons_555555_256x240.png
         jqueryui_css:
             inputs:
                 - "%kernel.root_dir%/../vendor/components/jqueryui/themes/base/jquery-ui.min.css"
