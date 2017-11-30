@@ -7,14 +7,8 @@ parameters:
     local_database_name: symfony
     local_database_user: root
     local_database_password: ~
-
-    extern_database_host: 127.0.0.1
-    extern_database_port: ~
-    extern_database_name: symfony
-    extern_database_user: root
-    extern_database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
+
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
