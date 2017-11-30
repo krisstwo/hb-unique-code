@@ -96,6 +96,7 @@ class CreateReservation extends AbstractType
             ->add('offer_service_afternoon')
             ->add('offer_service_night')
             ->add('offer_service_morning')
+            ->add('offer_price', null, array('required' => true))
             ->add('customer_msg', TextareaType::class, array('empty_data' => '', 'constraints' => array(new Length(array('max' => 255)))));
     }
 

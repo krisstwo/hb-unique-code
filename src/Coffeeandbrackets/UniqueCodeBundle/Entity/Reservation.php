@@ -176,6 +176,13 @@ class Reservation
     private $offerServiceMorning;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="offer_price", type="float", scale=2)
+     */
+    private $offerPrice;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -587,6 +594,22 @@ class Reservation
     public function setOfferServiceMorning($offerServiceMorning)
     {
         $this->offerServiceMorning = $offerServiceMorning;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOfferPrice()
+    {
+        return $this->offerPrice;
+    }
+
+    /**
+     * @param float $offerPrice
+     */
+    public function setOfferPrice($offerPrice)
+    {
+        $this->offerPrice = $offerPrice;
     }
 }
 
