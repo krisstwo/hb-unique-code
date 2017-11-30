@@ -155,6 +155,27 @@ class Reservation
     private $campaign;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_afternoon", type="string", length=255)
+     */
+    private $offerServiceAfternoon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_night", type="string", length=255)
+     */
+    private $offerServiceNight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_morning", type="string", length=255)
+     */
+    private $offerServiceMorning;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -518,6 +539,54 @@ class Reservation
     public function setCustomerDeclineDate($customerDeclineDate)
     {
         $this->customerDeclineDate = $customerDeclineDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceAfternoon()
+    {
+        return $this->offerServiceAfternoon;
+    }
+
+    /**
+     * @param string $offerServiceAfternoon
+     */
+    public function setOfferServiceAfternoon($offerServiceAfternoon)
+    {
+        $this->offerServiceAfternoon = $offerServiceAfternoon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceNight()
+    {
+        return $this->offerServiceNight;
+    }
+
+    /**
+     * @param string $offerServiceNight
+     */
+    public function setOfferServiceNight($offerServiceNight)
+    {
+        $this->offerServiceNight = $offerServiceNight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceMorning()
+    {
+        return $this->offerServiceMorning;
+    }
+
+    /**
+     * @param string $offerServiceMorning
+     */
+    public function setOfferServiceMorning($offerServiceMorning)
+    {
+        $this->offerServiceMorning = $offerServiceMorning;
     }
 }
 

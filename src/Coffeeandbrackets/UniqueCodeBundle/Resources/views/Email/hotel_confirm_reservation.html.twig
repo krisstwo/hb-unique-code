@@ -17,9 +17,18 @@
             <p>
                 {{ reservation.getCustomer().getLastName() }} {{ reservation.getCustomer().getFirstName() }}<br>
                 {{ reservation.getCustomer().getEmail() }}<br>
-                {{ reservation.getReservationDate()|date('d/m/Y') }}<br>
+                {% if(reservation.getCustomer().getPhone()) %}{{ reservation.getCustomer().getPhone() }}<br>{% endif %}
+                {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits<br>
                 {{ reservation.getOffer() }}
             </p>
+            {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
+            <p>
+                <b>Détail de la prestation: </b><br>
+                {% if(reservation.getOfferServiceAfternoon()) %}{{ reservation.getOfferServiceAfternoon() }}<br>{% endif %}
+                {% if(reservation.getOfferServiceNight()) %}{{ reservation.getOfferServiceNight() }}<br>{% endif %}
+                {% if(reservation.getOfferServiceMorning()) %}{{ reservation.getOfferServiceMorning() }}<br>{% endif %}
+            </p>
+            {% endif %}
             <p style="text-align: center">
                 A bientôt,</br>L’équipe Happybreak
             </p>

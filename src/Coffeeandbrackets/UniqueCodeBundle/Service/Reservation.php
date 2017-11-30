@@ -99,6 +99,10 @@ class Reservation
         $reservation->setCustomer($customer);
         $reservation->setCampaign($campaign);
 
+        $reservation->setOfferServiceAfternoon($data['offer_service_afternoon']);
+        $reservation->setOfferServiceNight($data['offer_service_night']);
+        $reservation->setOfferServiceMorning($data['offer_service_morning']);
+
         $this->em->persist($reservation);
         $this->em->flush();
 
@@ -173,6 +177,9 @@ class Reservation
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
             $newReservation->setCampaign($reservation->getCampaign());
+            $reservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
+            $reservation->setOfferServiceNight($reservation->getOfferServiceNight());
+            $reservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);
