@@ -39,6 +39,8 @@
                            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire une autre demande <br>de réservation*</a>
                         {% if reservation.getCampaign() is not empty %}
                             <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_campaign', {'campaignCode': reservation.getCampaign().getCode() }) }}">
+                        {% else %}
+                            <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_homepage') }}">
                         {% endif %}
                     </p>
                 </div>
