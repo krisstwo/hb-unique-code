@@ -248,3 +248,11 @@ JQUERY TWEAKS
     text-decoration: line-through;
     opacity: 1;
 }
+
+.no-padding-left {
+    padding-left: 0!important;
+}
+
+.cgu-list ul {
+    padding-left: 15px;
+}
