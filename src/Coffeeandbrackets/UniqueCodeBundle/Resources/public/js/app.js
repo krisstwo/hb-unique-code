@@ -430,7 +430,7 @@ $(function(){
         language: 'fr',
         placeholder: 'Saisissez le nom de l\'hôtel *',
         ajax: {
-            url: 'js/ajax_hotel.js',//$('#hotel').data('endpoint'),
+            url: $('#hotel').data('endpoint'),
             dataType: 'json',
             processResults: function (data) {
                 var results = [];
