@@ -93,6 +93,7 @@ $(function(){
         },
         onSelect : function(dateText){
             reservationDetail(dateText);
+            initNightsSelect2();
         }
     });
 
@@ -514,6 +515,28 @@ $(function(){
                     id: selectedFormula.nights[i],
                     text: selectedFormula.nights[i] == 1 ? '1 nuit' : selectedFormula.nights[i] + ' nuits'
                 });
+            }
+        }
+
+        var selectedDate = $('#date').datepicker( "getDate" );
+        var disableFrom = 0;
+        if(selectedDate && nightsOptions.length) {
+            for (var i in selectedFormula.planning) {
+                var planning = selectedFormula.planning[i];
+                if(parseInt(planning.year) == selectedDate.getFullYear() && parseInt(planning.month) == (selectedDate.getMonth() + 1)){
+                    $.each(nightsOptions, function(index, val){
+                        if(planning.days[selectedDate.getDate() + index] == 0){
+                            disableFrom = index;
+                            return false;
+                        }
+                    });
+                }
+            }
+        }
+
+        if(disableFrom > 0) {
+            for (i = disableFrom; i < nightsOptions.length; i++){
+                nightsOptions[i]['disabled'] = true;
             }
         }
 
