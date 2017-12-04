@@ -183,6 +183,20 @@ class Reservation
     private $offerPrice;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="hotel_phone", type="string", length=255)
+     */
+    private $hotelPhone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hotel_address", type="string", length=255)
+     */
+    private $hotelAddress;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -610,6 +624,38 @@ class Reservation
     public function setOfferPrice($offerPrice)
     {
         $this->offerPrice = $offerPrice;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelPhone()
+    {
+        return $this->hotelPhone;
+    }
+
+    /**
+     * @param string $hotelPhone
+     */
+    public function setHotelPhone($hotelPhone)
+    {
+        $this->hotelPhone = $hotelPhone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelAddress()
+    {
+        return $this->hotelAddress;
+    }
+
+    /**
+     * @param string $hotelAddress
+     */
+    public function setHotelAddress($hotelAddress)
+    {
+        $this->hotelAddress = $hotelAddress;
     }
 }
 

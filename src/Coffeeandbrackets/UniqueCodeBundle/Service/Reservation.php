@@ -93,6 +93,9 @@ class Reservation
             $reservation->setHotelEmail(iconv("UTF-8", "ASCII//IGNORE", $hotel['email']));
         }
 
+        $reservation->setHotelPhone($data['hotel_phone']);
+        $reservation->setHotelAddress($data['hotel_address']);
+
         $reservation->setOffer($data['offer-name']);
 
         $reservation->setCustomerMsg($data['customer_msg']);
@@ -174,6 +177,8 @@ class Reservation
             $newReservation->setNumberNight($reservation->getHotelProposedNumberNight());
             $newReservation->setNumberPerson($reservation->getNumberPerson());
             $newReservation->setHotel($reservation->getHotel());
+            $newReservation->setHotelAddress($reservation->getHotelAddress());
+            $newReservation->setHotelPhone($reservation->getHotelPhone());
             $newReservation->setOffer($reservation->getOffer());
             $newReservation->setHotelEmail($reservation->getHotelEmail());
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());

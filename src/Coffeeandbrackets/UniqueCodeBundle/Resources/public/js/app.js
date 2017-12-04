@@ -313,6 +313,9 @@ $(function(){
         $('#hotel-informations').show();
         $('#hotel-informations .content').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
 
+        $('#hotel_phone').val(selectedHotel.phone);
+        $('#hotel_address').val(selectedHotel.address);
+
         initOfferSelect2();
     };
 
@@ -426,7 +429,7 @@ $(function(){
         language: 'fr',
         placeholder: 'Saisissez le nom de l\'hôtel *',
         ajax: {
-            url: $('#hotel').data('endpoint'),
+            url: 'js/ajax_hotel.js',//$('#hotel').data('endpoint'),
             dataType: 'json',
             processResults: function (data) {
                 var results = [];

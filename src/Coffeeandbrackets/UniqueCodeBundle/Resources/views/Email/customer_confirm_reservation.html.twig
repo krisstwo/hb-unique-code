@@ -31,6 +31,8 @@
                             <p>
                                 {{ reservation.getHotel() }}<br>
                                 {{ reservation.getHotelEmail() }}<br>
+                                {{ reservation.getHotelPhone() }}<br>
+                                {{ reservation.getHotelAddress() }}<br>
                                 {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits<br>
                                 {{ reservation.getOffer() }}
                             </p>

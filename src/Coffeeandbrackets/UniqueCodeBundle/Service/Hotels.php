@@ -126,6 +126,8 @@ class Hotels
                     'stars'        => $item->etoiles,
                     'informations' => trim($item->infos_pratiques),
                     'email'        => trim($item->mail_hotel),
+                    'phone'        => trim($item->telephone_hotel),
+                    'address'      => trim($item->rue_hotel).', '.trim($item->postal_code).' '.trim($item->ville_hotel).', '.trim($item->pays_hotel),
                     'formulas'     => array()
                 );
             }
