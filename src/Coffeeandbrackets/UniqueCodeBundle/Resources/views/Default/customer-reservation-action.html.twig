@@ -22,6 +22,7 @@
                             <li>du {{ reservation.getHotelProposedCheckInDate().format('d/m/Y') }}
                                 pour {{ reservation.getHotelProposedNumberNight() }} nuits</li>
                         </ul>
+                        <p>Merci d’accepter, ou non, la proposition de l’hôtel dans les 72h. Passé ce délai, celle ci ne sera plus valable</p>
                     {% endif %}
                 </div>
             </div>
@@ -36,7 +37,7 @@
                     <p class="text-center">
                         <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-decline-reservation"
                            href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}"
-                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Faire une autre demande <br>de réservation*</a>
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">REFUSER LA PROPOSITION <br>DE L’HOTEL*</a>
                         {% if reservation.getCampaign() is not empty %}
                             <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_campaign', {'campaignCode': reservation.getCampaign().getCode() }) }}">
                         {% else %}

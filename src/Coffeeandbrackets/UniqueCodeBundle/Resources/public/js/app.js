@@ -674,7 +674,7 @@ $(function(){
                     if(result && result.error)
                         return;
 
-                    $('#modal-flash-success-static .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
+                    $('#modal-flash-success-static .content').html('Bravo! Votre réservation est confirmée. <br><br>Vous allez recevoir par mail le détail de votre séjour.<br>Pensez à vérifier vos courriers indésirables<br><br>A noter ! Chaque réservation est soumise aux CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.');
                     $('#modal-flash-success-static').modal('show');
                 },
                 complete: function () {
