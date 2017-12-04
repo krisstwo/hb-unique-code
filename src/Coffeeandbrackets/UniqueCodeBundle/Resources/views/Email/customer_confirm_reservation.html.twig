@@ -25,7 +25,7 @@
                         <td>
                             <p><b>{{ reservation.getCustomer().getFirstName() }}, faites vos valises !</b></p>
                             <p>L’hôtel {{ reservation.getHotel() }} a accepté votre réservation et vous accueillera
-                                du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits .</p>
+                                du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %} .</p>
                             <p><b>A noter !</b> Chaque réservation est soumise aux CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.</p>
                             <p>Veuillez trouver ci-dessous un rappel de votre réservation :</p>
                             <p>
@@ -33,7 +33,7 @@
                                 {{ reservation.getHotelEmail() }}<br>
                                 {{ reservation.getHotelPhone() }}<br>
                                 {{ reservation.getHotelAddress() }}<br>
-                                {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits<br>
+                                {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}<br>
                                 {{ reservation.getOffer() }}
                             </p>
                             {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
