@@ -184,10 +184,10 @@ class Reservation
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
             $newReservation->setCampaign($reservation->getCampaign());
-            $reservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
-            $reservation->setOfferServiceNight($reservation->getOfferServiceNight());
-            $reservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
-            $reservation->setOfferPrice($reservation->getOfferPrice());
+            $newReservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
+            $newReservation->setOfferServiceNight($reservation->getOfferServiceNight());
+            $newReservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
+            $newReservation->setOfferPrice($reservation->getOfferPrice());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);
