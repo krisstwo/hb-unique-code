@@ -1,13 +1,11 @@
-html {
-    height: 100%;
-}
 body {
     color: #61514e;
     font-size: 14px;
     font-family: 'Source Sans Pro',sans-serif;
-    height: 100%;
     padding-bottom: 3em;
     box-sizing: border-box;
+    background-position: top center;
+    background-size: cover;
 }
 
 a {
@@ -28,12 +26,6 @@ select option:disabled {
 /**
 LAYOUT STYLES
  */
-
-.body-bg {
-    height: 100%;
-    background-position: top center;
-    background-size: cover;
-}
 
 #header {
     background: #ffffff;
@@ -83,7 +75,7 @@ LAYOUT STYLES
 #footer {
     background: #776863;
     color: #ffffff;
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     height: 3em;

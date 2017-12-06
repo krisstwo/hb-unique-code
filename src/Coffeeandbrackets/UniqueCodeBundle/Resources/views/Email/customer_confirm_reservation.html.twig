@@ -19,11 +19,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
+                    <tr>
                         <td>
                             <p><b>{{ reservation.getCustomer().getFirstName() }}, faites vos valises !</b></p>
                             <p>L’hôtel {{ reservation.getHotel() }} a accepté votre réservation et vous accueillera
                                 du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits .</p>
-                            <p><b>A noter !</b> Chaque réservation est soumise au CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.</p>
+                            <p><b>A noter !</b> Chaque réservation est soumise aux CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.</p>
                             <p>Veuillez trouver ci-dessous un rappel de votre réservation :</p>
                             <p>
                                 {{ reservation.getHotel() }}<br>
@@ -31,10 +34,22 @@
                                 {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits<br>
                                 {{ reservation.getOffer() }}
                             </p>
+                            {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
+                            <p>
+                            <b>Détail de la prestation: </b><br>
+                                {% if(reservation.getOfferServiceAfternoon()) %}{{ reservation.getOfferServiceAfternoon() }}<br>{% endif %}
+                                {% if(reservation.getOfferServiceNight()) %}{{ reservation.getOfferServiceNight() }}<br>{% endif %}
+                                {% if(reservation.getOfferServiceMorning()) %}{{ reservation.getOfferServiceMorning() }}<br>{% endif %}
+                                Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.
+                            </p>
+                            {% endif %}
                             <p>
                                 {{ reservation.getCustomerMsg() }}
                             </p>
                         </td>
+                    </tr>
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
                     </tr>
                     <tr>
                         <td align="center" valign="top">

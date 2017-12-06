@@ -119,11 +119,11 @@ class Reservation
     private $hotelProposedCheckInDate;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="hotel_proposed_check_out_date", type="date", nullable=true)
+     * @ORM\Column(name="hotel_proposed_number_night", type="integer", nullable=true)
      */
-    private $hotelProposedCheckOutDate;
+    private $hotelProposedNumberNight;
 
     /**
      * @var \DateTime
@@ -153,6 +153,34 @@ class Reservation
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="cam_id")
      */
     private $campaign;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_afternoon", type="string", length=255, nullable=true)
+     */
+    private $offerServiceAfternoon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_night", type="string", length=255, nullable=true)
+     */
+    private $offerServiceNight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="offer_service_morning", type="string", length=255, nullable=true)
+     */
+    private $offerServiceMorning;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="offer_price", type="float", scale=2, nullable=true)
+     */
+    private $offerPrice;
 
     /**
      * @ORM\PrePersist
@@ -475,22 +503,6 @@ class Reservation
     /**
      * @return \DateTime
      */
-    public function getHotelProposedCheckOutDate()
-    {
-        return $this->hotelProposedCheckOutDate;
-    }
-
-    /**
-     * @param \DateTime $hotelProposedCheckOutDate
-     */
-    public function setHotelProposedCheckOutDate($hotelProposedCheckOutDate)
-    {
-        $this->hotelProposedCheckOutDate = $hotelProposedCheckOutDate;
-    }
-
-    /**
-     * @return \DateTime
-     */
     public function getCustomerAcceptanceDate()
     {
         return $this->customerAcceptanceDate;
@@ -518,6 +530,86 @@ class Reservation
     public function setCustomerDeclineDate($customerDeclineDate)
     {
         $this->customerDeclineDate = $customerDeclineDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHotelProposedNumberNight()
+    {
+        return $this->hotelProposedNumberNight;
+    }
+
+    /**
+     * @param int $hotelProposedNumberNight
+     */
+    public function setHotelProposedNumberNight($hotelProposedNumberNight)
+    {
+        $this->hotelProposedNumberNight = $hotelProposedNumberNight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceAfternoon()
+    {
+        return $this->offerServiceAfternoon;
+    }
+
+    /**
+     * @param string $offerServiceAfternoon
+     */
+    public function setOfferServiceAfternoon($offerServiceAfternoon)
+    {
+        $this->offerServiceAfternoon = $offerServiceAfternoon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceNight()
+    {
+        return $this->offerServiceNight;
+    }
+
+    /**
+     * @param string $offerServiceNight
+     */
+    public function setOfferServiceNight($offerServiceNight)
+    {
+        $this->offerServiceNight = $offerServiceNight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferServiceMorning()
+    {
+        return $this->offerServiceMorning;
+    }
+
+    /**
+     * @param string $offerServiceMorning
+     */
+    public function setOfferServiceMorning($offerServiceMorning)
+    {
+        $this->offerServiceMorning = $offerServiceMorning;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOfferPrice()
+    {
+        return $this->offerPrice;
+    }
+
+    /**
+     * @param float $offerPrice
+     */
+    public function setOfferPrice($offerPrice)
+    {
+        $this->offerPrice = $offerPrice;
     }
 }
 

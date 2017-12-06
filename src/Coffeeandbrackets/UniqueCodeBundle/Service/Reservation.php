@@ -90,7 +90,7 @@ class Reservation
 
         $hotel = $this->hotelsService->findOneByNameId($data['hotel-name'], $data['hotel']);
         if ($hotel) {
-            $reservation->setHotelEmail($hotel['email']);
+            $reservation->setHotelEmail(iconv("UTF-8", "ASCII//IGNORE", $hotel['email']));
         }
 
         $reservation->setOffer($data['offer-name']);
@@ -98,6 +98,12 @@ class Reservation
         $reservation->setCustomerMsg($data['customer_msg']);
         $reservation->setCustomer($customer);
         $reservation->setCampaign($campaign);
+
+        $reservation->setOfferServiceAfternoon($data['offer_service_afternoon']);
+        $reservation->setOfferServiceNight($data['offer_service_night']);
+        $reservation->setOfferServiceMorning($data['offer_service_morning']);
+
+        $reservation->setOfferPrice($data['offer_price']);
 
         $this->em->persist($reservation);
         $this->em->flush();
@@ -112,8 +118,7 @@ class Reservation
             $reservation->setHotelRefuseDate(new \DateTime());
             $reservation->setHotelRefuseReason($data['reason']);
             $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
-            $reservation->setHotelProposedCheckOutDate(date_create_from_format('d/m/Y',
-                $data['check-in-date'])->add(new \DateInterval(sprintf('P%dD', $data['nights']))));
+            $reservation->setHotelProposedNumberNight($data['nights']);
 
             //dispatch event
             $event = new HotelDeclined($reservation);
@@ -166,13 +171,18 @@ class Reservation
             $newReservation = new ReservationEntity();
             $newReservation->setCode($reservation->getCode());
             $newReservation->setReservationDate($reservation->getHotelProposedCheckInDate());
-            $newReservation->setNumberNight($reservation->getHotelProposedCheckInDate()->diff($reservation->getHotelProposedCheckOutDate())->format('%a'));
+            $newReservation->setNumberNight($reservation->getHotelProposedNumberNight());
             $newReservation->setNumberPerson($reservation->getNumberPerson());
             $newReservation->setHotel($reservation->getHotel());
             $newReservation->setOffer($reservation->getOffer());
+            $newReservation->setHotelEmail($reservation->getHotelEmail());
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
             $newReservation->setCampaign($reservation->getCampaign());
+            $reservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
+            $reservation->setOfferServiceNight($reservation->getOfferServiceNight());
+            $reservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
+            $reservation->setOfferPrice($reservation->getOfferPrice());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);

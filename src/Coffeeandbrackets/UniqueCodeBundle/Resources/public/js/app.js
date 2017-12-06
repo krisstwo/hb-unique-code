@@ -67,6 +67,8 @@ $(function(){
         $('#step_' + stepIndex).show();
     };
 
+    $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+
     $('#step_3 #date').datepicker({
         dateFormat: "dd/mm/yy",
         minDate: new Date(),
@@ -88,6 +90,9 @@ $(function(){
             }
 
             return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
+        },
+        onSelect : function(dateText){
+            reservationDetail(dateText);
         }
     });
 
@@ -341,8 +346,10 @@ $(function(){
         $('#number_person_1').closest('label').tooltip('destroy');
         if(selectedFormula.persons.indexOf(1) === -1){
             $('#number_person_1').attr('disabled', 'disabled');
-            $('#number_person_1').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 1 personne.');
-            $('#number_person_1').closest('label').tooltip();
+            $('#number_person_1').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations que pour 2 personnes.');
+            $('#number_person_1').closest('label').tooltip({
+                container: "body"
+            });
         }
 
         $('#number_person_2').closest('label').attr('title', '');
@@ -350,13 +357,46 @@ $(function(){
         $('#number_person_2').closest('label').tooltip('destroy');
         if(selectedFormula.persons.indexOf(2) === -1){
             $('#number_person_2').attr('disabled', 'disabled');
-            $('#number_person_2').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations pour 2 personnes.');
-            $('#number_person_2').closest('label').tooltip();
+            $('#number_person_2').closest('label').attr('title', 'Désolé, cet hôtel ne fournit des prestations que pour 1 personne.');
+            $('#number_person_2').closest('label').tooltip({
+                container: "body"
+            });
         }
 
+        reservationDetail($('#step_3 #date').val());
+        $('#offer_price').val(searchFormulaPrice(selectedFormula, true));
     };
 
-    var searchFormulaPrice = function (formula) {
+    var reservationDetail = function (date){
+
+        $('#reservation-detail').hide();
+
+        $('#reservation-detail #offer_service_afternoon').val('');
+        $('#reservation-detail #offer_service_night').val('');
+        $('#reservation-detail #offer_service_morning').val('');
+
+        if (!selectedFormula || !date)
+            return false;
+
+        var month = parseInt(date.split('/')[1]);
+        var year = parseInt(date.split('/')[2]);
+        for (var i in selectedFormula.planning) {
+            var planning = selectedFormula.planning[i];
+
+            if(parseInt(planning.year) == year && parseInt(planning.month) == month){
+                if((planning.service_afternoon || planning.service_night || planning.service_morning)){
+                    $('#reservation-detail').show();
+                    $('#reservation-detail .content').html(planning.service_afternoon+'<br><br>'+planning.service_night+'<br><br>'+planning.service_morning);
+
+                    $('#reservation-detail #offer_service_afternoon').val(planning.service_afternoon);
+                    $('#reservation-detail #offer_service_night').val(planning.service_night);
+                    $('#reservation-detail #offer_service_morning').val(planning.service_morning);
+                }
+            }
+        }
+    };
+
+    var searchFormulaPrice = function (formula, without_currency) {
         if (!formula.planning || !formula.planning.length)
             return '';
 
@@ -372,6 +412,9 @@ $(function(){
                     price = planning.days[day];
             }
         }
+
+        if(without_currency)
+            return price;
 
         if (price > 0)
             return (' ' + price + ' €').replace('.', ',');
@@ -605,8 +648,8 @@ $(function(){
                     if(result && result.error)
                         return;
 
-                    $('#modal-flash-success .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
-                    $('#modal-flash-success').modal('show');
+                    $('#modal-flash-success-static .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
+                    $('#modal-flash-success-static').modal('show');
                 },
                 complete: function () {
                     $('a.action-customer-accept-reservation').button('reset');

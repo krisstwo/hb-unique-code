@@ -1,20 +1,20 @@
 {% for message in app.flashes('success') %}
     <div class="alert alert-success">
-        {{ message }}
+        {{ message|nl2br }}
     </div>
 {% endfor %}
 {% for message in app.flashes('info') %}
     <div class="alert alert-info">
-        {{ message }}
+        {{ message|nl2br }}
     </div>
 {% endfor %}
 {% for message in app.flashes('notice') %}
     <div class="alert alert-warning">
-        {{ message }}
+        {{ message|nl2br }}
     </div>
 {% endfor %}
 {% for message in app.flashes('error') %}
     <div class="alert alert-danger">
-        {{ message }}
+        {{ message|nl2br }}
     </div>
 {% endfor %}

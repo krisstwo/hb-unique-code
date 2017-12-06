@@ -58,7 +58,7 @@ class Reservation extends AbstractAdmin
                    ->add('hotelRefuseDate')
                    ->add('hotelRefuseReason')
                    ->add('hotelProposedCheckInDate')
-                   ->add('hotelProposedCheckOutDate')
+                   ->add('hotelProposedNumberNight')
                    ->add('customerAcceptanceDate')
                    ->add('customerDeclineDate')
                    ->add('customer.firstName')

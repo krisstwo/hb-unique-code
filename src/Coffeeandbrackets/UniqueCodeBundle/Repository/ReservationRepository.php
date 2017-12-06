@@ -21,7 +21,7 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
 
         $criterea->where($criterea->expr()->isNull('hotelConfirmationDate'));
         $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
-        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT2H'))));
+        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT12H'))));
 
         $qb = $this->createQueryBuilder('r');
         $qb->addCriteria($criterea)
@@ -36,7 +36,7 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
 
         $criterea->where($criterea->expr()->isNull('hotelConfirmationDate'));
         $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
-        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT4H'))));
+        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT14H'))));
 
         $qb = $this->createQueryBuilder('r');
         $qb->addCriteria($criterea)
