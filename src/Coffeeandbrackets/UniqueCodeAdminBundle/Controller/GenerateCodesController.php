@@ -15,13 +15,20 @@ class GenerateCodesController extends Controller {
 
     public function generateAction() {
 
-        // TODO generation code
-
-        //$this->addFlash('sonata_flash_success', 'Generate successfully');
-
-        //return new RedirectResponse($this->admin->generateUrl('list'));
+        $request = $this->getRequest();
         $form = $this->get('form.factory')->createNamedBuilder('', GenerateCodes::class)->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            // TODO generation code
+
+            $this->addFlash('sonata_flash_success', 'Generate successfully');
+            return new RedirectResponse($this->admin->generateUrl('list'));
+        }
+
         return $this->render('UniqueCodeAdminBundle:Default:generation_codes_form.html.twig', array(
+            'action' => '',
             'form' => $form->createView()
         ));
     }

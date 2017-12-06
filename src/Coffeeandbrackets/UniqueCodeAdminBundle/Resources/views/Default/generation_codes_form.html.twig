@@ -1,25 +1,63 @@
-{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+{% extends base_template %}
 
-{% block sonata_admin_content %}
-   <div class="sonata-ba-form">
-       <form class="" action="">
-        <div class="row">
+{%- block actions -%}
+    {% include 'SonataAdminBundle:CRUD:action_buttons.html.twig' %}
+{%- endblock -%}
+
+{% block tab_menu %}
+    {{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active', 'template': sonata_admin.adminPool.getTemplate('tab_menu_template')}, 'twig') }}
+{% endblock %}
+
+{% block title %}
+    Générer des codes
+{% endblock %}
+
+{% block navbar_title %}
+    {{ block('title') }}
+{% endblock %}
+
+{% block form %}
+       <form
+               method="POST"
+               action="{{ admin.generateUrl('generate') }}"
+               >
+           {{ include('SonataAdminBundle:Helper:render_form_dismissable_errors.html.twig') }}
+           {% block sonata_pre_fieldsets %}
+           <div class="row">
+               {% endblock %}
+
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box box-primary">
                             <div class="box-header">
                                 <h4 class="box-title">
-                                    Géneration de code
+                                    Générer des codes
                                 </h4>
                             </div>
 
                             <div class="box-body">
                                 <div class="sonata-ba-collapsed-fields">
-                                    {{ form_start(form) }}
-                                    {{ form_widget(form) }}
-                                    {{ form_end(form) }}
-
+                                    <div class="form-group" id="sonata-ba-field-container-{{ form.campaign.vars.id }}">
+                                        {% block label %}
+                                        {{ form_label(form.campaign) }}
+                                        {% endblock %}
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            {{ form_widget(form.campaign, { 'attr': {'class': ' form-control'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="sonata-ba-field-container-{{ form.prefix.vars.id }}">
+                                        {{ form_label(form.prefix) }}
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            {{ form_widget(form.prefix, { 'attr': {'class': ' form-control'} }) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="sonata-ba-field-container-{{ form.quantity.vars.id }}">
+                                        {{ form_label(form.quantity) }}
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            {{ form_widget(form.quantity, { 'attr': {'class': ' form-control'} }) }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +65,19 @@
                 </div>
 
             </div>
-        </div>
+
+           {% block sonata_post_fieldsets %}
+           </div>
+           {% endblock %}
+
+           {{ form_rest(form) }}
+
+           {% block formactions %}
+               <div class="sonata-ba-form-actions well well-small form-actions">
+                   {% block sonata_form_actions %}
+                       <button class="btn btn-success" type="submit" name="btn_generate_code"><i class="fa fa-cogs" aria-hidden="true"></i> Générer</button>
+                   {% endblock %}
+               </div>
+           {% endblock formactions %}
        </form>
-   </div>
 {% endblock %}

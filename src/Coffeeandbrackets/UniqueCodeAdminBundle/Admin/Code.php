@@ -21,10 +21,7 @@ class Code extends AbstractAdmin
         $listMapper
             ->add('_action', null, array(
                 'actions' => array(
-                    'edit' => array(),
-                    'generate' => array(
-                        'template' => 'list__action_generate.html.twig'
-                    )
+                    'edit' => array()
                 )
             ))
             ->add('id')
@@ -64,6 +61,16 @@ class Code extends AbstractAdmin
     {
         $collection->clearExcept(array('list', 'export', 'edit'));
         $collection->add('generate', 'generate');
+    }
+
+    public function configureActionButtons($action, $object = null) {
+        $list = parent::configureActionButtons($action, $object);
+        $this->setTemplate('button_generate', 'list__action_generate.html.twig');
+        $list['generate'] = array(
+            'template' => $this->getTemplate('button_generate'),
+        );
+
+        return $list;
     }
 
     public function toString($object)
