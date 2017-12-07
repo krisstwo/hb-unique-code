@@ -166,10 +166,6 @@ class Reservation
         try {
             $reservation->setCustomerAcceptanceDate(new \DateTime());
 
-            //dispatch acceptance event
-            $event = new CustomerAccepted($reservation);
-            $this->eventDispatcher->dispatch(CustomerAccepted::NAME, $event);
-
             //create a new reservation with the proposed and accepted dates
             $newReservation = new ReservationEntity();
             $newReservation->setCode($reservation->getCode());
@@ -188,14 +184,15 @@ class Reservation
             $newReservation->setOfferServiceNight($reservation->getOfferServiceNight());
             $newReservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
             $newReservation->setOfferPrice($reservation->getOfferPrice());
+            $newReservation->setHotelConfirmationDate($reservation->HotelRefuseDate());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);
             $this->em->flush();
 
-            //new reservation event
-            $event = new ReservationCreated($newReservation);
-            $this->eventDispatcher->dispatch(ReservationCreated::NAME, $event);
+            //dispatch acceptance event
+            $event = new CustomerAccepted($newReservation);
+            $this->eventDispatcher->dispatch(CustomerAccepted::NAME, $event);
         } catch (\Exception $e) {
             throw $e;
         }
