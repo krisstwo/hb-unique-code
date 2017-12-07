@@ -92,7 +92,6 @@ $(function(){
             return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
         },
         onSelect : function(dateText){
-            reservationDetail(dateText);
             initNightsSelect2();
         }
     });
@@ -367,11 +366,11 @@ $(function(){
             });
         }
 
-        reservationDetail($('#step_3 #date').val());
+        reservationDetail();
         $('#offer_price').val(searchFormulaPrice(selectedFormula, true));
     };
 
-    var reservationDetail = function (date){
+    var reservationDetail = function (){
 
         $('#reservation-detail').hide();
 
@@ -379,24 +378,27 @@ $(function(){
         $('#reservation-detail #offer_service_night').val('');
         $('#reservation-detail #offer_service_morning').val('');
 
-        if (!selectedFormula || !date)
+        if (!selectedFormula)
             return false;
 
-        var month = parseInt(date.split('/')[1]);
-        var year = parseInt(date.split('/')[2]);
-        for (var i in selectedFormula.planning) {
-            var planning = selectedFormula.planning[i];
+        if((selectedFormula.service_afternoon || selectedFormula.service_night || selectedFormula.service_morning)){
+            var html_content = '';
+            if(selectedFormula.service_afternoon)
+                html_content += selectedFormula.service_afternoon+'<br><br>';
 
-            if(parseInt(planning.year) == year && parseInt(planning.month) == month){
-                if((planning.service_afternoon || planning.service_night || planning.service_morning)){
-                    $('#reservation-detail').show();
-                    $('#reservation-detail .content').html(planning.service_afternoon+'<br><br>'+planning.service_night+'<br><br>'+planning.service_morning);
+            if(selectedFormula.service_night)
+                html_content += selectedFormula.service_night+'<br><br>';
 
-                    $('#reservation-detail #offer_service_afternoon').val(planning.service_afternoon);
-                    $('#reservation-detail #offer_service_night').val(planning.service_night);
-                    $('#reservation-detail #offer_service_morning').val(planning.service_morning);
-                }
-            }
+            if(selectedFormula.service_morning)
+                html_content += selectedFormula.service_morning;
+
+            $('#reservation-detail .content').html(html_content);
+
+            $('#reservation-detail #offer_service_afternoon').val(selectedFormula.service_afternoon);
+            $('#reservation-detail #offer_service_night').val(selectedFormula.service_night);
+            $('#reservation-detail #offer_service_morning').val(selectedFormula.service_morning);
+
+            $('#reservation-detail').show();
         }
     };
 

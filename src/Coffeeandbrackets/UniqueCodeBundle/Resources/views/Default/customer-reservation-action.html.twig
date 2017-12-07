@@ -20,7 +20,7 @@
                         </p>
                         <ul>
                             <li>du {{ reservation.getHotelProposedCheckInDate().format('d/m/Y') }}
-                                pour {{ reservation.getHotelProposedNumberNight() }} nuits</li>
+                                pour {{ reservation.getHotelProposedNumberNight() }} nuit{% if reservation.getHotelProposedNumberNight() > 1 %}s{% endif %}</li>
                         </ul>
                         <p>Merci d’accepter, ou non, la proposition de l’hôtel dans les 72h. Passé ce délai, celle ci ne sera plus valable</p>
                     {% endif %}
