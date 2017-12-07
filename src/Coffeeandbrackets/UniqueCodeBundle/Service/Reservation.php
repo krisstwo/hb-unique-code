@@ -161,6 +161,22 @@ class Reservation
         }
     }
 
+    public function autoCustomerDeclineHotelProposing(ReservationEntity $reservation)
+    {
+        try {
+            $reservation->setCustomerDeclineDate(new \DateTime());
+            $reservation->setIsAutoCustomerDeclineDate(true);
+
+            //dispatch event
+            $event = new CustomerDeclined($reservation);
+            $this->eventDispatcher->dispatch(CustomerDeclined::NAME, $event);
+
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public function customerAcceptHotelProposing(ReservationEntity $reservation)
     {
         try {

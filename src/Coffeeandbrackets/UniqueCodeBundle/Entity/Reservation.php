@@ -140,6 +140,13 @@ class Reservation
     private $customerDeclineDate;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_auto_customer_decline_date", type="boolean")
+     */
+    private $isAutoCustomerDeclineDate;
+
+    /**
      * @var
      *
      * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
@@ -656,6 +663,22 @@ class Reservation
     public function setHotelAddress($hotelAddress)
     {
         $this->hotelAddress = $hotelAddress;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsAutoCustomerDeclineDate()
+    {
+        return $this->isAutoCustomerDeclineDate;
+    }
+
+    /**
+     * @param boolean $isAutoCustomerDeclineDate
+     */
+    public function setIsAutoCustomerDeclineDate($isAutoCustomerDeclineDate)
+    {
+        $this->isAutoCustomerDeclineDate = $isAutoCustomerDeclineDate;
     }
 }
 

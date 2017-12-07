@@ -21,7 +21,7 @@ class CodeUniqueHandleUnansweredHotelPropositionCommand extends ContainerAwareCo
         $reservationService = $this->getContainer()->get('unique_code.reservation');
 
         foreach ($unansweredHotelPropositions as $reservation){
-            $reservationService->customerDeclineHotelProposing($reservation);
+            $reservationService->autoCustomerDeclineHotelProposing($reservation);
         }
 
         $output->writeln('Command ended.');
