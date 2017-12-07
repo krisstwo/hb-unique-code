@@ -200,7 +200,8 @@ class Reservation
             $newReservation->setOfferServiceNight($reservation->getOfferServiceNight());
             $newReservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
             $newReservation->setOfferPrice($reservation->getOfferPrice());
-            $newReservation->setHotelConfirmationDate($reservation->HotelRefuseDate());
+            $newReservation->setHotelConfirmationDate($reservation->getHotelRefuseDate());
+            $newReservation->setIsAutoCustomerDeclineDate($reservation->getIsAutoCustomerDeclineDate());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);

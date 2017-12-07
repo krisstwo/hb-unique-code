@@ -668,7 +668,7 @@ class Reservation
     /**
      * @return boolean
      */
-    public function isIsAutoCustomerDeclineDate()
+    public function getIsAutoCustomerDeclineDate()
     {
         return $this->isAutoCustomerDeclineDate;
     }
