@@ -144,7 +144,7 @@ class Reservation
      *
      * @ORM\Column(name="is_auto_customer_decline_date", type="boolean")
      */
-    private $isAutoCustomerDeclineDate;
+    private $isAutoCustomerDeclineDate = false;
 
     /**
      * @var
