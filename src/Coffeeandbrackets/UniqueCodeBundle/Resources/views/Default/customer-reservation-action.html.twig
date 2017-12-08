@@ -37,7 +37,7 @@
                     <p class="text-center">
                         <a class="btn btn-hb btn-lg btn-block btn-upper action-customer-decline-reservation"
                            href="{{ path('unique_code_ajax_customer_decline_hotel_proposing', {'id': reservation.getId() }) }}"
-                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">REFUSER LA PROPOSITION <br>DE L’HOTEL*</a>
+                           data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">REFUSER LA PROPOSITION <br>DE L’HOTEL</a>
                         {% if reservation.getCampaign() is not empty %}
                             <input type="hidden" id="customer-decline-redirect-url" value="{{ path('unique_code_campaign', {'campaignCode': reservation.getCampaign().getCode() }) }}">
                         {% else %}
@@ -46,9 +46,6 @@
                     </p>
                 </div>
             </div>
-            <p>
-                * Autre hôtel, autre date
-            </p>
         </div>
     </div>
 {% endblock %}
