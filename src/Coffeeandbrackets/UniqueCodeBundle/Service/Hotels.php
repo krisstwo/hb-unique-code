@@ -126,6 +126,8 @@ class Hotels
                     'stars'        => $item->etoiles,
                     'informations' => trim($item->infos_pratiques),
                     'email'        => trim($item->mail_hotel),
+                    'phone'        => trim($item->telephone_hotel),
+                    'address'      => trim($item->rue_hotel).', '.trim($item->postal_code).' '.trim($item->ville_hotel).', '.trim($item->pays_hotel),
                     'formulas'     => array()
                 );
             }
@@ -135,6 +137,7 @@ class Hotels
                 $planinngGrid = $this->em->getRepository('UniqueCodeBundle:ForfaitPlanning')->findPlaningById($item->nidforfait);
 
                 $forfaitPlanning = array();
+                $service_afternoon = $service_night = $service_morning = '';
                 foreach ($planinngGrid as $planningLine) {
                     /**
                      * @var $planningLine ForfaitPlanning
@@ -142,11 +145,17 @@ class Hotels
                     $forfaitPlanning[] = array(
                         'year'  => $planningLine->getYear(),
                         'month' => $planningLine->getMonth(),
-                        'days'  => $planningLine->getDaysArray(),
-                        'service_afternoon' => $planningLine->getServiceAfternoon(),
-                        'service_night' => $planningLine->getServiceNight(),
-                        'service_morning' => $planningLine->getServiceMorning()
+                        'days'  => $planningLine->getDaysArray()
                     );
+
+                    if(empty($service_afternoon))
+                        $service_afternoon = $planningLine->getServiceAfternoon();
+
+                    if(empty($service_night))
+                        $service_night = $planningLine->getServiceNight();
+
+                    if(empty($service_morning))
+                        $service_morning = $planningLine->getServiceMorning();
                 }
 
                 //setup the structure
@@ -155,7 +164,10 @@ class Hotels
                     'label'   => $item->forfait,
                     'persons' => $this->extractPersons($item),
                     'nights'  => $this->extractNights($item),
-                    'planning' => $forfaitPlanning
+                    'planning' => $forfaitPlanning,
+                    'service_afternoon' => $service_afternoon,
+                    'service_night' => $service_night,
+                    'service_morning' => $service_morning
                 );
             }
         }
@@ -187,22 +199,13 @@ class Hotels
     {
         $possibleValues = array();
 
-        switch ($formula->nuitee) {
-            case 'Cette formule est réservable un maximum de 1 nuitée consécutive':
-                $possibleValues[] = 1;
-                break;
-            case 'Cette formule est réservable un maximum de 2 nuitées consécutives':
-                $possibleValues = array(1, 2);
-                break;
-            case 'Cette formule est réservable un maximum de 3 nuitées consécutives':
-                $possibleValues = array(1, 2, 3);
-                break;
-            case 'Cette formule est réservable plusieurs nuitées consécutives' :
-                $possibleValues = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                break;
-            default:
-                break;
+        $max_night = 10;
+        // if has max night
+        if(strpos($formula->nuitee, 'Cette formule est réservable un maximum de') !== false){
+            $max_night = filter_var($formula->nuitee, FILTER_SANITIZE_NUMBER_INT);
         }
+
+        $possibleValues = range(1, $max_night);
 
         return $possibleValues;
     }

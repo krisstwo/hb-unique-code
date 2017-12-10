@@ -244,7 +244,19 @@ JQUERY TWEAKS
     background: rgba(247, 166, 0, .6);
 }
 
+.ui-datepicker-calendar .ui-state-active {
+    background: #776863;
+}
+
 .ui-datepicker-calendar .forfait-unavailable {
     text-decoration: line-through;
     opacity: 1;
+}
+
+.no-padding-left {
+    padding-left: 0!important;
+}
+
+.cgu-list ul {
+    padding-left: 15px;
 }

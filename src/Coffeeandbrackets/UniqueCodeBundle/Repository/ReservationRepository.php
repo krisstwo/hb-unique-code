@@ -44,4 +44,17 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function findUnansweredHotelPropositions() {
+        $criterea = new Criteria();
+
+        $criterea->where($criterea->expr()->isNull('customerAcceptanceDate'));
+        $criterea->andWhere($criterea->expr()->isNull('customerDeclineDate'));
+        $criterea->andWhere($criterea->expr()->lte('hotelRefuseDate', (new \DateTime())->sub(new \DateInterval('PT72H'))));
+
+        $qb = $this->createQueryBuilder('r');
+        $qb->addCriteria($criterea);
+
+        return $qb->getQuery()->execute();
+    }
 }

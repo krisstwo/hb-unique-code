@@ -10,6 +10,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Email\HotelConfirmationDueEmailSent;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Email\UnseenReservationEmailSent;
 use Coffeeandbrackets\UniqueCodeBundle\Event\EmailEvent;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelConfirmationDue;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelDeclined;
@@ -80,6 +81,7 @@ class EmailSubscriber implements EventSubscriberInterface
             HotelAccepted::NAME        => 'onHotelAccepted',
             ReservationUnseen::NAME    => 'onReservationUnseen',
             HotelConfirmationDue::NAME => 'onHotelConfirmationDue',
+            CustomerAccepted::NAME     => 'onCustomerAccepted',
         );
     }
 
@@ -212,5 +214,33 @@ class EmailSubscriber implements EventSubscriberInterface
 
         $event = new HotelConfirmationDueEmailSent($recipient, $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
+    }
+
+    public function onCustomerAccepted(ReservationEvent $event) {
+        $reservation = $event->getReservation();
+
+        //send email to hotel
+        $tabParam = array(
+            'to' => $reservation->getHotelEmail(),
+            'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
+            'subject' => 'Confirmation de réservation',
+            'from' => 'contact@happybreak.com',//TODO: let from be empty,
+            'params' => array(
+                'reservation' => $reservation
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
+
+        // send confirmation mail to customer
+        $tabParam = array(
+            'to' => $reservation->getCustomer()->getEmail(),
+            'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
+            'subject' => 'Confirmation de votre réservation',
+            'from' => 'contact@happybreak.com',//TODO: let from be empty
+            'params' => array(
+                'reservation' => $reservation
+            )
+        );
+        $this->mailer->sendMessage($tabParam, 'text/html');
     }
 }

@@ -34,7 +34,7 @@
                 </li>
                 {% endif %}
                 <li>
-                    {{ reservation.getReservationDate().format('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuits
+                    {{ reservation.getReservationDate().format('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}
                 </li>
                 <li>
                     {{ reservation.getOffer() }} au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.

@@ -140,6 +140,13 @@ class Reservation
     private $customerDeclineDate;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_auto_customer_decline_date", type="boolean")
+     */
+    private $isAutoCustomerDeclineDate = false;
+
+    /**
      * @var
      *
      * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Customer", cascade={"persist"})
@@ -181,6 +188,20 @@ class Reservation
      * @ORM\Column(name="offer_price", type="float", scale=2, nullable=true)
      */
     private $offerPrice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hotel_phone", type="string", length=255)
+     */
+    private $hotelPhone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hotel_address", type="string", length=255)
+     */
+    private $hotelAddress;
 
     /**
      * @ORM\PrePersist
@@ -610,6 +631,54 @@ class Reservation
     public function setOfferPrice($offerPrice)
     {
         $this->offerPrice = $offerPrice;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelPhone()
+    {
+        return $this->hotelPhone;
+    }
+
+    /**
+     * @param string $hotelPhone
+     */
+    public function setHotelPhone($hotelPhone)
+    {
+        $this->hotelPhone = $hotelPhone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHotelAddress()
+    {
+        return $this->hotelAddress;
+    }
+
+    /**
+     * @param string $hotelAddress
+     */
+    public function setHotelAddress($hotelAddress)
+    {
+        $this->hotelAddress = $hotelAddress;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsAutoCustomerDeclineDate()
+    {
+        return $this->isAutoCustomerDeclineDate;
+    }
+
+    /**
+     * @param boolean $isAutoCustomerDeclineDate
+     */
+    public function setIsAutoCustomerDeclineDate($isAutoCustomerDeclineDate)
+    {
+        $this->isAutoCustomerDeclineDate = $isAutoCustomerDeclineDate;
     }
 }
 

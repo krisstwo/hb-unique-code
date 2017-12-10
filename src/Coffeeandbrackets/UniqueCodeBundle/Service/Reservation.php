@@ -93,6 +93,9 @@ class Reservation
             $reservation->setHotelEmail(iconv("UTF-8", "ASCII//IGNORE", $hotel['email']));
         }
 
+        $reservation->setHotelPhone($data['hotel_phone']);
+        $reservation->setHotelAddress($data['hotel_address']);
+
         $reservation->setOffer($data['offer-name']);
 
         $reservation->setCustomerMsg($data['customer_msg']);
@@ -158,14 +161,26 @@ class Reservation
         }
     }
 
+    public function autoCustomerDeclineHotelProposing(ReservationEntity $reservation)
+    {
+        try {
+            $reservation->setCustomerDeclineDate(new \DateTime());
+            $reservation->setIsAutoCustomerDeclineDate(true);
+
+            //dispatch event
+            $event = new CustomerDeclined($reservation);
+            $this->eventDispatcher->dispatch(CustomerDeclined::NAME, $event);
+
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public function customerAcceptHotelProposing(ReservationEntity $reservation)
     {
         try {
             $reservation->setCustomerAcceptanceDate(new \DateTime());
-
-            //dispatch acceptance event
-            $event = new CustomerAccepted($reservation);
-            $this->eventDispatcher->dispatch(CustomerAccepted::NAME, $event);
 
             //create a new reservation with the proposed and accepted dates
             $newReservation = new ReservationEntity();
@@ -174,23 +189,27 @@ class Reservation
             $newReservation->setNumberNight($reservation->getHotelProposedNumberNight());
             $newReservation->setNumberPerson($reservation->getNumberPerson());
             $newReservation->setHotel($reservation->getHotel());
+            $newReservation->setHotelAddress($reservation->getHotelAddress());
+            $newReservation->setHotelPhone($reservation->getHotelPhone());
             $newReservation->setOffer($reservation->getOffer());
             $newReservation->setHotelEmail($reservation->getHotelEmail());
             $newReservation->setCustomerMsg($reservation->getCustomerMsg());
             $newReservation->setCustomer($reservation->getCustomer());
             $newReservation->setCampaign($reservation->getCampaign());
-            $reservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
-            $reservation->setOfferServiceNight($reservation->getOfferServiceNight());
-            $reservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
-            $reservation->setOfferPrice($reservation->getOfferPrice());
+            $newReservation->setOfferServiceAfternoon($reservation->getOfferServiceAfternoon());
+            $newReservation->setOfferServiceNight($reservation->getOfferServiceNight());
+            $newReservation->setOfferServiceMorning($reservation->getOfferServiceMorning());
+            $newReservation->setOfferPrice($reservation->getOfferPrice());
+            $newReservation->setHotelConfirmationDate($reservation->getHotelRefuseDate());
+            $newReservation->setIsAutoCustomerDeclineDate($reservation->getIsAutoCustomerDeclineDate());
 
             //TODO: must move to the end to simulate a transaction ...
             $this->em->persist($newReservation);
             $this->em->flush();
 
-            //new reservation event
-            $event = new ReservationCreated($newReservation);
-            $this->eventDispatcher->dispatch(ReservationCreated::NAME, $event);
+            //dispatch acceptance event
+            $event = new CustomerAccepted($newReservation);
+            $this->eventDispatcher->dispatch(CustomerAccepted::NAME, $event);
         } catch (\Exception $e) {
             throw $e;
         }

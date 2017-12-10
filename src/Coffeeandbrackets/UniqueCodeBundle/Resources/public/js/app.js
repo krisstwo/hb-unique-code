@@ -92,7 +92,7 @@ $(function(){
             return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
         },
         onSelect : function(dateText){
-            reservationDetail(dateText);
+            initNightsSelect2();
         }
     });
 
@@ -313,6 +313,9 @@ $(function(){
         $('#hotel-informations').show();
         $('#hotel-informations .content').html(selectedHotel.informations.replace(/(?:\r\n|\r|\n\n|\n)/g, '<br>'));
 
+        $('#hotel_phone').val(selectedHotel.phone);
+        $('#hotel_address').val(selectedHotel.address);
+
         initOfferSelect2();
     };
 
@@ -363,11 +366,11 @@ $(function(){
             });
         }
 
-        reservationDetail($('#step_3 #date').val());
+        reservationDetail();
         $('#offer_price').val(searchFormulaPrice(selectedFormula, true));
     };
 
-    var reservationDetail = function (date){
+    var reservationDetail = function (){
 
         $('#reservation-detail').hide();
 
@@ -375,24 +378,27 @@ $(function(){
         $('#reservation-detail #offer_service_night').val('');
         $('#reservation-detail #offer_service_morning').val('');
 
-        if (!selectedFormula || !date)
+        if (!selectedFormula)
             return false;
 
-        var month = parseInt(date.split('/')[1]);
-        var year = parseInt(date.split('/')[2]);
-        for (var i in selectedFormula.planning) {
-            var planning = selectedFormula.planning[i];
+        if((selectedFormula.service_afternoon || selectedFormula.service_night || selectedFormula.service_morning)){
+            var html_content = '';
+            if(selectedFormula.service_afternoon)
+                html_content += selectedFormula.service_afternoon+'<br><br>';
 
-            if(parseInt(planning.year) == year && parseInt(planning.month) == month){
-                if((planning.service_afternoon || planning.service_night || planning.service_morning)){
-                    $('#reservation-detail').show();
-                    $('#reservation-detail .content').html(planning.service_afternoon+'<br><br>'+planning.service_night+'<br><br>'+planning.service_morning);
+            if(selectedFormula.service_night)
+                html_content += selectedFormula.service_night+'<br><br>';
 
-                    $('#reservation-detail #offer_service_afternoon').val(planning.service_afternoon);
-                    $('#reservation-detail #offer_service_night').val(planning.service_night);
-                    $('#reservation-detail #offer_service_morning').val(planning.service_morning);
-                }
-            }
+            if(selectedFormula.service_morning)
+                html_content += selectedFormula.service_morning;
+
+            $('#reservation-detail .content').html(html_content);
+
+            $('#reservation-detail #offer_service_afternoon').val(selectedFormula.service_afternoon);
+            $('#reservation-detail #offer_service_night').val(selectedFormula.service_night);
+            $('#reservation-detail #offer_service_morning').val(selectedFormula.service_morning);
+
+            $('#reservation-detail').show();
         }
     };
 
@@ -511,6 +517,28 @@ $(function(){
                     id: selectedFormula.nights[i],
                     text: selectedFormula.nights[i] == 1 ? '1 nuit' : selectedFormula.nights[i] + ' nuits'
                 });
+            }
+        }
+
+        var selectedDate = $('#date').datepicker( "getDate" );
+        var disableFrom = 0;
+        if(selectedDate && nightsOptions.length) {
+            for (var i in selectedFormula.planning) {
+                var planning = selectedFormula.planning[i];
+                if(parseInt(planning.year) == selectedDate.getFullYear() && parseInt(planning.month) == (selectedDate.getMonth() + 1)){
+                    $.each(nightsOptions, function(index, val){
+                        if(planning.days[selectedDate.getDate() + index] == 0){
+                            disableFrom = index;
+                            return false;
+                        }
+                    });
+                }
+            }
+        }
+
+        if(disableFrom > 0) {
+            for (i = disableFrom; i < nightsOptions.length; i++){
+                nightsOptions[i]['disabled'] = true;
             }
         }
 
@@ -648,7 +676,7 @@ $(function(){
                     if(result && result.error)
                         return;
 
-                    $('#modal-flash-success-static .content').html('Votre demande de réservation a bien été envoyée !<br><br>- L’hôtel vous donnera une réponse par mail d’ici 12 heures<br>- Pensez à vérifier vos courriers indésirables<br>- Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.');
+                    $('#modal-flash-success-static .content').html('Bravo! Votre réservation est confirmée. <br><br>Vous allez recevoir par mail le détail de votre séjour.<br>Pensez à vérifier vos courriers indésirables<br><br>A noter ! Chaque réservation est soumise aux CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.');
                     $('#modal-flash-success-static').modal('show');
                 },
                 complete: function () {

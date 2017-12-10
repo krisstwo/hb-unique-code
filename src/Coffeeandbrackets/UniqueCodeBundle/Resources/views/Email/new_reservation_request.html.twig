@@ -19,7 +19,7 @@
                             <p>Vous avez reçu une nouvelle demande de réservation de la part d’un membre Happybreak !</p>
                             <p>Monsieur {{ customer.getLastName() }} souhaite réserver une chambre double
                                 avec {{ reservation.getOffer() }} le {{ reservation.getReservationDate()|date('d/m/Y') }}
-                                pour {{ reservation.getNumberNight() }} nuits</p>
+                                pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}</p>
                         </td>
                     </tr>
                     <tr>

@@ -10,6 +10,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Event;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Code;
 use Coffeeandbrackets\UniqueCodeBundle\Entity\CodeStatusChangeLog;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CodeActivated;
+use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\CustomerDeclined;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\HotelAccepted;
 use Coffeeandbrackets\UniqueCodeBundle\Event\Reservation\ReservationCreated;
@@ -77,6 +78,7 @@ class CodeStatusSubscriber implements EventSubscriberInterface
             ReservationCreated::NAME => 'onReservationEvent',
             HotelAccepted::NAME => 'onReservationEvent',
             HotelDeclined::NAME => 'onReservationEvent',
+            CustomerAccepted::NAME => 'onReservationEvent',
             'workflow.status_code.leave' => 'onCodeStatusChange'
         );
     }
@@ -107,6 +109,10 @@ class CodeStatusSubscriber implements EventSubscriberInterface
                 break;
             case HotelDeclined::NAME :
                 $this->codeStatusWorkflow->apply($code, 'refuse');
+                break;
+            case CustomerAccepted::NAME :
+                $this->codeStatusWorkflow->apply($code, 'request');
+                $this->codeStatusWorkflow->apply($code, 'accept');
                 break;
         }
 
