@@ -1,6 +1,7 @@
 <?php
 
 namespace Coffeeandbrackets\UniqueCodeBundle\Repository;
+use Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign;
 
 /**
  * CodeRepository
@@ -10,4 +11,13 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Repository;
  */
 class CodeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getLastClearByCampaign(Campaign $campaign){
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c.clear');
+        $qb->where('c.campaign = '.$campaign->getId());
+        $qb->orderBy('c.clear', 'desc');
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

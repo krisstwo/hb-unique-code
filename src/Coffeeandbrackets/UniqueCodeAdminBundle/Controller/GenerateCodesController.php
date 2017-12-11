@@ -21,13 +21,17 @@ class GenerateCodesController extends Controller {
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $statingNumber = 1;
             $suffix = $request->get('prefix');
             $howMany = $request->get('quantity');
 
+            $data = $form->getData();
+            $campaign = $this->getDoctrine()->getRepository('UniqueCodeBundle:Campaign')->find($data['campaign']);
+
             $hashids = new Hashids('happybreak' . $suffix, 4, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
 
-            $campaign = $this->getDoctrine()->getRepository('UniqueCodeBundle:Campaign')->find($request->get('campaign'));
+            $statingNumber = (!empty($campaign))
+                ? ($this->get('unique_code.campaign')->getLastClearSequenceCode($campaign) + 1)
+                : 1;
             for ($i = 0; $i < $howMany; $i++) {
                 $code = $suffix . $hashids->encode($statingNumber + $i);
 
@@ -35,7 +39,7 @@ class GenerateCodesController extends Controller {
                 $codeEntity->setCode($code);
                 $codeEntity->setCampaign($campaign);
                 $codeEntity->setCurrentStatus('not_actived');
-                $codeEntity->setClear('');
+                $codeEntity->setClear($statingNumber + $i);
 
                 $this->getDoctrine()->getManager()->persist($codeEntity);
                 $this->getDoctrine()->getManager()->flush();
