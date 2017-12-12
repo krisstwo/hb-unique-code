@@ -8,6 +8,7 @@ namespace Coffeeandbrackets\UniqueCodeBundle\Service;
 
 
 use Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation as ReservationEntity;
+use Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign as CampaignEntity;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -62,5 +63,18 @@ class Campaign
         }
 
         return $campaign;
+    }
+
+    /**
+     * @param CampaignEntity $campaign
+     * @return int|mixed
+     */
+    public function getLastClearSequenceCode(CampaignEntity $campaign){
+        if(empty($campaign))
+            return 1;
+
+        $clearSequence = $this->em->getRepository('UniqueCodeBundle:Code')->getLastClearByCampaign($campaign);
+
+        return ($clearSequence) ? $clearSequence['clear'] : 0;
     }
 }

@@ -35,7 +35,8 @@
         "symfony/symfony": "3.3.*",
         "symfony/workflow": "^3.3",
         "twbs/bootstrap": "^3.3",
-        "twig/twig": "^1.0||^2.0"
+        "twig/twig": "^1.0||^2.0",
+        "hashids/hashids": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

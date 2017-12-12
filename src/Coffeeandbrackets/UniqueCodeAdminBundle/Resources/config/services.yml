@@ -15,7 +15,7 @@ services:
                 - { name: sonata.admin, manager_type: orm, label: Reservations }
     admin.code:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Code
-            arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Code, ~]
+            arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Code, UniqueCodeAdminBundle:GenerateCodes]
             tags:
                 - { name: sonata.admin, manager_type: orm, label: Codes }
     admin.customer:

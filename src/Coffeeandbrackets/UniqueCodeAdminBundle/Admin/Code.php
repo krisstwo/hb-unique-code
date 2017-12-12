@@ -7,10 +7,12 @@
 namespace Coffeeandbrackets\UniqueCodeAdminBundle\Admin;
 
 use \Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class Code extends AbstractAdmin
 {
@@ -58,6 +60,17 @@ class Code extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clearExcept(array('list', 'export', 'edit'));
+        $collection->add('generate', 'generate');
+    }
+
+    public function configureActionButtons($action, $object = null) {
+        $list = parent::configureActionButtons($action, $object);
+        $this->setTemplate('button_generate', 'list__action_generate.html.twig');
+        $list['generate'] = array(
+            'template' => $this->getTemplate('button_generate'),
+        );
+
+        return $list;
     }
 
     public function toString($object)
