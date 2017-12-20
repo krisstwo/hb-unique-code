@@ -27,6 +27,8 @@ class Code extends AbstractAdmin
             ->add('id')
             ->add('code')
             ->add('currentStatus')
+            ->add('creationDate')
+            ->add('updateDate')
             ->add('campaign.name');
     }
 
@@ -34,6 +36,8 @@ class Code extends AbstractAdmin
     {
         $datagridMapper->add('code')
                        ->add('currentStatus')
+                        ->add('creationDate')
+                        ->add('updateDate')
                        ->add('campaign', null, array(), 'entity', array(
                            'class'        => 'Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign',
                            'choice_label' => 'name',
@@ -60,7 +64,7 @@ class Code extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clearExcept(array('list', 'export', 'edit'));
+        $collection->clearExcept(array('list', 'export', 'edit', 'bulk'));
         $collection->add('generate', 'generate');
     }
 
