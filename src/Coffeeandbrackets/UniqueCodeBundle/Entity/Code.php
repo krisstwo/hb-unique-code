@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Code
  *
- * @ORM\Table(name="code")
+ * @ORM\Table(name="code", uniqueConstraints={@ORM\UniqueConstraint(name="code_uniqueness", columns={"code"})})
  * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CodeRepository") @ORM\HasLifecycleCallbacks
  */
 class Code
