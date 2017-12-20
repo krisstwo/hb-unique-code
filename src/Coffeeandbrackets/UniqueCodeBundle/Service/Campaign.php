@@ -69,12 +69,14 @@ class Campaign
      * @param CampaignEntity $campaign
      * @return int|mixed
      */
-    public function getLastClearSequenceCode(CampaignEntity $campaign){
-        if(empty($campaign))
-            return 1;
+    public function getLastClearSequenceCode(CampaignEntity $campaign = null){
+        $clearSequenceLastValue = 0;
+        if($campaign == null){
+            $clearSequenceLastValue = $this->em->getRepository('UniqueCodeBundle:Code')->getLastClearNoCampaign();
+        }else {
+            $clearSequenceLastValue = $this->em->getRepository('UniqueCodeBundle:Code')->getLastClearByCampaign($campaign);
+        }
 
-        $clearSequence = $this->em->getRepository('UniqueCodeBundle:Code')->getLastClearByCampaign($campaign);
-
-        return ($clearSequence) ? $clearSequence['clear'] : 0;
+        return $clearSequenceLastValue;
     }
 }

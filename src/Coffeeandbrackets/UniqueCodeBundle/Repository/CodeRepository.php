@@ -18,6 +18,16 @@ class CodeRepository extends \Doctrine\ORM\EntityRepository
         $qb->orderBy('c.clear', 'desc');
         $qb->setMaxResults(1);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getLastClearNoCampaign(){
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c.clear');
+        $qb->where('c.campaign IS NULL');
+        $qb->orderBy('c.clear', 'desc');
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

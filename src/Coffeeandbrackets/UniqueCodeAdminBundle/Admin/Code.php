@@ -54,6 +54,7 @@ class Code extends AbstractAdmin
                    ->add('campaign', 'entity', array(
                        'class'        => 'Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign',
                        'choice_label' => 'name',
+                       'required'      => false,
                    ));
     }
 

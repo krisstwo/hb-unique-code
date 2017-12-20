@@ -21,7 +21,7 @@ class GenerateCodes extends AbstractType {
             ->add('campaign', EntityType::class, array(
                 'class' => Campaign::class,
                 'choice_label' => 'name',
-                'required' => true
+                'required' => false
             ))
             ->add('prefix', null, array('required' => true))
             ->add('quantity', null, array('required' => true));
