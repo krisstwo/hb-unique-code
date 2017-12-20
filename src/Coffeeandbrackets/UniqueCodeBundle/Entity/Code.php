@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Code
  *
  * @ORM\Table(name="code")
- * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CodeRepository")
+ * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CodeRepository") @ORM\HasLifecycleCallbacks
  */
 class Code
 {
@@ -57,6 +57,35 @@ class Code
      */
     private $campaign;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_date", type="datetime", nullable=true)
+     */
+    private $updateDate;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->creationDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updateDate = new \DateTime();
+    }
 
     /**
      * Get id
