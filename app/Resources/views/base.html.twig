@@ -44,7 +44,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        Tous droits réservés - <a href="https://www.happybreak.com/mentions-legales" target="_blank">Mentions légales</a> - <a href="https://www.happybreak.com/cgu" target="_blank">CGV-CGU</a> - <a href="https://www.happybreak.com" target="_blank">www.happybreak.com</a> -
+                        {% set campaign = unique_code_campaign.detectCampaign() %}
+                        Tous droits réservés - <a href="https://www.happybreak.com/mentions-legales" target="_blank">Mentions légales</a> - <a href="https://www.happybreak.com/cgu" target="_blank">CGV-CGU</a> - <a href="https://www.happybreak.com/?utm_source=codeunique&utm_medium=referral&utm_content=homepage{{ campaign ? '&utm_campaign=' ~ campaign.getCode() : '' }}" target="_blank">www.happybreak.com</a> -
                         Contactez-nous au 09 80 01 01 01
                     </div>
                 </div>

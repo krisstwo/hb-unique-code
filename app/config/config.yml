@@ -40,6 +40,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        unique_code_campaign: "@unique_code.campaign"
 
 # Doctrine Configuration
 doctrine:
