@@ -18,7 +18,9 @@ class CodeRepository extends \Doctrine\ORM\EntityRepository
         $qb->orderBy('c.clear', 'desc');
         $qb->setMaxResults(1);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result ? $result['clear'] : 0;
     }
 
     public function getLastClearNoCampaign(){
@@ -28,6 +30,8 @@ class CodeRepository extends \Doctrine\ORM\EntityRepository
         $qb->orderBy('c.clear', 'desc');
         $qb->setMaxResults(1);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result ? $result['clear'] : 0;
     }
 }
