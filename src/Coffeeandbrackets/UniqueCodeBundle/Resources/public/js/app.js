@@ -91,7 +91,8 @@ $(function(){
 
             return isStatisfied ? [true] : [false, 'forfait-unavailable', 'Ce jour n\'est disponible'];
         },
-        onSelect : function(dateText){
+        onSelect : function(dateText, instance){
+            initOfferSelect2();
             initNightsSelect2();
         }
     });
@@ -321,6 +322,7 @@ $(function(){
 
     $('#number_person_1').tooltip();
     $('#number_person_2').tooltip();
+
     var selectFormula = function (id) {
         selectedFormula = selectedHotel.formulas[id];
 
@@ -367,7 +369,7 @@ $(function(){
         }
 
         reservationDetail();
-        $('#offer_price').val(searchFormulaPrice(selectedFormula, true));
+        $('#offer_price').val(searchFormulaPrice(selectedFormula));
     };
 
     var reservationDetail = function (){
@@ -402,28 +404,32 @@ $(function(){
         }
     };
 
-    var searchFormulaPrice = function (formula, without_currency) {
+    var searchFormulaPrice = function (formula) {
         if (!formula.planning || !formula.planning.length)
             return '';
 
+        var dayDate = $('#date').datepicker('getDate');
         var price = 0;
+        var priceMatchDone = false;
         for (var i in formula.planning) {
             var planning = formula.planning[i];
 
             for (var day in planning.days) {
-                //set the price to fist non-zero value, first
-                if (price === 0 && planning.days[day] > 0)
+                //Break on exact match
+                if (dayDate && (dayDate.getMonth() + 1) === parseInt(planning.month) && dayDate.getDate() === parseInt(day)) {
+                    price = planning.days[day];
+                    priceMatchDone = true;
+                    break;
+                } else if (price === 0 && planning.days[day] > 0) //set the price to fist non-zero value, first
                     price = planning.days[day];
                 else if (planning.days[day] > 0 && planning.days[day] < price)//set the lowest price we find
                     price = planning.days[day];
             }
+
+            if (priceMatchDone) break;
         }
-
-        if(without_currency)
-            return price;
-
         if (price > 0)
-            return (' ' + price + ' €').replace('.', ',');
+            return price;
         else
             return '';
     };
@@ -486,24 +492,31 @@ $(function(){
             minimumResultsForSearch: -1,
             data: formulaOptions,
             templateResult: function (d) {
-                if (d.id)
-                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + searchFormulaPrice(d) + '</span>');
-                else
+                if (d.id) {
+                    var price = searchFormulaPrice(d);
+                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + (price ? (' ' + price + ' €').replace('.', ',') : '') + '</span>');
+                } else
                     return $(d.text);
             },
             templateSelection: function (d) {
-                if (d.id)
-                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + searchFormulaPrice(d) + '</span>');
-                else
+                if (d.id) {
+                    var price = searchFormulaPrice(d);
+                    return $('<span>' + d.text + '</span>' + '<span id="price-' + d.id + '" class="price">' + (price ? (' ' + price + ' €').replace('.', ',') : '') + '</span>');
+                } else
                     return $(d.text);
             }
         });
 
-        if(formulaOptions.length > 0)
+        //Set value on current selection or select 1st by default
+        if(selectedFormula)
+            $('#offer').val(selectedFormula.id);
+        else if(formulaOptions.length > 0)
             $('#offer').val(formulaOptions[0].id);
+
         $('#offer').trigger('change');
     };
 
+    //Trigger the formula chage logic when selecting other one
     $('#offer').change(function (e) {
         selectFormula($('#offer').val());
     });
