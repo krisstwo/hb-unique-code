@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Campaign
  *
  * @ORM\Table(name="campaign_cam")
- * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CampaignRepository")
+ * @ORM\Entity(repositoryClass="Coffeeandbrackets\UniqueCodeBundle\Repository\CampaignRepository") @ORM\HasLifecycleCallbacks
  */
 class Campaign
 {
@@ -41,6 +41,36 @@ class Campaign
      * @ORM\Column(name="cam_logo", type="string", length=255)
      */
     private $logo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_date", type="datetime", nullable=true)
+     */
+    private $updateDate;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->creationDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updateDate = new \DateTime();
+    }
 
 
     /**
@@ -123,6 +153,22 @@ class Campaign
     public function getLogo()
     {
         return $this->logo;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
     }
 }
 

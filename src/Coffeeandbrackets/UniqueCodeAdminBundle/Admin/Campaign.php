@@ -26,13 +26,17 @@ class Campaign extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('code')
-            ->add('logo');
+            ->add('logo')
+            ->add('creationDate')
+            ->add('updateDate');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('name')
-                       ->add('code');
+                       ->add('code')
+                       ->add('creationDate')
+                       ->add('updateDate');
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -45,5 +49,12 @@ class Campaign extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clearExcept(array('list', 'export', 'create', 'edit', 'delete'));
+    }
+
+    public function toString($object)
+    {
+        return $object instanceof \Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign
+            ? 'Campaign #' . $object->getId()
+            : 'Campaign'; // shown in the breadcrumb on the create view
     }
 }
