@@ -21,6 +21,7 @@
         "components/jqueryui": "^1.12",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "hashids/hashids": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "mashape/unirest-php": "^3.0",
         "oyejorge/less.php": "v1.7.0.14",
@@ -35,8 +36,7 @@
         "symfony/symfony": "3.3.*",
         "symfony/workflow": "^3.3",
         "twbs/bootstrap": "^3.3",
-        "twig/twig": "^1.0||^2.0",
-        "hashids/hashids": "^2.0"
+        "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
