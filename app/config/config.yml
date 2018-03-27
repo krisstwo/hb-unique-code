@@ -184,3 +184,9 @@ sonata_admin:
                 label:                ~
                 label_catalogue:      ~
                 keep_open:            true
+
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            show:
+                url: "UniqueCodeAdminBundle:CRUD:show_url.html.twig"
