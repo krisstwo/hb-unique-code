@@ -40,8 +40,9 @@ class GenerateCodesController extends Controller {
                 $codeEntity->setClear($startingNumber + $i);
 
                 $this->getDoctrine()->getManager()->persist($codeEntity);
-                $this->getDoctrine()->getManager()->flush();
             }
+
+            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('sonata_flash_success', 'Generate successfully');
             return new RedirectResponse($this->admin->generateUrl('list'));
