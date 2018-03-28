@@ -40,6 +40,11 @@ class GenerateCodesController extends Controller {
                 $codeEntity->setClear($startingNumber + $i);
 
                 $this->getDoctrine()->getManager()->persist($codeEntity);
+
+                // Flush every 1k otherwise can require massive RAM
+                if ($i % 1000 === 0) {
+                    $this->getDoctrine()->getManager()->flush();
+                }
             }
 
             $this->getDoctrine()->getManager()->flush();
