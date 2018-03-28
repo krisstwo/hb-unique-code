@@ -12,10 +12,14 @@ use Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign;
 class CodeRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getLastClearByCampaign(Campaign $campaign){
+
+        $config = $this->getEntityManager()->getConfiguration();
+        $config->addCustomNumericFunction('INT', 'Coffeeandbrackets\UniqueCodeBundle\Doctrine\Query\CastAsInteger');
+
         $qb = $this->createQueryBuilder('c');
         $qb->select('c.clear');
         $qb->where('c.campaign = '.$campaign->getId());
-        $qb->orderBy('c.clear', 'desc');
+        $qb->orderBy('INT(c.clear)', 'desc');
         $qb->setMaxResults(1);
 
         $result = $qb->getQuery()->getOneOrNullResult();
@@ -24,10 +28,14 @@ class CodeRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function getLastClearNoCampaign(){
+
+        $config = $this->getEntityManager()->getConfiguration();
+        $config->addCustomNumericFunction('INT', 'Coffeeandbrackets\UniqueCodeBundle\Doctrine\Query\CastAsInteger');
+
         $qb = $this->createQueryBuilder('c');
         $qb->select('c.clear');
         $qb->where('c.campaign IS NULL');
-        $qb->orderBy('c.clear', 'desc');
+        $qb->orderBy('INT(c.clear)', 'desc');
         $qb->setMaxResults(1);
 
         $result = $qb->getQuery()->getOneOrNullResult();
