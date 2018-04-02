@@ -36,7 +36,7 @@ class Code extends AbstractAdmin
     {
         $datagridMapper->add('code')
                        ->add('currentStatus')
-                        ->add('creationDate')
+                        ->add('creationDate', 'doctrine_orm_date')
                         ->add('updateDate')
                        ->add('campaign', null, array(), 'entity', array(
                            'class'        => 'Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign',
