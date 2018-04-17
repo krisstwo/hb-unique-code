@@ -10,6 +10,7 @@ use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
 use Sonata\AdminBundle\Form\Type\Filter\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,6 +60,7 @@ class CreateCustomer extends AbstractType
             ->add('email', EmailType::class, array('required' => true))
             ->add('re_email', EmailType::class, array('required' => true))
             ->add('phone', null, array('required' => true, 'constraints' => array(new Regex(['pattern' => "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/"]))))
+            ->add('newsletter', NumberType::class)
             ->add('cgv', null, array('required' => true));
     }
 

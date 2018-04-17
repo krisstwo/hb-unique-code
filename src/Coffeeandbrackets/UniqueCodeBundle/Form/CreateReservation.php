@@ -10,6 +10,7 @@ use Coffeeandbrackets\UniqueCodeBundle\Service\CheckCode;
 use Coffeeandbrackets\UniqueCodeBundle\Service\Hotels;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -85,6 +86,7 @@ class CreateReservation extends AbstractType
             ->add('email', EmailType::class, array('required' => true))
             ->add('re_email', EmailType::class, array('required' => true))
             ->add('phone', null, array('required' => true))
+            ->add('newsletter', NumberType::class)
             ->add('cgv', null, array('required' => true))
             ->add('number_person', null, array('required' => true))
             ->add('hotel-name', null, array('required' => true))
