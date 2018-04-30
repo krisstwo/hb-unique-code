@@ -95,8 +95,7 @@ LAYOUT STYLES
 }
 
 #footer .logo {
-    position: absolute;
-    left: 1em;
+    display: inline-block;
     height: 3em;
     line-height: 3em;
 }
