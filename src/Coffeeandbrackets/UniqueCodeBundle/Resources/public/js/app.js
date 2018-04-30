@@ -60,9 +60,6 @@ $(function(){
         if (stepIndex < 1 || stepIndex > 4)
             return;
 
-        $('.step-list .step-list-item').removeClass('active');
-        $('.step-list #step-' + stepIndex).addClass('active');
-
         $('.step-container').hide();
         $('#step_' + stepIndex).show();
     };
@@ -121,6 +118,7 @@ $(function(){
     );
 
     $("#step_2 form").validate({
+        ignore: [], // Hidden elements
         rules: {
             code: {
                 required: true,
@@ -229,6 +227,7 @@ $(function(){
     var isReservationSubmitted = false;
 
     $("#step_3 form").validate({
+        ignore: [], // Hidden elements
         rules: {
             number_person: {
                 required: true
@@ -265,8 +264,12 @@ $(function(){
                 $('#step_3 .error-required').show();
 
             this.defaultShowErrors();
-        },
-        submitHandler: function(form) {
+        }
+    });
+
+    $("#to_step_4").on('click', function (e) {
+        e.preventDefault();
+        if($("#step_3 form").valid()) {
             //can submit only on a page load
             if(isReservationSubmitted)
                 return;
@@ -274,9 +277,9 @@ $(function(){
             $('#to_step_4').button('loading');
 
             $.ajax({
-                url: $(form).attr('action'),
+                url: $("#step_3 form").attr('action'),
                 type: 'POST',
-                data: $(form).serialize() + '&' + $("#step_2 form").serialize(),
+                data: $("#step_2 form").serialize() + '&' + $("#step_3 form").serialize(),
                 success: function (result) {
                     if (result && result.error)
                         return;
