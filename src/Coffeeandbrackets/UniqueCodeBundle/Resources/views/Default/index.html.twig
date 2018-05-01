@@ -72,9 +72,9 @@
                                         <h3 class="heading">mes informations :</h3>
                                         <div class="form-group">
                                             <input class="magic-radio inline" type="radio" id="gender_female" name="gender" value="female">
-                                            <label for="gender_female">Mme</label>&nbsp;&nbsp;
+                                            <label class="control-label" for="gender_female">Mme</label>&nbsp;&nbsp;
                                             <input class="magic-radio inline" type="radio" id="gender_male" name="gender" value="male">
-                                            <label for="gender_male">Mr</label>
+                                            <label class="control-label" for="gender_male">Mr</label>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="last_name"
@@ -107,27 +107,12 @@
                                             Le champs de confirmation d'email est invalide.
                                         </div>
 
-
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input class="magic-checkbox" type="checkbox" value="cgv" name="cgv" id="cgv">
-                                                <label for="cgv">
-                                                    En cochant cette case, j’accepte <a
-                                                            href="https://www.happybreak.com/cgu" target="_blank">les
-                                                        conditions générales</a> de Happybreak*.
-                                                </label>
-
-                                            </div>
-                                        </div>
                                         <div class="checkbox">
                                             <input class="magic-checkbox" type="checkbox" id="newsletter" name="newsletter" value="1"
                                                    checked="checked">
                                             <label for="newsletter">
                                                 Je souhaite recevoir une sélection d’offres d’hôtels à -50% de la part de Happybreak.
                                             </label>
-                                        </div>
-                                        <div class="alert alert-danger error-cgv" style="display: none;">
-                                            Vous devez accepter les conditions générales de Happybreak pour continuer.
                                         </div>
                                     </form>
                                     <span>* Champs obligatoires</span>
@@ -162,7 +147,7 @@
                             <div class="col-md-4 step-content">
                                 <div class="step-panel">
                                     <h3 class="heading">Je choisis mon hôtel :</h3>
-                                    <form action="{{ path('unique_code_submit_reservation') }}">
+                                    <form>
                                         <div class="form-group">
                                             <select type="text" class="form-control" id="hotel" name="hotel" required data-endpoint="{{ path('unique_code_ajax_search_hotel') }}"></select>
                                             <input type="hidden" id="hotel-name" name="hotel-name">
@@ -217,14 +202,10 @@
                                             </div>
                                         </div>
                                         <p>&nbsp;</p>
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <p>
-                                                    Veuillez préciser ci-dessous toutes remarques propres à votre réservation (demande d’un lit d’appoint dans la chambre, nombre d’enfant et âge, présence d’animaux domestiques, allergies...)
+                                        <p>
+                                            Veuillez préciser ci-dessous toutes remarques propres à votre réservation (demande d’un lit d’appoint dans la chambre, nombre d’enfant et âge, présence d’animaux domestiques, allergies...)
 
-                                                </p>
-                                            </div>
-                                        </div>
+                                        </p>
                                         <div class="form-group">
                                 <textarea class="form-control" id="customer_msg" name="customer_msg"
                                           placeholder="Je suis allergique au gluten et je souhaiterais un d'appoint ..." maxlength="255"></textarea>
@@ -254,30 +235,99 @@
                         <div class="row">
                             <div class="col-md-6 step-heading">
                                 <p>&nbsp;</p>
-                                Je reçois la confirmation de réservation par email dans les 24h
+                                J’envoie ma demande de réservation
                             </div>
-                            <div class="col-md-3 step-content">
+                            <div class="col-md-4 step-content">
                                 <div class="step-panel">
-                                    <h3 class="heading">Demande de Réservation envoyée !</h3>
-                                    <strong>
-                                        C’est parti! Votre demande de réservation a bien été envoyée à l’hôtel !
-                                    </strong>
-                                    <p class="text-center" style="color: #f7a600; border: 1px solid #f7a600; padding: 10px; margin: 10px 0; text-transform: uppercase;">
-                                        <strong>L’hôtel vous donnera une réponse par email d’ici 24 heures</strong>
-                                    </p>
+                                    <h3 class="heading">Ma demande de réservation</h3>
+                                    J’ai réservé à : <strong class="text-yellow summary-hotel-name"></strong>
+                                    <br/>Le : <strong class="text-yellow summary-reservation-date"></strong> pour :
+                                    <strong class="text-yellow summary-reservation-nights"></strong>
+                                    <br/>Détail de la prestation : <strong
+                                            class="text-yellow summary-offer-name"></strong>
+                                    <br/>Au prix de : <strong class="text-yellow summary-price"></strong>
+
+                                    <h3>Conditions de réservation</h3>
                                     <ul>
-                                        <li>Pensez à vérifier vos courriers indésirables.</li>
-                                        <li>À noter, Vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours.</li>
+                                        <li>En validant ma demande de réservation je m’engage à ne pas effectuer la même
+                                            réservation en direct avec l’hôtelier.
+                                        </li>
+                                        <li>Chaque réservation est soumise aux conditions de réservation et d’annulation
+                                            de chaque hôtel.
+                                        </li>
+                                        <li>Si je ne me présente pas le jour de la réservation sans avoir annulé mon
+                                            séjour au minimum 48h à l’avance, alors je m’engage à <strong>régler la
+                                                totalité de mon séjour.</strong></li>
                                     </ul>
-                                    <p class="text-center" style="color: #f7a600;">
-                                        <strong>Happybreak vous souhaite un excellent séjour !</strong>
-                                        <br/>Retrouvez toute notre actualité sur :
-                                        <br/><a href="https://www.facebook.com/Happybreak-103517903321720/"><i class="fa fa-facebook-official fa-2x" style="color: #3B5998; vertical-align: middle"></i></a>
-                                    </p>
+
+
+                                    <form action="{{ path('unique_code_submit_reservation') }}">
+                                        <div class="form-group">
+                                            <input class="magic-checkbox" type="checkbox" value="cgv" name="cgv"
+                                                   id="cgv">
+                                            <label class="control-label" for="cgv">
+                                                En cochant cette case j’accepte les conditions de réservation et les <a
+                                                        href="https://www.happybreak.com/cgu" target="_blank">les
+                                                    conditions
+                                                    générales de Happybreak</a>.
+                                            </label>
+                                        </div>
+                                    </form>
+
+                                    <div class="alert alert-danger error-cgv" style="display: none;">
+                                        Vous devez accepter les conditions générales de Happybreak pour continuer.
+                                    </div>
+                                </div>
+                                <p>&nbsp;</p>
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <button class="btn btn-hb-2 btn-lg btn-block btn-upper" id="back_step_3"
+                                                data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
+                                            Précédent
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <button class="btn btn-hb btn-lg btn-block btn-upper" id="to_step_5"
+                                                data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Envoyer
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                <div class="step-container" id="step_5" style="display: none">
+                    <div class="row">
+                        <div class="col-md-6 step-heading">
+                            <p>&nbsp;</p>
+                            Je reçois la confirmation de réservation par email dans les 24h
+                        </div>
+                        <div class="col-md-3 step-content">
+                            <div class="step-panel">
+                                <h3 class="heading">Demande de Réservation envoyée !</h3>
+                                <strong>
+                                    C’est parti! Votre demande de réservation a bien été envoyée à l’hôtel !
+                                </strong>
+                                <p class="text-center"
+                                   style="color: #f7a600; border: 1px solid #f7a600; padding: 10px; margin: 10px 0; text-transform: uppercase;">
+                                    <strong>L’hôtel vous donnera une réponse par email d’ici 24 heures</strong>
+                                </p>
+                                <ul>
+                                    <li>Pensez à vérifier vos courriers indésirables.</li>
+                                    <li>À noter, Vous ne pouvez pas faire une autre demande de réservation tant que
+                                        celle-ci est en cours.
+                                    </li>
+                                </ul>
+                                <p class="text-center" style="color: #f7a600;">
+                                    <strong>Happybreak vous souhaite un excellent séjour !</strong>
+                                    <br/>Retrouvez toute notre actualité sur :
+                                    <br/><a href="https://www.facebook.com/Happybreak-103517903321720/"><i
+                                                class="fa fa-facebook-official fa-2x"
+                                                style="color: #3B5998; vertical-align: middle"></i></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

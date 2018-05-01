@@ -130,6 +130,10 @@ CUSTOM ELEMENTS
     max-width: 50%;
 }
 
+.text-yellow {
+    color: #f7a600;
+}
+
 /**
 BOOTSTRAP TWEAKS
  */

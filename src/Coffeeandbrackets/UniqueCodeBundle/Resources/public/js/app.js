@@ -57,7 +57,7 @@ $(function(){
      */
 
     var stepTo = function (stepIndex) {
-        if (stepIndex < 1 || stepIndex > 4)
+        if (stepIndex < 1 || stepIndex > 5)
             return;
 
         $('.step-container').hide();
@@ -65,6 +65,15 @@ $(function(){
     };
 
     $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+
+    var formatPrice = function (price) {
+
+        return isNaN(parseFloat(price)) ? '0,00 €' : parseFloat(price).toFixed(2).replace('.', ',') + ' €';
+    }
+
+    var formatNights = function (nights) {
+        return isNaN(parseInt(nights)) ? '0 nuits' : (parseInt(nights) == 1 ? '1 nuit' : parseInt(nights) + ' nuits');
+    }
 
     $('#step_3 #date').datepicker({
         dateFormat: "dd/mm/yy",
@@ -107,6 +116,11 @@ $(function(){
     $("#back_step_2").on('click', function (e) {
         e.preventDefault();
         stepTo(2);
+    });
+
+    $("#back_step_3").on('click', function (e) {
+        e.preventDefault();
+        stepTo(3);
     });
 
     $.validator.addMethod(
@@ -153,9 +167,6 @@ $(function(){
                 required: true,
                 email: true
             },
-            cgv: {
-                required: true
-            },
             re_email: {
                 equalTo: "#email"
             },
@@ -183,16 +194,12 @@ $(function(){
             }
 
             $('#step_2 .error-required').hide();
-            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['phone'])
+            if ((errorMap['code'] && errorMap['code'] === 'This field is required.') || errorMap['gender'] || errorMap['last_name'] || errorMap['first_name'] || errorMap['email'] || errorMap['phone'])
                 $('#step_2 .error-required').show();
 
             $('#step_2 .error-re-email').hide();
             if(errorMap['re_email'])
                 $('#step_2 .error-re-email').show();
-
-            $('#step_2 .error-cgv').hide();
-            if (errorMap['cgv'])
-                $('#step_2 .error-cgv').show();
 
             this.defaultShowErrors();
         }
@@ -223,8 +230,6 @@ $(function(){
             });
         }
     });
-
-    var isReservationSubmitted = false;
 
     $("#step_3 form").validate({
         ignore: [], // Hidden elements
@@ -270,26 +275,72 @@ $(function(){
     $("#to_step_4").on('click', function (e) {
         e.preventDefault();
         if($("#step_3 form").valid()) {
+
+            // Set information on step 4
+            $('#step_4 .summary-hotel-name').text($('#hotel-name').val());
+            $('#step_4 .summary-reservation-date').text($('#date').val());
+            $('#step_4 .summary-reservation-nights').text(formatNights($('#number_night').val()));
+            $('#step_4 .summary-offer-name').text($('#offer-name').val());
+            $('#step_4 .summary-price').text(formatPrice($('#offer_price').val()));
+
+            stepTo(4);
+
+            return false;
+        }
+    });
+
+    $("#step_4 form").validate({
+        ignore: [], // Hidden elements
+        rules: {
+            cgv: {
+                required: true
+            }
+        },
+        onkeyup: false,
+        errorClass : 'has-error',
+        validClass : '',
+        highlight: function(element, errorClass, validClass) {
+            $(element).parents('.form-group').addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.form-group').removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function (error, element) {
+        },
+        showErrors: function (errorMap, errorList) {
+            $('#step_4 .error-cgv').hide();
+            if (errorMap['cgv'])
+                $('#step_4 .error-cgv').show();
+
+            this.defaultShowErrors();
+        }
+    });
+
+    var isReservationSubmitted = false;
+
+    $("#to_step_5").on('click', function (e) {
+        e.preventDefault();
+        if($("#step_4 form").valid()) {
             //can submit only on a page load
             if(isReservationSubmitted)
                 return;
 
-            $('#to_step_4').button('loading');
+            $('#to_step_5').button('loading');
 
             $.ajax({
-                url: $("#step_3 form").attr('action'),
+                url: $("#step_4 form").attr('action'),
                 type: 'POST',
-                data: $("#step_2 form").serialize() + '&' + $("#step_3 form").serialize(),
+                data: $("#step_2 form").serialize() + '&' + $("#step_3 form").serialize() + '&' + $("#step_4 form").serialize(),
                 success: function (result) {
                     if (result && result.error)
                         return;
 
                     isReservationSubmitted = true;
-                    $('#to_step_4').prop('disabled', true);
-                    stepTo(4);
+                    $('#to_step_5').prop('disabled', true);
+                    stepTo(5);
                 },
                 complete: function () {
-                    $('#to_step_4').button('reset');
+                    $('#to_step_5').button('reset');
                 }
             });
 
