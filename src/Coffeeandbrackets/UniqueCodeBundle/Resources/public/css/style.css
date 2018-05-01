@@ -313,6 +313,7 @@ STEPS SPECIFICS
 #step_1 .step-content {
     color: #ffffff;
     font-size: 23px;
+    position: relative;
 }
 
 #step_1 .step-content a {
@@ -341,4 +342,23 @@ STEPS SPECIFICS
 #step_1 .step-content h3 strong {
     text-transform: capitalize;
     font-size: 60px;
+}
+
+#step_1 .step-1-path {
+    position: absolute;
+    top: 50px;
+    left: -20px;
+}
+
+#step_1 .step-1-path-start {
+    background: top left no-repeat;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+#step_1 .step-1-path-extend {
+    background: bottom left no-repeat;
+    width: 20px;
+    height: 280px;
 }
