@@ -6,7 +6,7 @@
             <div class="col-container">
                 {% if reservation is not empty %}
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-md-offset-2">
                             {% include 'UniqueCodeBundle:Default:partials/hotel-reservation-header.html.twig' %}
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                             </a>
                         </div>
                         <div class="col-xs-6 text-center">
-                            Ce n’est pas possible, je propose une autre date
+                            Ce n’est pas possible, je donne un motif
                             <br>
                             <br>
                             <a href="{{ path('unique_code_hotel_refuse_reservation', {'id': reservation.getId() }) }}"

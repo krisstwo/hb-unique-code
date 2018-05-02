@@ -60,6 +60,11 @@ LAYOUT STYLES
     padding: 100px 0;
 }
 
+.col-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+}
+
 #footer {
     background: #776863;
     color: #ffffff;

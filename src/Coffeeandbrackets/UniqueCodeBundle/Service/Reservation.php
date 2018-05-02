@@ -120,8 +120,10 @@ class Reservation
         try {
             $reservation->setHotelRefuseDate(new \DateTime());
             $reservation->setHotelRefuseReason($data['reason']);
-            $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
-            $reservation->setHotelProposedNumberNight($data['nights']);
+            if ( ! empty($data['check-in-date'])) {
+                $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
+                $reservation->setHotelProposedNumberNight($data['nights']);
+            }
 
             //dispatch event
             $event = new HotelDeclined($reservation);

@@ -131,6 +131,13 @@ $(function(){
         }
     );
 
+    $.validator.addMethod(
+        "requiredIfInputNotEmpty",
+        function(value, element, input) {
+            return !$(input).val() || !$(input).val().length || (value && value.length > 0) ? true : false;
+        }
+    );
+
     $("#step_2 form").validate({
         ignore: [], // Hidden elements
         rules: {
@@ -651,11 +658,8 @@ $(function(){
             reason: {
                 required: true
             },
-            'check-in-date': {
-                required: true
-            },
             nights: {
-                required: true
+                requiredIfInputNotEmpty: $('#check-in-date')
             }
         },
         errorClass: 'has-error',
