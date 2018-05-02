@@ -16,7 +16,31 @@
                     <tr>
                         <td>
                             <p>Bonjour,</p>
-                            <p>Vous avez reçu une nouvelle demande de réservation de la part d’un membre Happybreak !</p>
+                            <p>Vous avez reçu une nouvelle demande de réservation de la part d’un membre Happybreak ! Merci d’accepter ou refuser la réservation.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <table width="280" height="44" cellpadding="0" cellspacing="0" border="0"
+                                   bgcolor="#F7A600 " style="border-radius:4px;">
+                                <tr>
+                                    <td align="center" valign="middle" height="44">
+                                        <a href="{{ url('unique_code_view_reservation', {'id': reservation.getId()}) }}"
+                                           target="_blank"
+                                           style="display: inline-block; width:280px; color: #776863;">Accepter ou refuser la réservation</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
                             <p>Monsieur {{ customer.getLastName() }} souhaite réserver une chambre double
                                 avec {{ reservation.getOffer() }} le {{ reservation.getReservationDate()|date('d/m/Y') }}
                                 pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}</p>
@@ -27,27 +51,15 @@
                     </tr>
                     {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
                     <tr>
-                        <td>
-                            <p><b>Détail de la prestation: </b></p>
-                            {% if(reservation.getOfferServiceAfternoon()) %}<p>{{ reservation.getOfferServiceAfternoon() }}</p>{% endif %}
-                            {% if(reservation.getOfferServiceNight()) %}<p>{{ reservation.getOfferServiceNight() }}</p>{% endif %}
-                            {% if(reservation.getOfferServiceMorning()) %}<p>{{ reservation.getOfferServiceMorning() }}</p>{% endif %}
-                            <p>Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
                         <td align="center" valign="top">
-                            <table width="180" height="44" cellpadding="0" cellspacing="0" border="0"
-                                   bgcolor="#F7A600 " style="border-radius:4px;">
+                            <table width="300" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
-                                    <td align="center" valign="middle" height="44">
-                                        <a href="{{ url('unique_code_view_reservation', {'id': reservation.getId()}) }}"
-                                           target="_blank"
-                                           style="display: inline-block; width:180px; color: #776863;">Consulter</a>
+                                    <td>
+                                        <p><b>Détail de la prestation: </b></p>
+                                        {% if(reservation.getOfferServiceAfternoon()) %}<p>{{ reservation.getOfferServiceAfternoon() }}</p>{% endif %}
+                                        {% if(reservation.getOfferServiceNight()) %}<p>{{ reservation.getOfferServiceNight() }}</p>{% endif %}
+                                        {% if(reservation.getOfferServiceMorning()) %}<p>{{ reservation.getOfferServiceMorning() }}</p>{% endif %}
+                                        <p>Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.</p>
                                     </td>
                                 </tr>
                             </table>
@@ -56,9 +68,15 @@
                     <tr>
                         <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
                     </tr>
+                    {% endif %}
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
                     <tr>
                         <td align="center" valign="top">
-                            <img src="http://emailing.happy-break.fr/resources/codeunique/img/banniere.jpg" />
+                            <p>
+                                A bientôt,</br>L’équipe Happybreak
+                            </p>
                         </td>
                     </tr>
                     <tr>
