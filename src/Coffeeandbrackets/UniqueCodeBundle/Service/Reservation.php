@@ -72,6 +72,7 @@ class Reservation
         $campaign = $this->campaignService->detectCampaign();
 
         $customer = new Customer();
+        $customer->setGender($data['gender']);
         $customer->setFirstName($data['first_name']);
         $customer->setLastName($data['last_name']);
         $customer->setEmail($data['email']);

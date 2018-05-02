@@ -67,7 +67,7 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", columnDefinition="enum('male', 'female')")
+     * @ORM\Column(name="gender", type="string", columnDefinition="enum('Monsieur', 'Madame')")
      */
     private $gender;
 
