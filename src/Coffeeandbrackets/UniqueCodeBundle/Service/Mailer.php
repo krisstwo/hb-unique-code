@@ -86,10 +86,26 @@ class Mailer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
      * @param string $from
      */
     public function setFrom( $from ) {
         $this->from = $from;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTo()
+    {
+        return $this->to;
     }
 
     /**
@@ -100,10 +116,26 @@ class Mailer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getBcc()
+    {
+        return $this->bcc;
+    }
+
+    /**
      * @param string $bcc
      */
     public function setBcc( $bcc ) {
         $this->bcc = $bcc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 
     /**
@@ -113,8 +145,27 @@ class Mailer {
         $this->subject = $subject;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param $template
+     */
     public function setTemplate( $template ) {
         $this->template = $template;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
     }
 
     /**
@@ -122,6 +173,14 @@ class Mailer {
      */
     public function setParams( $params = null ) {
         $this->params = $params;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 
     /**
