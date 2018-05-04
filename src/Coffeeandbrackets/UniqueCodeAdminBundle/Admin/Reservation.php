@@ -24,10 +24,14 @@ class Reservation extends AbstractAdmin
             ))
             ->add('id')
             ->add('code')
+            ->add('codeObject.currentStatus')
             ->add('hotel')
-            ->add('reservationDate')
             ->add('addDate')
             ->add('updateDate')
+            ->add('customer.firstName')
+            ->add('customer.lastName')
+            ->add('customer.email')
+            ->add('customer.phone')
             ->add('campaign.name');
     }
 
@@ -36,6 +40,10 @@ class Reservation extends AbstractAdmin
         $datagridMapper->add('code')
                        ->add('hotel')
                        ->add('reservationDate')
+                       ->add('customer.firstName')
+                       ->add('customer.lastName')
+                       ->add('customer.email')
+                       ->add('customer.phone')
                        ->add('addDate')
                        ->add('campaign', null, array(), 'entity', array(
                            'class'        => 'Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign',
@@ -61,10 +69,18 @@ class Reservation extends AbstractAdmin
                    ->add('hotelProposedNumberNight')
                    ->add('customerAcceptanceDate')
                    ->add('customerDeclineDate')
+                   ->add('customer.gender')
                    ->add('customer.firstName')
                    ->add('customer.lastName')
+                   ->add('customer.email')
+                   ->add('customer.phone')
                    ->add('addDate')
                    ->add('updateDate');
+    }
+
+    public function getExportFields()
+    {
+        return ['id','code','codeObject.currentStatus','customer.gender','customer.firstName','customer.lastName','customer.email','customer.phone','campaign.name','numberPerson','hotel','hotelEmail','offer','reservationDate','numberNight','customerMsg','addDate','updateDate','hotelConfirmationDate','hotelRefuseDate','hotelRefuseReason','hotelProposedCheckInDate','hotelProposedNumberNight','customerAcceptanceDate','customerDeclineDate','isAutoCustomerDeclineDate','offerServiceAfternoon','offerServiceNight','offerServiceMorning','offerPrice','hotelPhone','hotelAddress'];
     }
 
     protected function configureRoutes(RouteCollection $collection)
