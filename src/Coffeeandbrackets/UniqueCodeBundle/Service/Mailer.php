@@ -12,6 +12,7 @@ class Mailer {
     private $subject;
     private $from;
     private $to;
+    private $bcc;
     private $params;
     private $body;
 
@@ -36,6 +37,7 @@ class Mailer {
             ->setSubject( $this->subject )
             ->setFrom( $this->from )
             ->setTo( $this->to )
+            ->setBcc( $this->bcc )
             ->setBody( $this->body , $contentType );
 
         $this->mailer->send( $message );
@@ -57,6 +59,10 @@ class Mailer {
 
                 case 'to':
                     $this->setTo( $v );
+                    break;
+
+                case 'bcc':
+                    $this->setBcc( $v );
                     break;
 
                 case 'subject':
@@ -91,6 +97,13 @@ class Mailer {
      */
     public function setTo( $to ) {
         $this->to = $to;
+    }
+
+    /**
+     * @param string $bcc
+     */
+    public function setBcc( $bcc ) {
+        $this->bcc = $bcc;
     }
 
     /**
