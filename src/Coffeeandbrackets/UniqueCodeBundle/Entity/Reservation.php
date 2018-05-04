@@ -29,6 +29,13 @@ class Reservation
     private $code;
 
     /**
+     * @var Code
+     *
+     * @ORM\OneToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Code", mappedBy="reservation")
+     */
+    private $codeObject;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="number_person", type="integer")
@@ -251,6 +258,22 @@ class Reservation
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return Code
+     */
+    public function getCodeObject()
+    {
+        return $this->codeObject;
+    }
+
+    /**
+     * @param Code $codeObject
+     */
+    public function setCodeObject(Code $codeObject)
+    {
+        $this->codeObject = $codeObject;
     }
 
     /**

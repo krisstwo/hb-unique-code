@@ -45,7 +45,7 @@ class Code
     /**
      * @var
      *
-     * @ORM\ManyToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation")
+     * @ORM\OneToOne(targetEntity="Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation", inversedBy="codeObject")
      */
     private $reservation;
 
