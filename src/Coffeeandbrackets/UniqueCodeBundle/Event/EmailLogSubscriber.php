@@ -58,8 +58,10 @@ class EmailLogSubscriber implements EventSubscriberInterface
     {
         $emailLog = new EmailLog();
         $emailLog->setEvent($event::NAME);
-        $emailLog->setSentDate(new \DateTime());
-        $emailLog->setRecipient($event->getRecipient());
+        $emailLog->setEventDate(new \DateTime());
+        $emailLog->setFrom($event->getFrom());
+        $emailLog->setTo($event->getTo());
+        $emailLog->setBcc($event->getBcc());
         $emailLog->setSubject($event->getSubject());
         $emailLog->setBody($event->getBody());
         $emailLog->setReservation($event->getReservation());

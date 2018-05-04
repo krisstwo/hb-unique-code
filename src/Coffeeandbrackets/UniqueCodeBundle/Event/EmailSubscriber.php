@@ -185,7 +185,7 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new UnseenReservationEmailSent($recipient, $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
+        $event = new UnseenReservationEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
@@ -219,7 +219,7 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new HotelConfirmationDueEmailSent($recipient, $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
+        $event = new HotelConfirmationDueEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, '', $reservation);//TODO: body generation outside of mailer, or get it from the return value
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 

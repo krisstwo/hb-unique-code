@@ -17,7 +17,17 @@ abstract class EmailEvent extends Event
     /**
      * @var string
      */
-    protected $recipient;
+    protected $from;
+
+    /**
+     * @var string
+     */
+    protected $to;
+
+    /**
+     * @var string
+     */
+    protected $bcc;
 
     /**
      * @var string
@@ -37,14 +47,18 @@ abstract class EmailEvent extends Event
     /**
      * EmailEvent constructor.
      *
-     * @param string $recipient
+     * @param string $from
+     * @param string $to
+     * @param string $bcc
      * @param string $subject
      * @param string $body
      * @param Reservation $reservation
      */
-    public function __construct($recipient, $subject, $body, Reservation $reservation)
+    public function __construct($from, $to, $bcc, $subject, $body, Reservation $reservation)
     {
-        $this->recipient   = $recipient;
+        $this->from          = $from;
+        $this->to          = $to;
+        $this->bcc          = $bcc;
         $this->subject     = $subject;
         $this->body        = $body;
         $this->reservation = $reservation;
@@ -53,9 +67,25 @@ abstract class EmailEvent extends Event
     /**
      * @return string
      */
-    public function getRecipient()
+    public function getFrom()
     {
-        return $this->recipient;
+        return $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTo()
+    {
+        return $this->to;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBcc()
+    {
+        return $this->bcc;
     }
 
     /**
