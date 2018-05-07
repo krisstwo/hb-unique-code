@@ -13,7 +13,7 @@ class Mailer {
     private $from;
     private $to;
     private $bcc;
-    private $params;
+    private $params = array();
     private $body;
 
     public function __construct( $mailer, EngineInterface $templating ) {
@@ -31,7 +31,8 @@ class Mailer {
     public function sendMessage( array $config, $contentType = null ) {
 
         $this->explodeConfigAndSet( $config );
-        $this->setTemplateParamsTwig();
+        if(!empty($config['template']))
+            $this->generateBodyFromTemplate();
 
         $message = \Swift_Message::newInstance()
             ->setSubject( $this->subject )
@@ -71,6 +72,10 @@ class Mailer {
 
                 case 'template':
                     $this->setTemplate( $v );
+                    break;
+
+                case 'body':
+                    $this->setBody( $v );
                     break;
 
                 case 'params':
@@ -184,19 +189,19 @@ class Mailer {
     }
 
     /**
+     * @param mixed $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
      * parameter template
      */
-    public function setTemplateParamsTwig() {
+    private function generateBodyFromTemplate() {
 
-        if( !is_null( $this->params ) ) {
-
-            $this->body = $this->templating->render( $this->template, $this->params );
-
-        } else {
-
-            $this->body = $this->templating->render( $this->template );
-
-        }
+        $this->body = $this->templating->render( $this->template, $this->params );
 
     }
 }
