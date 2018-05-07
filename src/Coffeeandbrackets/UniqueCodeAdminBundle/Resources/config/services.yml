@@ -25,6 +25,6 @@ services:
                 - { name: sonata.admin, manager_type: orm, label: Customers }
     admin.email-log:
                 class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\EmailLog
-                arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\EmailLog, ~]
+                arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\EmailLog, UniqueCodeAdminBundle:EmailLog]
                 tags:
                     - { name: sonata.admin, manager_type: orm, label: Emails log }

@@ -25,7 +25,10 @@ class EmailLog extends AbstractAdmin
         $listMapper
             ->add('_action', null, array(
                 'actions' => array(
-                    'show' => array()
+                    'show' => array(),
+                    'resend' => array(
+                        'template' => 'UniqueCodeAdminBundle:EmailLog:list__action_resend.html.twig'
+                    ),
                 )
             ))
             ->addIdentifier('id')
@@ -86,6 +89,7 @@ class EmailLog extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clearExcept(array('list', 'export', 'show'));
+        $collection->add('resend', $this->getRouterIdParameter() . '/resend');
     }
 
     public function toString($object)
