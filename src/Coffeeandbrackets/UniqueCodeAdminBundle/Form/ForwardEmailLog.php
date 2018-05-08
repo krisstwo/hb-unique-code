@@ -17,7 +17,8 @@ class ForwardEmailLog extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('email', EmailType::class, [
-            'attr' => ['placeholder' => 'Forward email address'],
+            'attr' => ['placeholder' => 'Recipient address'],
+            'label' => 'To',
             'constraints' => [
                 new NotBlank(["message" => "Please provide a valid email"]),
                 new Email(["message" => "Your email doesn't seems to be valid"]),
