@@ -1,0 +1,98 @@
+{% extends base_template %}
+
+{% block navbar_title %}
+    {{ admin.toString(object) }}
+{% endblock %}
+
+{%- block actions -%}
+    {% include 'SonataAdminBundle:CRUD:action_buttons.html.twig' %}
+{%- endblock -%}
+
+{% block show %}
+<div class="sonata-ba-view">
+    <div class="row">
+        {% block field_row %}
+            {% for code in admin.showtabs.default.groups %}
+                {% set show_group = admin.showgroups[code] %}
+
+                <div class="{{ show_group.class|default('col-md-12') }} {{ no_padding|default(false) ? 'nopadding' }}">
+                    <div class="{{ show_group.box_class }}">
+                        <div class="box-header">
+                            <h4 class="box-title">
+                                {% block show_title %}
+                                    {{ show_group.label|trans({}, show_group.translation_domain|default(admin.translationDomain)) }}
+                                {% endblock %}
+                            </h4>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table">
+                                <tbody>
+                                {% for field_name in show_group.fields %}
+                                    {% block show_field %}
+                                        <tr class="sonata-ba-view-container">
+                                            {% if elements[field_name] is defined %}
+                                                {{ elements[field_name]|render_view_element(object)}}
+                                            {% endif %}
+                                        </tr>
+                                    {% endblock %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block form %}
+    <form method="POST" action="{{ action }}" >
+        {{ include('SonataAdminBundle:Helper:render_form_dismissable_errors.html.twig') }}
+        {% block sonata_pre_fieldsets %}
+        <div class="row">
+            {% endblock %}
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h4 class="box-title">
+                                    Sent forward
+                                </h4>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="sonata-ba-collapsed-fields">
+                                    <div class="form-group" id="sonata-ba-field-container-{{ form.email.vars.id }}">
+                                        {{ form_label(form.email) }}
+                                        <div class="sonata-ba-field sonata-ba-field-standard-natural">
+                                            {{ form_widget(form.email, { 'attr': {'class': ' form-control'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% block sonata_post_fieldsets %}
+        </div>
+        {% endblock %}
+
+        {{ form_rest(form) }}
+
+        {% block formactions %}
+            <div class="sonata-ba-form-actions well well-small form-actions">
+                {% block sonata_form_actions %}
+                    <button class="btn btn-success" type="submit" name="btn_sent_forward">Send</button>
+                {% endblock %}
+            </div>
+        {% endblock formactions %}
+    </form>
+{% endblock %}

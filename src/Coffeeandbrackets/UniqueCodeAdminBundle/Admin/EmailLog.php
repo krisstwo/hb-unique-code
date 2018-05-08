@@ -29,6 +29,9 @@ class EmailLog extends AbstractAdmin
                     'resend' => array(
                         'template' => 'UniqueCodeAdminBundle:EmailLog:list__action_resend.html.twig'
                     ),
+                    'forward' => array(
+                        'template' => 'UniqueCodeAdminBundle:EmailLog:list__action_forward.html.twig'
+                    ),
                 )
             ))
             ->addIdentifier('id')
@@ -90,6 +93,7 @@ class EmailLog extends AbstractAdmin
     {
         $collection->clearExcept(array('list', 'export', 'show'));
         $collection->add('resend', $this->getRouterIdParameter() . '/resend');
+        $collection->add('forward', $this->getRouterIdParameter() . '/forward');
     }
 
     public function toString($object)
