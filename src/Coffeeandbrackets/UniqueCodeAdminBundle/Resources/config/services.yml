@@ -6,25 +6,25 @@ services:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Campaign
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign, ~]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Campagnes }
+                - { name: sonata.admin, manager_type: orm, label: Campagnes, label_translator_strategy: sonata.admin.label.strategy.underscore }
             public: true
     admin.reservation:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Reservation
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation, ~]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Reservations }
+                - { name: sonata.admin, manager_type: orm, label: Reservations, label_translator_strategy: sonata.admin.label.strategy.underscore }
     admin.code:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Code
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Code, UniqueCodeAdminBundle:GenerateCodes]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Codes }
+                - { name: sonata.admin, manager_type: orm, label: Codes, label_translator_strategy: sonata.admin.label.strategy.underscore }
     admin.customer:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Customer
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Customer, ~]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Customers }
+                - { name: sonata.admin, manager_type: orm, label: Customers, label_translator_strategy: sonata.admin.label.strategy.underscore }
     admin.email-log:
                 class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\EmailLog
                 arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\EmailLog, UniqueCodeAdminBundle:EmailLog]
                 tags:
-                    - { name: sonata.admin, manager_type: orm, label: Emails log }
+                    - { name: sonata.admin, manager_type: orm, label: Emails log, label_translator_strategy: sonata.admin.label.strategy.underscore }

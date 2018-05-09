@@ -28,7 +28,7 @@ class Campaign extends AbstractAdmin
                 )
             ))
             ->addIdentifier('id')
-            ->add('name', null, ['label' => 'campaign_name'])
+            ->add('name')
             ->add('code')
             ->add('logo')
             ->add('creationDate')
@@ -45,7 +45,7 @@ class Campaign extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', 'text', ['label' => 'campaign_name'])
+        $formMapper->add('name', 'text')
                    ->add('code', 'text')
                    ->add('logo', 'text');
     }
@@ -55,7 +55,7 @@ class Campaign extends AbstractAdmin
         parent::configureShowFields($showMapper);
 
         $showMapper->add('id')
-                   ->add('name', null, ['label' => 'campaign_name'])
+                   ->add('name')
 //                   ->add('code')
                    ->add('logo')
                    ->add('creationDate')
