@@ -15,6 +15,8 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class Campaign extends AbstractAdmin
 {
+    protected $translationDomain = 'UniqueCodeAdminBundle';
+
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -26,7 +28,7 @@ class Campaign extends AbstractAdmin
                 )
             ))
             ->addIdentifier('id')
-            ->add('name')
+            ->add('name', null, ['label' => 'campaign_name'])
             ->add('code')
             ->add('logo')
             ->add('creationDate')
@@ -43,7 +45,7 @@ class Campaign extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', 'text')
+        $formMapper->add('name', 'text', ['label' => 'campaign_name'])
                    ->add('code', 'text')
                    ->add('logo', 'text');
     }
@@ -53,7 +55,7 @@ class Campaign extends AbstractAdmin
         parent::configureShowFields($showMapper);
 
         $showMapper->add('id')
-                   ->add('name')
+                   ->add('name', null, ['label' => 'campaign_name'])
 //                   ->add('code')
                    ->add('logo')
                    ->add('creationDate')
