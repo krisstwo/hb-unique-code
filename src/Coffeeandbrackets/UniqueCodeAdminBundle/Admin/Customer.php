@@ -14,6 +14,8 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class Customer extends AbstractAdmin
 {
+    protected $translationDomain = 'UniqueCodeAdminBundle';
+
     protected $datagridValues = [
         '_sort_order' => 'DESC',
         '_sort_by'    => 'id',
@@ -50,12 +52,27 @@ class Customer extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper->add('id')
+                   ->add('gender')
                    ->add('firstName')
                    ->add('lastName')
                    ->add('email')
                    ->add('phone')
                    ->add('acceptNewsletter')
                    ->add('campaign.name');
+    }
+
+    public function getExportFields()
+    {
+        return [
+            $this->trans('show.label_id') => 'id',
+            $this->trans('show.label_gender') => 'gender',
+            $this->trans('show.label_first_name') => 'firstName',
+            $this->trans('show.label_last_name') => 'lastName',
+            $this->trans('show.label_email') => 'email',
+            $this->trans('show.label_phone') => 'phone',
+            $this->trans('show.label_accept_newsletter') => 'acceptNewsletter',
+            $this->trans('show.label_campaign_name') => 'campaign.name'
+        ];
     }
 
     protected function configureRoutes(RouteCollection $collection)
@@ -66,7 +83,7 @@ class Customer extends AbstractAdmin
     public function toString($object)
     {
         return $object instanceof \Coffeeandbrackets\UniqueCodeBundle\Entity\Customer
-            ? 'Customer #' . $object->getId()
-            : 'Customer'; // shown in the breadcrumb on the create view
+            ? 'Client #' . $object->getId()
+            : 'Client'; // shown in the breadcrumb on the create view
     }
 }
