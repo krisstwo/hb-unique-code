@@ -31,6 +31,7 @@ class Customer extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('email')
+            ->add('phone')
             ->add('campaign.name');
     }
 
@@ -39,6 +40,7 @@ class Customer extends AbstractAdmin
         $datagridMapper->add('firstName')
                        ->add('lastName')
                        ->add('email')
+                       ->add('phone')
                        ->add('campaign', null, array(), 'entity', array(
                            'class'        => 'Coffeeandbrackets\UniqueCodeBundle\Entity\Campaign',
                            'choice_label' => 'name',
@@ -51,6 +53,7 @@ class Customer extends AbstractAdmin
                    ->add('firstName')
                    ->add('lastName')
                    ->add('email')
+                   ->add('phone')
                    ->add('acceptNewsletter')
                    ->add('campaign.name');
     }
