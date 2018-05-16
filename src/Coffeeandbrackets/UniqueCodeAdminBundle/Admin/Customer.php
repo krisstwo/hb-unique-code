@@ -14,6 +14,11 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class Customer extends AbstractAdmin
 {
+    protected $datagridValues = [
+        '_sort_order' => 'DESC',
+        '_sort_by'    => 'id',
+    ];
+
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper

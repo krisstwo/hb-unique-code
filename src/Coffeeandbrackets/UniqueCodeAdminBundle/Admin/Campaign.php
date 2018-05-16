@@ -17,6 +17,11 @@ class Campaign extends AbstractAdmin
 {
     protected $translationDomain = 'UniqueCodeAdminBundle';
 
+    protected $datagridValues = [
+        '_sort_order' => 'DESC',
+        '_sort_by'    => 'id',
+    ];
+
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
