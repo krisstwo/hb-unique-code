@@ -1,0 +1,76 @@
+# Customers
+breadcrumb.link_customer_list: Clients
+filter.label_first_name: Prénom
+filter.label_last_name: Nom
+filter.label_email: Email
+filter.label_phone: Téléphone
+filter.label_campaign: Campagne
+list.label__action: Actions
+list.label_id: ID
+list.label_first_name: Prénom
+list.label_last_name: Nom
+list.label_email: Email
+list.label_phone: Téléphone
+list.label_campaign_name: Campagne
+show.label_id: ID
+show.label_gender: Civilité
+show.label_first_name: Prénom
+show.label_last_name: Nom
+show.label_email: Email
+show.label_phone: Téléphone
+show.label_campaign_name: Campagne
+show.label_accept_newsletter: Newsletter acceptée
+
+# Reservations
+breadcrumb.link_reservation_list: Réservations
+filter.label_code: Code
+filter.label_hotel: Hôtel
+filter.label_reservation_date: Date de check-in
+filter.label_customer_first_name: Prénom
+filter.label_customer_last_name: Nom
+filter.label_customer_email: Email
+filter.label_customer_phone: Téléphone
+filter.label_add_date: Date de création
+filter.label_campaign: Campagne
+list.label_code: Code
+list.label_code_object_current_status: Statut actuel du code
+list.label_hotel: Hôtel
+list.label_add_date: Date de création
+list.label_update_date: Date de modification
+list.label_customer_first_name: Prénom
+list.label_customer_last_name: Nom
+list.label_customer_email: Email
+list.label_customer_phone: Téléphone
+list.label_campaign_name: Campagne
+list.label_name: Nom
+show.label_code: Code
+show.label_code_object_current_status: Statut actuel du code
+show.label_hotel: Hôtel
+show.label_offer: Offre
+show.label_number_person: Nbr de personnes
+show.label_number_night: Nuitées
+show.label_reservation_date: Date de check-in
+show.label_customer_msg: Message du client
+show.label_offer_service_afternoon: Prestation midi
+show.label_offer_service_night: Prestation soir
+show.label_offer_service_morning: Prestation matin
+show.label_offer_price: Prix formule
+show.label_hotel_phone: Téléphone de l'hôtel
+show.label_hotel_address: Adresse de l'hôtel
+show.label_hotel_confirmation_date: Date de confirmation de l'hôtel
+show.label_hotel_refuse_date: Date de refus de l'hôtel
+show.label_hotel_refuse_reason: Motif du refus
+show.label_hotel_proposed_check_in_date: Date de check-in proposée
+show.label_hotel_proposed_number_night: Nuitées proposées
+show.label_customer_acceptance_date: Date d'acceptation de la proposition par le client
+show.label_customer_decline_date: Date de refus de la proposition par le client
+show.label_is_auto_customer_decline_date: Refus client automatique
+show.label_customer_gender: Civilité
+show.label_customer_first_name: Prénom
+show.label_customer_last_name: Nom
+show.label_customer_email: Email
+show.label_customer_phone: Téléphone
+show.label_add_date: Date de création
+show.label_update_date: Date de modification
+show.label_campaign_name: Campagne
+code_generate_btn: Générer

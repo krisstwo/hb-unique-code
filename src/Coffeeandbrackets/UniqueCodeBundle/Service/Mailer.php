@@ -12,7 +12,8 @@ class Mailer {
     private $subject;
     private $from;
     private $to;
-    private $params;
+    private $bcc;
+    private $params = array();
     private $body;
 
     public function __construct( $mailer, EngineInterface $templating ) {
@@ -30,12 +31,14 @@ class Mailer {
     public function sendMessage( array $config, $contentType = null ) {
 
         $this->explodeConfigAndSet( $config );
-        $this->setTemplateParamsTwig();
+        if(!empty($config['template']))
+            $this->generateBodyFromTemplate();
 
         $message = \Swift_Message::newInstance()
             ->setSubject( $this->subject )
             ->setFrom( $this->from )
             ->setTo( $this->to )
+            ->setBcc( $this->bcc )
             ->setBody( $this->body , $contentType );
 
         $this->mailer->send( $message );
@@ -59,12 +62,20 @@ class Mailer {
                     $this->setTo( $v );
                     break;
 
+                case 'bcc':
+                    $this->setBcc( $v );
+                    break;
+
                 case 'subject':
                     $this->setSubject( $v );
                     break;
 
                 case 'template':
                     $this->setTemplate( $v );
+                    break;
+
+                case 'body':
+                    $this->setBody( $v );
                     break;
 
                 case 'params':
@@ -80,10 +91,26 @@ class Mailer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
      * @param string $from
      */
     public function setFrom( $from ) {
         $this->from = $from;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTo()
+    {
+        return $this->to;
     }
 
     /**
@@ -94,14 +121,56 @@ class Mailer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getBcc()
+    {
+        return $this->bcc;
+    }
+
+    /**
+     * @param string $bcc
+     */
+    public function setBcc( $bcc ) {
+        $this->bcc = $bcc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
      * @param string $subject
      */
     public function setSubject( $subject ) {
         $this->subject = $subject;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param $template
+     */
     public function setTemplate( $template ) {
         $this->template = $template;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
     }
 
     /**
@@ -112,19 +181,27 @@ class Mailer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param mixed $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
      * parameter template
      */
-    public function setTemplateParamsTwig() {
+    private function generateBodyFromTemplate() {
 
-        if( !is_null( $this->params ) ) {
-
-            $this->body = $this->templating->render( $this->template, $this->params );
-
-        } else {
-
-            $this->body = $this->templating->render( $this->template );
-
-        }
+        $this->body = $this->templating->render( $this->template, $this->params );
 
     }
 }

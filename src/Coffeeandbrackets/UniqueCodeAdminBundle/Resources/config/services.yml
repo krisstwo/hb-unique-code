@@ -12,7 +12,7 @@ services:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Reservation
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Reservation, ~]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Reservations }
+                - { name: sonata.admin, manager_type: orm, label: Réservations, label_translator_strategy: sonata.admin.label.strategy.underscore }
     admin.code:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Code
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Code, UniqueCodeAdminBundle:GenerateCodes]
@@ -22,4 +22,9 @@ services:
             class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\Customer
             arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\Customer, ~]
             tags:
-                - { name: sonata.admin, manager_type: orm, label: Customers }
+                - { name: sonata.admin, manager_type: orm, label: Clients, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    admin.email-log:
+                class: Coffeeandbrackets\UniqueCodeAdminBundle\Admin\EmailLog
+                arguments: [~, Coffeeandbrackets\UniqueCodeBundle\Entity\EmailLog, UniqueCodeAdminBundle:EmailLog]
+                tags:
+                    - { name: sonata.admin, manager_type: orm, label: Logs emails }

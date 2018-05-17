@@ -24,23 +24,37 @@ class EmailLog
     /**
      * @var string
      *
-     * @ORM\Column(name="event", type="string", length=255)
+     * @ORM\Column(name="`event`", type="string", length=255)
      */
     private $event;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sent_date", type="datetimetz")
+     * @ORM\Column(name="event_date", type="datetimetz")
      */
-    private $sentDate;
+    private $eventDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="recipient", type="string", length=255)
+     * @ORM\Column(name="`from`", type="string", length=255)
      */
-    private $recipient;
+    private $from;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="`to`", type="string", length=255)
+     */
+    private $to;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bcc", type="string", length=255)
+     */
+    private $bcc;
 
     /**
      * @var string
@@ -93,13 +107,13 @@ class EmailLog
     /**
      * Set sentDate
      *
-     * @param \DateTime $sentDate
+     * @param \DateTime $eventDate
      *
      * @return EmailLog
      */
-    public function setSentDate($sentDate)
+    public function setEventDate($eventDate)
     {
-        $this->sentDate = $sentDate;
+        $this->eventDate = $eventDate;
 
         return $this;
     }
@@ -109,21 +123,37 @@ class EmailLog
      *
      * @return \DateTime
      */
-    public function getSentDate()
+    public function getEventDate()
     {
-        return $this->sentDate;
+        return $this->eventDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
+     * @param string $from
+     */
+    public function setFrom($from)
+    {
+        $this->from = $from;
     }
 
     /**
      * Set recipient
      *
-     * @param string $recipient
+     * @param string $to
      *
      * @return EmailLog
      */
-    public function setRecipient($recipient)
+    public function setTo($to)
     {
-        $this->recipient = $recipient;
+        $this->to = $to;
 
         return $this;
     }
@@ -133,9 +163,25 @@ class EmailLog
      *
      * @return string
      */
-    public function getRecipient()
+    public function getTo()
     {
-        return $this->recipient;
+        return $this->to;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBcc()
+    {
+        return $this->bcc;
+    }
+
+    /**
+     * @param string $bcc
+     */
+    public function setBcc($bcc)
+    {
+        $this->bcc = $bcc;
     }
 
     /**

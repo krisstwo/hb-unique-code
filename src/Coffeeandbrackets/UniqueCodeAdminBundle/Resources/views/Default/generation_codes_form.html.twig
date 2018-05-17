@@ -75,7 +75,7 @@
            {% block formactions %}
                <div class="sonata-ba-form-actions well well-small form-actions">
                    {% block sonata_form_actions %}
-                       <button class="btn btn-success" type="submit" name="btn_generate_code"><i class="fa fa-cogs" aria-hidden="true"></i> Générer</button>
+                       <button class="btn btn-success" type="submit" name="btn_generate_code"><i class="fa fa-cogs" aria-hidden="true"></i> {{ 'code_generate_btn'|trans({}, 'UniqueCodeAdminBundle') }}</button>
                    {% endblock %}
                </div>
            {% endblock formactions %}
