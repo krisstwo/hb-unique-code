@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-md-6 step-heading">
                                 <p>&nbsp;</p>
-                                Pour réserver je saisis mes informations personnelles
+                                Pour réserver, je saisis mes informations personnelles
                             </div>
                             <div class="col-md-3 step-content">
                                 <div class="step-panel">
@@ -66,7 +66,7 @@
                                         {% endif %}
                                         <div class="form-group has-feedback">
                                             <input type="text" class="form-control" id="code" name="code"
-                                                   placeholder="Code avantage *"
+                                                   placeholder="Code de réservation *"
                                                    data-endpoint="{{ path('unique_code_ajax_validate_code') }}">
                                             <span class="form-control-feedback" style="display: none;"><i
                                                         class="fa fa-circle-o-notch fa-spin"></i></span>
@@ -253,13 +253,17 @@
 
                                     <h3>Conditions de réservation</h3>
                                     <ul>
-                                        <li>En validant ma demande de réservation je m’engage à ne pas effectuer la même
-                                            réservation en direct avec l’hôtelier.
+                                        <li>
+                                            Ma réservation est validée. Je m’engage à ne pas effectuer la même réservation en direct avec l’hôtelier.
                                         </li>
                                         <li>Chaque réservation est soumise aux conditions de réservation et d’annulation
                                             de chaque hôtel.
                                         </li>
-                                        <li>Si je ne me présente pas le jour de la réservation sans avoir annulé mon
+                                        <li>
+                                            Pour bloquer définitivement la chambre, l’hôtel est en droit de vous
+                                            demander vos informations bancaires.
+                                        </li>
+                                        <li>Si je ne me présente pas le jour de la réservation sans avoir annulé mon
                                             séjour au minimum 48h à l’avance, alors je m’engage à <strong>régler la
                                                 totalité de mon séjour.</strong></li>
                                     </ul>
@@ -316,7 +320,17 @@
                                     <strong>L’hôtel vous donnera une réponse par email d’ici 24 heures</strong>
                                 </p>
                                 <ul>
-                                    <li>Pensez à vérifier vos courriers indésirables.</li>
+                                    <li>
+                                        Si vous n’avez pas reçu de réponse d’ici 24h :
+                                        <ol>
+                                            <li>
+                                                Vérifiez vos courriers indésirables ou « spam ».
+                                            </li>
+                                            <li>
+                                                Toujours rien, appelez nous au 09 80 01 01 01 pour nous le signaler.
+                                            </li>
+                                        </ol>
+                                    </li>
                                     <li>À noter, Vous ne pouvez pas faire une autre demande de réservation tant que
                                         celle-ci est en cours.
                                     </li>

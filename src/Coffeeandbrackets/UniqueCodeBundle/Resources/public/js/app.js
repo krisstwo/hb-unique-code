@@ -715,14 +715,15 @@ $(function(){
 
     $('a.action-customer-decline-reservation').click(function (e) {
         e.preventDefault();
-        confirmBox(null, 'Êtes vous sur de refuser cette réservation ?').done(function () {
+        var noConfirm = $(this).data('no-confirm');
+        var btnAction = function () {
             $('a.action-customer-decline-reservation').button('loading');
             $.ajax({
                 url: $(e.target).attr('href'),
                 type: 'POST',
                 dataType: 'json',
-                success: function(result) {
-                    if(result && result.error)
+                success: function (result) {
+                    if (result && result.error)
                         return;
                     var redirectURl = $('#customer-decline-redirect-url').val();
                     window.location.href = redirectURl ? redirectURl : '/';
@@ -731,7 +732,13 @@ $(function(){
                     $('a.action-customer-decline-reservation').button('reset');
                 }
             });
-        });
+        };
+
+        if (noConfirm == true) {
+            btnAction();
+        } else {
+            confirmBox(null, 'Êtes vous sur de refuser cette réservation ?').done(btnAction);
+        }
 
     });
 
