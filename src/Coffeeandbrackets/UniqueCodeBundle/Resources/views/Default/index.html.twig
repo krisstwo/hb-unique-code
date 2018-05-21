@@ -11,7 +11,6 @@
                     <div class="step-container" id="step_1">
                         <div class="row">
                             <div class="col-md-6 step-heading">
-                                <p>&nbsp;</p>
                                 Ce site est dédié aux détenteurs d'un code de réservation valable pour une seule
                                 réservation
                             </div>
@@ -51,11 +50,10 @@
                     </div>
                     <div class="step-container" id="step_2" style="display: none">
                         <div class="row">
-                            <div class="col-md-6 step-heading">
-                                <p>&nbsp;</p>
+                            <div class="col-sm-6 step-heading">
                                 Pour réserver, je saisis mes informations personnelles
                             </div>
-                            <div class="col-md-3 step-content">
+                            <div class="col-lg-4 col-sm-6 step-content">
                                 <div class="step-panel">
                                     <h3 class="heading">code réservation :</h3>
                                     <form class="form" action="{{ path('unique_code_submit_customer_information') }}">
@@ -129,6 +127,7 @@
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                             Précédent
                                         </button>
+                                        <p></p>
                                     </div>
                                     <div class="col-md-6 text-center">
                                         <button type="submit" class="btn btn-hb btn-lg btn-block btn-upper"
@@ -136,6 +135,7 @@
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                             Suivant
                                         </button>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -144,11 +144,10 @@
                     </div>
                     <div class="step-container" id="step_3" style="display: none">
                         <div class="row">
-                            <div class="col-md-6 step-heading">
-                                <p>&nbsp;</p>
+                            <div class="col-sm-6 step-heading">
                                 Je sélectionne mon séjour
                             </div>
-                            <div class="col-md-4 step-content">
+                            <div class="col-lg-4 col-sm-6 step-content">
                                 <div class="step-panel">
                                     <h3 class="heading">Je choisis mon hôtel :</h3>
                                     <form>
@@ -225,11 +224,13 @@
                                         <button type="submit" class="btn btn-hb-2 btn-lg btn-block btn-upper" id="back_step_2"
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Précédent
                                         </button>
+                                        <p></p>
                                     </div>
                                     <div class="col-md-6 text-center">
                                         <button type="submit" class="btn btn-hb btn-lg btn-block btn-upper" id="to_step_4"
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Suivant
                                         </button>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -237,11 +238,10 @@
                     </div>
                     <div class="step-container" id="step_4" style="display: none">
                         <div class="row">
-                            <div class="col-md-6 step-heading">
-                                <p>&nbsp;</p>
+                            <div class="col-sm-6 step-heading">
                                 J’envoie ma demande de réservation
                             </div>
-                            <div class="col-md-4 step-content">
+                            <div class="col-lg-4 col-sm-6 step-content">
                                 <div class="step-panel">
                                     <h3 class="heading">Ma demande de réservation</h3>
                                     J’ai réservé à : <strong class="text-yellow summary-hotel-name"></strong>
@@ -293,11 +293,13 @@
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                             Précédent
                                         </button>
+                                        <p></p>
                                     </div>
                                     <div class="col-md-6 text-center">
                                         <button class="btn btn-hb btn-lg btn-block btn-upper" id="to_step_5"
                                                 data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Envoyer
                                         </button>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -305,11 +307,10 @@
                     </div>
                 <div class="step-container" id="step_5" style="display: none">
                     <div class="row">
-                        <div class="col-md-6 step-heading">
-                            <p>&nbsp;</p>
+                        <div class="col-sm-6 step-heading">
                             Je reçois la confirmation de réservation par email dans les 24h
                         </div>
-                        <div class="col-md-3 step-content">
+                        <div class="col-lg-4 col-sm-6 step-content">
                             <div class="step-panel">
                                 <h3 class="heading">Demande de Réservation envoyée !</h3>
                                 <strong>
