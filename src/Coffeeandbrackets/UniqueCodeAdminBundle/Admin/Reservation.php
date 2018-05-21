@@ -73,6 +73,7 @@ class Reservation extends AbstractAdmin
                    ->add('offerServiceNight')
                    ->add('offerServiceMorning')
                    ->add('offerPrice')
+                   ->add('hotelEmail')
                    ->add('hotelPhone')
                    ->add('hotelAddress')
                    ->add('campaign.name')
@@ -107,7 +108,7 @@ class Reservation extends AbstractAdmin
             $this->trans('show.label_campaign_name') => 'campaign.name',
             $this->trans('show.label_number_person') => 'numberPerson',
             $this->trans('show.label_hotel') => 'hotel',
-            $this->trans('show.label_code') => 'hotelEmail',
+            $this->trans('show.label_hotel_email') => 'hotelEmail',
             $this->trans('show.label_offer') => 'offer',
             $this->trans('show.label_reservation_date') => 'reservationDate',
             $this->trans('show.label_number_night') => 'numberNight',
