@@ -150,6 +150,7 @@ BOOTSTRAP TWEAKS
 
 a.btn {
     text-decoration: none;
+    white-space: normal;
 }
 
 .btn.btn-hb {
@@ -366,4 +367,9 @@ STEPS SPECIFICS
     background: bottom left no-repeat;
     width: 20px;
     height: 280px;
+}
+
+.view-reservation-text {
+    font-size: 16px;
+    font-weight: bold;
 }

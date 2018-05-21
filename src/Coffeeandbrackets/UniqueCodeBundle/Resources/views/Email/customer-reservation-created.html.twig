@@ -23,8 +23,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <p>Bonjour {{ reservation.getCustomer().getFirstName() }},</p>
-                            <p>Votre demande de réservation a bien été envoyée à l’hôtel {{ reservation.getHotel() }} !</p>
+                            <p>Bonjour <strong>{{ reservation.getCustomer().getFirstName() }}</strong>,</p>
+                            <p>Votre demande de réservation a bien été envoyée à l’hôtel <strong>{{ reservation.getHotel() }}</strong> !</p>
                             <p>L’hôtel vous donnera une réponse par mail d’ici 24 heures.</p>
                             <p>A noter, vous ne pouvez pas faire une autre demande de réservation tant que celle-ci est en cours. </p>
                             <p>En validant ma demande de réservation je m’engage à ne pas effectuer la même réservation en direct avec l’hôtelier.</p>
