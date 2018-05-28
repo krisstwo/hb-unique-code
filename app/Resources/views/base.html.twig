@@ -1,3 +1,4 @@
+{% set campaign = unique_code_campaign.detectCampaign() %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,9 @@
             {% stylesheets '@UniqueCodeBundle/Resources/public/select2/css/select2.min.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
+            {% stylesheets '@UniqueCodeBundle/Resources/public/magic-check/magic-check.min.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
             {% stylesheets '@UniqueCodeBundle/Resources/public/css/style.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -23,10 +27,17 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="logo-hb">
-                            {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
-                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
-                            {% endimage %}
+                        <div class="logos">
+                            <div class="logo-hb">
+                                {% image '@UniqueCodeBundle/Resources/public/img/header-logo.png' %}
+                                <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
+                                {% endimage %}
+                            </div>
+                            {% if campaign is not empty %}
+                                <div class="logo-campaign">
+                                    <img src="{{ campaign.getLogo() }}" class="logo"/>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -36,21 +47,31 @@
             {% block body %}{% endblock %}
         </section>
         <footer id="footer">
-            <div class="logo">
-                {% image '@UniqueCodeBundle/Resources/public/img/footer-logo.png' %}
-                <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
-                {% endimage %}
-            </div>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        {% set campaign = unique_code_campaign.detectCampaign() %}
+                        <div class="logo">
+                            {% image '@UniqueCodeBundle/Resources/public/img/footer-logo.png' %}
+                            <img class="logo-hb" src="{{ asset_url }}" alt="logo"/>
+                            {% endimage %}
+                        </div>
                         Tous droits réservés - <a href="https://www.happybreak.com/mentions-legales" target="_blank">Mentions légales</a> - <a href="https://www.happybreak.com/cgu" target="_blank">CGV-CGU</a> - <a href="https://www.happybreak.com/?utm_source=codeunique&utm_medium=referral&utm_content=homepage{{ campaign ? '&utm_campaign=' ~ campaign.getCode() : '' }}" target="_blank">www.happybreak.com</a> -
                         Contactez-nous au 09 80 01 01 01
                     </div>
                 </div>
             </div>
         </footer>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119396908-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-119396908-1');
+        </script>
+
         {% block javascripts %}
             <script src="{{ asset('js/jquery.min.js') }}"></script>
             <script src="{{ asset('js/jquery-ui.min.js') }}"></script>

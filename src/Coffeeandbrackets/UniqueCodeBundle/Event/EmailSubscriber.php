@@ -102,6 +102,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:customer-reservation-created.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -109,7 +110,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($mailConfig, 'text/html');
 
-        $event = new CustomerNewReservationRequestEmailSent($mailConfig['from'], $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new CustomerNewReservationRequestEmailSent($mailConfig['fromName'] . ' ' . $mailConfig['from'],
+            $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
 
         //send email to hotel
@@ -120,6 +122,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:new_reservation_request.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation,
@@ -128,7 +131,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($mailConfig, 'text/html');
 
-        $event = new HotelNewReservationRequestEmailSent($mailConfig['from'], $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new HotelNewReservationRequestEmailSent($mailConfig['fromName'] . ' ' . $mailConfig['from'],
+            $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
@@ -143,6 +147,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:customer-reservation-refused.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -150,7 +155,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($mailConfig, 'text/html');
 
-        $event = new CustomerReservationDeclinedEmailSent($mailConfig['from'], $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new CustomerReservationDeclinedEmailSent($mailConfig['fromName'] . ' ' . $mailConfig['from'],
+            $recipient, $mailConfig['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
@@ -166,6 +172,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -173,7 +180,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new HotelReservationAcceptedEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new HotelReservationAcceptedEmailSent($tabParam['fromName'] . ' ' . $tabParam['from'], $recipient,
+            $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
 
         // send confirmation mail to customer
@@ -184,6 +192,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -191,7 +200,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new CustomerReservationAcceptedEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new CustomerReservationAcceptedEmailSent($tabParam['fromName'] . ' ' . $tabParam['from'], $recipient,
+            $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
@@ -241,6 +251,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:hotel-confirmation-due.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation,
@@ -249,7 +260,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new HotelConfirmationDueEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new HotelConfirmationDueEmailSent($tabParam['fromName'] . ' ' . $tabParam['from'], $recipient,
+            $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 
@@ -264,6 +276,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:hotel_confirm_reservation.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -271,7 +284,8 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new HotelReservationAcceptedEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new HotelReservationAcceptedEmailSent($tabParam['fromName'] . ' ' . $tabParam['from'], $recipient,
+            $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
 
         // send confirmation mail to customer
@@ -282,6 +296,7 @@ class EmailSubscriber implements EventSubscriberInterface
             'template' => 'UniqueCodeBundle:Email:customer_confirm_reservation.html.twig',
             'subject'  => $subject,
             'from'     => 'reservation.happybreak-noreply@happybreak.com',//TODO: let from be empty
+            'fromName' => empty(trim($reservation->getHotel())) ? 'Votre réservation' : $reservation->getHotel() . ' via Happybreak',
             'bcc'      => 'reservation.happybreak-noreply@happybreak.com',
             'params'   => array(
                 'reservation' => $reservation
@@ -289,7 +304,7 @@ class EmailSubscriber implements EventSubscriberInterface
         );
         $this->mailer->sendMessage($tabParam, 'text/html');
 
-        $event = new CustomerReservationAcceptedEmailSent($tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
+        $event = new CustomerReservationAcceptedEmailSent($tabParam['fromName'] . ' ' . $tabParam['from'], $recipient, $tabParam['bcc'], $subject, $this->mailer->getBody(), $reservation);
         $this->eventDispatcher->dispatch(EmailEvent::NAME, $event);
     }
 }

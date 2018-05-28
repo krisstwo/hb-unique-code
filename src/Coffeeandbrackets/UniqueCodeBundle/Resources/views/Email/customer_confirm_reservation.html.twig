@@ -23,31 +23,75 @@
                     </tr>
                     <tr>
                         <td>
-                            <p><b>{{ reservation.getCustomer().getFirstName() }}, faites vos valises !</b></p>
-                            <p>L’hôtel {{ reservation.getHotel() }} a accepté votre réservation et vous accueillera
+                            <p>
+                                <b>{{ reservation.getCustomer().getGender() }} {{ reservation.getCustomer().getLastName() }}, faites vos valises !</b></p>
+                            <p>L’hôtel <strong>{{ reservation.getHotel() }}</strong> a accepté votre réservation et vous accueillera
                                 du {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %} .</p>
                             <p><b>A noter !</b> Chaque réservation est soumise aux CGV de l’hôtel. Il est possible que l’hôtel vous contacte pour compléter votre réservation.</p>
                             <p>Veuillez trouver ci-dessous un rappel de votre réservation :</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top">
+                            <table width="300" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <strong>{{ reservation.getHotel() }}</strong><br>
+                                            {{ reservation.getHotelEmail() }}<br>
+                                            {{ reservation.getHotelPhone() }}<br>
+                                            {{ reservation.getHotelAddress() }}<br>
+                                            {{ reservation.getReservationDate()|date('d/m/Y') }}
+                                            pour {{ reservation.getNumberNight() }}
+                                            nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}<br>
+                                            {{ reservation.getOffer() }}
+                                        </p>
+                                        {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
+                                            <p>
+                                                <b>Détail de la prestation: </b><br>
+                                                {% if(reservation.getOfferServiceAfternoon()) %}{{ reservation.getOfferServiceAfternoon() }}
+                                                    <br>{% endif %}
+                                                {% if(reservation.getOfferServiceNight()) %}{{ reservation.getOfferServiceNight() }}
+                                                    <br>{% endif %}
+                                                {% if(reservation.getOfferServiceMorning()) %}{{ reservation.getOfferServiceMorning() }}
+                                                    <br>{% endif %}
+                                                Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} €
+                                                par nuit.
+                                            </p>
+                                        {% endif %}
+                                        <p>
+                                            {{ reservation.getCustomerMsg() }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="30" style="font-size:30px; line-height:30px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 10px;">
                             <p>
-                                {{ reservation.getHotel() }}<br>
-                                {{ reservation.getHotelEmail() }}<br>
-                                {{ reservation.getHotelPhone() }}<br>
-                                {{ reservation.getHotelAddress() }}<br>
-                                {{ reservation.getReservationDate()|date('d/m/Y') }} pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}<br>
-                                {{ reservation.getOffer() }}
+                                <b>
+                                    Conditions de réservation Happybreak :
+                                </b>
                             </p>
-                            {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
-                            <p>
-                            <b>Détail de la prestation: </b><br>
-                                {% if(reservation.getOfferServiceAfternoon()) %}{{ reservation.getOfferServiceAfternoon() }}<br>{% endif %}
-                                {% if(reservation.getOfferServiceNight()) %}{{ reservation.getOfferServiceNight() }}<br>{% endif %}
-                                {% if(reservation.getOfferServiceMorning()) %}{{ reservation.getOfferServiceMorning() }}<br>{% endif %}
-                                Au tarif de {{ reservation.getOfferPrice()|number_format(2, ',') }} € par nuit.
-                            </p>
-                            {% endif %}
-                            <p>
-                                {{ reservation.getCustomerMsg() }}
-                            </p>
+                            <ul>
+                                <li>
+                                    Ma réservation est validée. Je m’engage à ne pas effectuer la même réservation en direct avec l’hôtelier.
+                                </li>
+                                <li>
+                                    Chaque réservation est soumise aux conditions de réservation et d’annulation de
+                                    chaque hôtel.
+                                </li>
+                                <li>
+                                    Si je ne me présente pas le jour de la réservation sans avoir annulé mon séjour au minimum 48h à l’avance, alors je m’engage à <strong>régler la totalité de mon séjour</strong>.
+                                </li>
+                            </ul>
                         </td>
                     </tr>
                     <tr>

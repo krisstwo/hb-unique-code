@@ -60,8 +60,7 @@ class CreateCustomer extends AbstractType
             ->add('email', EmailType::class, array('required' => true))
             ->add('re_email', EmailType::class, array('required' => true))
             ->add('phone', null, array('required' => true, 'constraints' => array(new Regex(['pattern' => "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/"]))))
-            ->add('newsletter', NumberType::class)
-            ->add('cgv', null, array('required' => true));
+            ->add('newsletter', NumberType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

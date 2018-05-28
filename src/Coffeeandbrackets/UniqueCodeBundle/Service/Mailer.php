@@ -11,6 +11,7 @@ class Mailer {
     private $template;
     private $subject;
     private $from;
+    private $fromName;
     private $to;
     private $bcc;
     private $params = array();
@@ -36,7 +37,7 @@ class Mailer {
 
         $message = \Swift_Message::newInstance()
             ->setSubject( $this->subject )
-            ->setFrom( $this->from )
+            ->setFrom( $this->from, $this->fromName )
             ->setTo( $this->to )
             ->setBcc( $this->bcc )
             ->setBody( $this->body , $contentType );
@@ -56,6 +57,10 @@ class Mailer {
 
                 case 'from':
                     $this->setFrom( $v );
+                    break;
+
+                case 'fromName':
+                    $this->setFromName( $v );
                     break;
 
                 case 'to':
@@ -103,6 +108,21 @@ class Mailer {
      */
     public function setFrom( $from ) {
         $this->from = $from;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFromName()
+    {
+        return $this->fromName;
+    }
+
+    /**
+     * @param string $fromName
+     */
+    public function setFromName( $fromName ) {
+        $this->fromName = $fromName;
     }
 
     /**

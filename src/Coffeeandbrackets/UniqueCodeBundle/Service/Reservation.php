@@ -72,6 +72,7 @@ class Reservation
         $campaign = $this->campaignService->detectCampaign();
 
         $customer = new Customer();
+        $customer->setGender($data['gender']);
         $customer->setFirstName($data['first_name']);
         $customer->setLastName($data['last_name']);
         $customer->setEmail($data['email']);
@@ -120,8 +121,10 @@ class Reservation
         try {
             $reservation->setHotelRefuseDate(new \DateTime());
             $reservation->setHotelRefuseReason($data['reason']);
-            $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
-            $reservation->setHotelProposedNumberNight($data['nights']);
+            if ( ! empty($data['check-in-date'])) {
+                $reservation->setHotelProposedCheckInDate(date_create_from_format('d/m/Y', $data['check-in-date']));
+                $reservation->setHotelProposedNumberNight($data['nights']);
+            }
 
             //dispatch event
             $event = new HotelDeclined($reservation);

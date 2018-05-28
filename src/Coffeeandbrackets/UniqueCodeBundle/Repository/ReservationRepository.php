@@ -36,7 +36,7 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
 
         $criterea->where($criterea->expr()->isNull('hotelConfirmationDate'));
         $criterea->andWhere($criterea->expr()->isNull('hotelRefuseDate'));
-        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT14H'))));
+        $criterea->andWhere($criterea->expr()->lte('addDate', (new \DateTime())->sub(new \DateInterval('PT24H'))));
 
         $qb = $this->createQueryBuilder('r');
         $qb->addCriteria($criterea)

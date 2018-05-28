@@ -34,14 +34,22 @@ LAYOUT STYLES
     box-sizing: content-box;
 }
 
-#header .logo-hb {
-    max-height: 70px;
-    line-height: 70px;
+#header .logos {
     text-align: center;
+    white-space: nowrap;
+}
+
+#header .logo-hb {
+    display: inline-block;
+    height: 70px;
+    width: auto;
+    line-height: 70px;
 }
 
 #header .logo-campaign {
+    display: inline-block;
     height: 70px;
+    width: auto;
     line-height: 70px;
 }
 
@@ -50,26 +58,12 @@ LAYOUT STYLES
 }
 
 #main {
-    padding: 50px 0;
+    padding: 100px 0;
 }
 
 .col-container {
     background: rgba(255, 255, 255, 0.8);
     padding: 20px;
-}
-
-.col-container.step-container {
-    padding: 20px 40px;
-}
-
-#step_1 .choice-container {
-    min-height: 150px;
-    position: relative;
-}
-
-#step_1 .choice-container .btn {
-    position: absolute;
-    bottom: 0;
 }
 
 #footer {
@@ -78,7 +72,6 @@ LAYOUT STYLES
     position: fixed;
     width: 100%;
     bottom: 0;
-    height: 3em;
 }
 
 #footer .row {
@@ -95,8 +88,7 @@ LAYOUT STYLES
 }
 
 #footer .logo {
-    position: absolute;
-    left: 1em;
+    display: inline-block;
     height: 3em;
     line-height: 3em;
 }
@@ -105,27 +97,39 @@ LAYOUT STYLES
     max-height: 80%;
 }
 
+@media (max-width: 767px) {
+    #main {
+        padding: 30px 0;
+        padding-bottom: 6em;
+    }
+}
+
 /**
 CUSTOM ELEMENTS
  */
 
-.step-list {
-
-}
-
-.step-list-item {
-    margin-bottom: 20px;
-    background: #d3cbc9;
-    color: #ffffff;
-    padding: 20px;
-}
-
-.step-list-item.active {
-    background: #776863;
-}
-
 .step-container .step-heading {
-    margin-bottom: 25px;
+    font-size: 60px;
+    font-weight: bold;
+    color: #ffffff;
+    padding-top: 1.2em;
+}
+
+.step-panel {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.step-content h3.heading {
+    text-transform: uppercase;
+    color: #f7a600;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.step-content h3.heading:first-child {
+    margin-top: 0;
 }
 
 .note {
@@ -139,18 +143,46 @@ CUSTOM ELEMENTS
     max-width: 50%;
 }
 
+.text-yellow {
+    color: #f7a600;
+}
+
+@media (max-width: 767px) {
+    .step-container .step-heading {
+        font-size: 30px;
+        padding-top: 0;
+        margin-bottom: 30px;
+    }
+}
+
 /**
 BOOTSTRAP TWEAKS
  */
 
+@media (min-width: 1200px) {
+    .container-fluid {
+        margin-left: 65px;
+        margin-right: 65px;
+    }
+}
+
 a.btn {
     text-decoration: none;
+    white-space: normal;
 }
 
 .btn.btn-hb {
     background: rgb(247, 166, 0);
     color: #ffffff;
     border: none;
+    font-weight: bold;
+}
+
+.btn.btn-hb-2 {
+    background: #776863;
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
 }
 
 .btn.btn-hb-secondary {
@@ -166,7 +198,8 @@ a.btn {
 .form-control {
     border-radius: 0;
     background: none;
-    border-color: #776863;
+    border-color: #f7a600;
+    border-width: 2px;
     color: #776863;
 }
 
@@ -178,6 +211,10 @@ a.btn {
     margin-bottom: 0;
 }
 
+.alert.error-code {
+    padding: 5px;
+}
+
 /**
 SELECT2 TWEAKS
  */
@@ -185,7 +222,8 @@ SELECT2 TWEAKS
 .select2 .select2-selection {
     background: none;
     border-radius: 0;
-    border-color: #776863;
+    border-color: #f7a600;
+    border-width: 2px;
     color: #776863;
     height: 34px;
 }
@@ -259,4 +297,97 @@ JQUERY TWEAKS
 
 .cgu-list ul {
     padding-left: 15px;
+}
+
+/**
+MAGIC CHECK TWEAKS
+ */
+
+.magic-checkbox.inline + label, .magic-radio.inline + label {
+    display: inline-block;
+}
+
+.magic-checkbox + label:before {
+    border-color: rgb(247, 166, 0);
+    background: #ffffff;
+}
+
+.magic-checkbox:checked + label:before {
+    border: 1px solid rgb(247, 166, 0);
+    background: #ffffff;
+}
+
+.magic-checkbox + label:after {
+    border-color: #61514e;
+}
+
+.magic-radio + label:after {
+    background: #61514e;
+}
+
+.magic-radio + label:before,
+.magic-radio:checked + label:before {
+    border: 1px solid rgb(247, 166, 0);
+}
+
+/**
+STEPS SPECIFICS
+ */
+
+#step_1 .step-content {
+    color: #ffffff;
+    font-size: 23px;
+    position: relative;
+}
+
+#step_1 .step-content a {
+    color: #f7a600;
+    text-decoration: underline;
+}
+
+#step_1 .step-content a:hover {
+    color: #f7a600;
+    text-decoration: none;
+}
+
+#step_1 .step-content .btn.btn-hb {
+    background: rgb(247, 166, 0);
+    color: #ffffff;
+    border: none;
+    text-decoration: none;
+}
+
+#step_1 .step-content h3 {
+    text-transform: uppercase;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#step_1 .step-content h3 strong {
+    text-transform: capitalize;
+    font-size: 60px;
+}
+
+#step_1 .step-1-path {
+    position: absolute;
+    top: 50px;
+    left: -20px;
+}
+
+#step_1 .step-1-path-start {
+    background: top left no-repeat;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+#step_1 .step-1-path-extend {
+    background: bottom left no-repeat;
+    width: 20px;
+    height: 280px;
+}
+
+.view-reservation-text {
+    font-size: 16px;
+    font-weight: bold;
 }
