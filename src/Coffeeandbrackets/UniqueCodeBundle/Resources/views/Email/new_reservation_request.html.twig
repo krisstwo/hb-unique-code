@@ -44,6 +44,13 @@
                             <p>Monsieur {{ customer.getLastName() }} souhaite réserver une chambre double
                                 avec {{ reservation.getOffer() }} le {{ reservation.getReservationDate()|date('d/m/Y') }}
                                 pour {{ reservation.getNumberNight() }} nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}</p>
+                            {% if not reservation.getCustomerMsg() is empty %}
+                                <p>
+                                    <b>Message du client :</b>
+                                    <br>
+                                    &ldquo;{{ reservation.getCustomerMsg() }}&rdquo;
+                                </p>
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
