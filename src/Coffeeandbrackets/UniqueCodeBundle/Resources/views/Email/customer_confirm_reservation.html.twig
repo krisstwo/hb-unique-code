@@ -49,6 +49,13 @@
                                             nuit{% if(reservation.getNumberNight() > 1) %}s{% endif %}<br>
                                             {{ reservation.getOffer() }}
                                         </p>
+                                        {% if not reservation.getCustomerMsg() is empty %}
+                                            <p>
+                                                <b>Message à l'hôtel :</b>
+                                                <br>
+                                                &ldquo;{{ reservation.getCustomerMsg() }}&rdquo;
+                                            </p>
+                                        {% endif %}
                                         {% if reservation.getOfferServiceAfternoon() or reservation.getOfferServiceNight() or reservation.getOfferServiceMorning() %}
                                             <p>
                                                 <b>Détail de la prestation: </b><br>
@@ -62,9 +69,6 @@
                                                 par nuit.
                                             </p>
                                         {% endif %}
-                                        <p>
-                                            {{ reservation.getCustomerMsg() }}
-                                        </p>
                                     </td>
                                 </tr>
                             </table>
