@@ -14,7 +14,7 @@ a {
 }
 
 a:hover {
-    color: #f7a600;
+    color: #FFBD00;
     text-decoration: none;
 }
 
@@ -67,7 +67,7 @@ LAYOUT STYLES
 }
 
 #footer {
-    background: #776863;
+    background: #262626;
     color: #ffffff;
     position: fixed;
     width: 100%;
@@ -84,7 +84,7 @@ LAYOUT STYLES
 }
 
 #footer a:hover {
-    color: #f7a600;
+    color: #FFBD00;
 }
 
 #footer .logo {
@@ -123,7 +123,7 @@ CUSTOM ELEMENTS
 
 .step-content h3.heading {
     text-transform: uppercase;
-    color: #f7a600;
+    color: #FFBD00;
     font-weight: bold;
     font-size: 24px;
 }
@@ -133,8 +133,8 @@ CUSTOM ELEMENTS
 }
 
 .note {
-    border: 1px solid #776863;
-    color: #776863;
+    border: 1px solid #262626;
+    color: #262626;
     padding: 20px;
     margin-bottom: 15px;
 }
@@ -144,7 +144,7 @@ CUSTOM ELEMENTS
 }
 
 .text-yellow {
-    color: #f7a600;
+    color: #FFBD00;
 }
 
 @media (max-width: 767px) {
@@ -172,21 +172,21 @@ a.btn {
 }
 
 .btn.btn-hb {
-    background: rgb(247, 166, 0);
+    background: #FFBD00;
     color: #ffffff;
     border: none;
     font-weight: bold;
 }
 
 .btn.btn-hb-2 {
-    background: #776863;
+    background: #262626;
     color: #ffffff;
     border: none;
     font-weight: bold;
 }
 
 .btn.btn-hb-secondary {
-    background: #776863;
+    background: #262626;
     color: #ffffff;
     border: none;
 }
@@ -198,9 +198,9 @@ a.btn {
 .form-control {
     border-radius: 0;
     background: none;
-    border-color: #f7a600;
+    border-color: #FFBD00;
     border-width: 2px;
-    color: #776863;
+    color: #262626;
 }
 
 .form-group {
@@ -222,9 +222,9 @@ SELECT2 TWEAKS
 .select2 .select2-selection {
     background: none;
     border-radius: 0;
-    border-color: #f7a600;
+    border-color: #FFBD00;
     border-width: 2px;
-    color: #776863;
+    color: #262626;
     height: 34px;
 }
 
@@ -233,7 +233,7 @@ SELECT2 TWEAKS
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background: rgb(247, 166, 0);
+    background: #FFBD00;
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
@@ -283,7 +283,7 @@ JQUERY TWEAKS
 }
 
 .ui-datepicker-calendar .ui-state-active {
-    background: #776863;
+    background: #262626;
 }
 
 .ui-datepicker-calendar .forfait-unavailable {
@@ -308,12 +308,12 @@ MAGIC CHECK TWEAKS
 }
 
 .magic-checkbox + label:before {
-    border-color: rgb(247, 166, 0);
+    border-color: #FFBD00;
     background: #ffffff;
 }
 
 .magic-checkbox:checked + label:before {
-    border: 1px solid rgb(247, 166, 0);
+    border: 1px solid #FFBD00;
     background: #ffffff;
 }
 
@@ -327,7 +327,7 @@ MAGIC CHECK TWEAKS
 
 .magic-radio + label:before,
 .magic-radio:checked + label:before {
-    border: 1px solid rgb(247, 166, 0);
+    border: 1px solid #FFBD00;
 }
 
 /**
@@ -341,17 +341,17 @@ STEPS SPECIFICS
 }
 
 #step_1 .step-content a {
-    color: #f7a600;
+    color: #FFBD00;
     text-decoration: underline;
 }
 
 #step_1 .step-content a:hover {
-    color: #f7a600;
+    color: #FFBD00;
     text-decoration: none;
 }
 
 #step_1 .step-content .btn.btn-hb {
-    background: rgb(247, 166, 0);
+    background: #FFBD00;
     color: #ffffff;
     border: none;
     text-decoration: none;
