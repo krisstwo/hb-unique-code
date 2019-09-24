@@ -14,11 +14,20 @@ class ForfaitPlanningRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findPlaningById($id)
     {
-        $criterea = new Criteria();
-        $criterea->where($criterea->expr()->eq('forfaitInternalId', $id));
-        $criterea->andWhere($criterea->expr()->gte('year', date('Y')));
-        $criterea->andWhere($criterea->expr()->gte('month', date('n')));
+        $criteria = new Criteria();
+        $criteria->where($criteria->expr()->eq('forfaitInternalId', $id));
 
-        return $this->matching($criterea);
+        // Need to have exact match as we are comparing strings, >< operator will do string comparison
+        $date   = new \DateTime();
+        $orCriteria = new Criteria();
+        for ($i = 1; $i <= 12; $i++) {
+            $orCriteria->orWhere(
+                $orCriteria->expr()->andX($orCriteria->expr()->eq('year', $date->format('Y')), $orCriteria->expr()->eq('month', $date->format('n')))
+            );
+            $date->add(new \DateInterval('P1M'));
+        }
+        $criteria->andWhere($orCriteria->getWhereExpression());
+
+        return $this->matching($criteria);
     }
 }
